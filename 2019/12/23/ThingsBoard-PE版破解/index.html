@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ThingsBoard PE版破解, Hexo">
+    <meta name="keywords" content="ThingsBoard PE版破解, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>ThingsBoard PE版破解 | Hexo</title>
+    <title>ThingsBoard PE版破解 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -26,7 +26,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
     
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -38,7 +38,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">Niww's Blog</span>
                 </a>
             </div>
             
@@ -136,7 +136,7 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">Niww's Blog</div>
         <div class="logo-desc">
             
             Never really desperate, only the lost of the soul.
@@ -466,20 +466,103 @@
                 <p><a href="https://thingsboard.io/" target="_blank" rel="noopener">ThingsBoard是一款开源的IOT平台</a>，有CE,PE两个版本，PE版需要付费，功能也更加丰富。为了体验下PE版的功能，尝试着对<br>PE版进行破解。</p>
 <a id="more"></a>
 <ol>
-<li>按照<a href="https://thingsboard.io/docs/user-guide/install/pe/windows/" target="_blank" rel="noopener">官方文档</a>进行安装，跳过步骤中的填写license部分</li>
-<li>启动服务，当然此时是无法访问的。查看日志thingsboard.log发现最后有如下提示<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2019-12-24 09:14:50,056 [main] ERROR o.t.s.d.s.BasicSubscriptionService - License secret is not provided!</span><br><span class="line">2019-12-24 09:14:50,057 [main] ERROR o.t.s.d.s.BasicSubscriptionService - Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!</span><br><span class="line">2019-12-24 09:14:50,156 [Shutdown Thread] INFO  o.t.s.d.s.BasicSubscriptionService - Terminating application due to critical License Error GENERAL_ERROR(300), exit code [-1]...</span><br></pre></td></tr></tbody></table></figure>
-这里提示<code>BasicSubscriptionService</code>这个类中进行了license的检验，但是上面没有显示改类包路径，无法精确定位到改类的位置。</li>
-<li>为了精确定位<code>BasicSubscriptionService</code>这个类的位置，对<code>conf/logback.xml</code>进行修改，将日志长度改大一点<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;encoder&gt;</span><br><span class="line">   &lt;pattern&gt;%d{ISO8601} [%thread] %-5level %logger{255} - %msg%n&lt;/pattern&gt;</span><br><span class="line">&lt;/encoder&gt;</span><br></pre></td></tr></tbody></table></figure></li>
-<li>再次重启服务，查看日志<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2019-12-24 09:32:58,495 [main] ERROR org.thingsboard.server.dao.subscription.BasicSubscriptionService - License secret is not provided!</span><br><span class="line">2019-12-24 09:32:58,497 [main] ERROR org.thingsboard.server.dao.subscription.BasicSubscriptionService - Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!</span><br><span class="line">2019-12-24 09:32:58,504 [Shutdown Thread] INFO  org.thingsboard.server.dao.subscription.BasicSubscriptionService - Terminating application due to critical License Error GENERAL_ERROR(300), exit code [-1]...</span><br></pre></td></tr></tbody></table></figure>
-发现<code>org.thingsboard.server.dao.subscription.BasicSubscriptionService</code>这个类是再dao包下，解压<code>lib/thingsboard.jar</code>，找到依赖的<code>dao-2.4.2PE.jar</code>，解压找到<code>BasicSubscriptionService</code><br>最后发现检查license的地方在这里:<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@PostConstruct</span><br><span class="line">   public void init() {</span><br><span class="line">       if (StringUtils.isEmpty(this.licenseSecret)) {</span><br><span class="line">           log.error("License secret is not provided!");</span><br><span class="line">           log.error("Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!");</span><br><span class="line">           this.doExit(-1, LicenseErrorCode.GENERAL_ERROR, false);</span><br><span class="line">       } else {</span><br><span class="line">           try {</span><br><span class="line">               this.tbLicenseClient = TbLicenseClient.builder().listener(this).licenseSecret(this.licenseSecret).releaseDate((new SimpleDateFormat("yyyy-MM-dd")).parse("2019-09-13").getTime()).build();</span><br><span class="line">               this.tbLicenseClient.init();</span><br><span class="line">           } catch (Exception var3) {</span><br><span class="line">               log.error("Failed to init license client", var3);</span><br><span class="line">               LicenseErrorCode licenseErrorCode = var3 instanceof LicenseException ? ((LicenseException)var3).getErrorCode() : LicenseErrorCode.GENERAL_ERROR;</span><br><span class="line">               this.doExit(-1, licenseErrorCode, false);</span><br><span class="line">           }</span><br><span class="line">       }</span><br><span class="line">  </span><br><span class="line">   }</span><br></pre></td></tr></tbody></table></figure></li>
-<li>尝试重写该类中方法，将验证license那部分去掉。然后将新的<code>BasicSubscriptionService.class</code>替换掉之前的代码。<br>打开CE版的源码，在<code>dao</code>模块下新建<code>subscription</code>包，对照<code>dao-2.4.2PE.jar</code>中的内容，将<code>SubscriptionService</code>,<code>InstallSubscriptionService</code>,<code>BasicSubscriptionService</code>这3个类中的内容完全复制过来,<br>再重写<code>BasicSubscriptionService</code>中的方法，最后内容如下：<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">import org.slf4j.Logger;</span><br><span class="line">import org.slf4j.LoggerFactory;</span><br><span class="line">import org.springframework.beans.factory.annotation.Value;</span><br><span class="line">import org.springframework.context.annotation.Profile;</span><br><span class="line">import org.springframework.stereotype.Service;</span><br><span class="line">import org.thingsboard.server.common.data.id.TenantId;</span><br><span class="line">import org.thingsboard.server.common.data.subscription.SubscriptionException;</span><br><span class="line"></span><br><span class="line">import javax.annotation.PostConstruct;</span><br><span class="line">import javax.annotation.PreDestroy;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">@Profile({"!install"})</span><br><span class="line">public class BasicSubscriptionService implements SubscriptionService {</span><br><span class="line">    private static final Logger log = LoggerFactory.getLogger(BasicSubscriptionService.class);</span><br><span class="line">    private static final String MAX_DEVICES_KEY = "maxdevices";</span><br><span class="line">    private static final String MAX_ASSETS_KEY = "maxassets";</span><br><span class="line">    private static final String WHITELABELING_KEY = "whitelabeling";</span><br><span class="line">    @Value("${license.secret}")</span><br><span class="line">    private String licenseSecret;</span><br><span class="line"></span><br><span class="line">    public BasicSubscriptionService() {</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    @PostConstruct</span><br><span class="line">    public void init() {</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    @PreDestroy</span><br><span class="line">    public void stop() {</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void createDeviceAllowed(TenantId tenantId) throws SubscriptionException {</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void createAssetAllowed(TenantId tenantId) throws SubscriptionException {</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void whiteLabelingAllowed(TenantId tenantId) throws SubscriptionException {</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean whiteLabelingEnabled(TenantId tenantId) throws SubscriptionException {</span><br><span class="line">       return true;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-(这步过程中<code>SubscriptionService</code>类中有个异常类<code>SubscriptionException</code>是在<code>common</code>模块下的，CE版中也没有这个类，需要按照路径在CE版中生成，然后重新编译<code>common</code>模块)</li>
-<li>编译<code>dao</code>模块，拿到<code>BasicSubscriptionService.class</code></li>
-<li>重新生成<code>dao-2.4.2PE.jar</code>,使用jar命令替换，在<code>dao-2.4.2PE.jar</code>同目录下新建目录<code>org\thingsboard\server\dao\subscription</code>,将<code>BasicSubscriptionService.class</code>放到该目录下，<br>执行<code>jar uf dao-2.4.2PE.jar org\thingsboard\server\dao\subscription\BasicSubscriptionService.class</code>此时<code>dao-2.4.2PE.jar</code>已经更新完。</li>
-<li>重新生成<code>thingsboard.jar</code>，解压之间的<code>thingsboard.jar</code>,得到3个目录<code>BOOT-INF</code>,<code>META-INF</code>,<code>org</code>,将上一步生成的<code>dao-2.4.2PE.jar</code>放入<code>BOOT-INF\lib</code>中，<br>执行<code>jar cf0M thingsboard.jar *</code>生成新的jar包</li>
-<li>用新的thingsboard.jar重新install或者直接执行都可以。</li>
+<li><p>按照<a href="https://thingsboard.io/docs/user-guide/install/pe/windows/" target="_blank" rel="noopener">官方文档</a>进行安装，跳过步骤中的填写license部分</p>
+</li>
+<li><p>启动服务，当然此时是无法访问的。查看日志thingsboard.log发现最后有如下提示</p>
+<pre><code> 2019-12-24 09:14:50,056 [main] ERROR o.t.s.d.s.BasicSubscriptionService - License secret is not provided!
+ 2019-12-24 09:14:50,057 [main] ERROR o.t.s.d.s.BasicSubscriptionService - Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!
+ 2019-12-24 09:14:50,156 [Shutdown Thread] INFO  o.t.s.d.s.BasicSubscriptionService - Terminating application due to critical License Error GENERAL_ERROR(300), exit code [-1]...</code></pre><p>这里提示<code>BasicSubscriptionService</code>这个类中进行了license的检验，但是上面没有显示改类包路径，无法精确定位到改类的位置。</p>
+</li>
+<li><p>为了精确定位<code>BasicSubscriptionService</code>这个类的位置，对<code>conf/logback.xml</code>进行修改，将日志长度改大一点</p>
+<pre><code>&lt;encoder&gt;
+   &lt;pattern&gt;%d{ISO8601} [%thread] %-5level %logger{255} - %msg%n&lt;/pattern&gt;
+&lt;/encoder&gt;</code></pre></li>
+<li><p>再次重启服务，查看日志</p>
+<pre><code>2019-12-24 09:32:58,495 [main] ERROR org.thingsboard.server.dao.subscription.BasicSubscriptionService - License secret is not provided!
+2019-12-24 09:32:58,497 [main] ERROR org.thingsboard.server.dao.subscription.BasicSubscriptionService - Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!
+2019-12-24 09:32:58,504 [Shutdown Thread] INFO  org.thingsboard.server.dao.subscription.BasicSubscriptionService - Terminating application due to critical License Error GENERAL_ERROR(300), exit code [-1]...</code></pre><p>发现<code>org.thingsboard.server.dao.subscription.BasicSubscriptionService</code>这个类是再dao包下，解压<code>lib/thingsboard.jar</code>，找到依赖的<code>dao-2.4.2PE.jar</code>，解压找到<code>BasicSubscriptionService</code><br>最后发现检查license的地方在这里:</p>
+<pre><code>@PostConstruct
+   public void init() {
+       if (StringUtils.isEmpty(this.licenseSecret)) {
+           log.error("License secret is not provided!");
+           log.error("Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!");
+           this.doExit(-1, LicenseErrorCode.GENERAL_ERROR, false);
+       } else {
+           try {
+               this.tbLicenseClient = TbLicenseClient.builder().listener(this).licenseSecret(this.licenseSecret).releaseDate((new SimpleDateFormat("yyyy-MM-dd")).parse("2019-09-13").getTime()).build();
+               this.tbLicenseClient.init();
+           } catch (Exception var3) {
+               log.error("Failed to init license client", var3);
+               LicenseErrorCode licenseErrorCode = var3 instanceof LicenseException ? ((LicenseException)var3).getErrorCode() : LicenseErrorCode.GENERAL_ERROR;
+               this.doExit(-1, licenseErrorCode, false);
+           }
+       }
+
+   }</code></pre></li>
+<li><p>尝试重写该类中方法，将验证license那部分去掉。然后将新的<code>BasicSubscriptionService.class</code>替换掉之前的代码。<br>打开CE版的源码，在<code>dao</code>模块下新建<code>subscription</code>包，对照<code>dao-2.4.2PE.jar</code>中的内容，将<code>SubscriptionService</code>,<code>InstallSubscriptionService</code>,<code>BasicSubscriptionService</code>这3个类中的内容完全复制过来,<br>再重写<code>BasicSubscriptionService</code>中的方法，最后内容如下：</p>
+<pre><code>import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
+import org.thingsboard.server.common.data.id.TenantId;
+import org.thingsboard.server.common.data.subscription.SubscriptionException;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+@Service
+@Profile({"!install"})
+public class BasicSubscriptionService implements SubscriptionService {
+    private static final Logger log = LoggerFactory.getLogger(BasicSubscriptionService.class);
+    private static final String MAX_DEVICES_KEY = "maxdevices";
+    private static final String MAX_ASSETS_KEY = "maxassets";
+    private static final String WHITELABELING_KEY = "whitelabeling";
+    @Value("${license.secret}")
+    private String licenseSecret;
+
+    public BasicSubscriptionService() {
+    }
+
+    @PostConstruct
+    public void init() {
+
+</code></pre></li>
 </ol>
-<script>
+<pre><code>   }
+
+   @PreDestroy
+   public void stop() {
+
+   }
+
+
+   @Override
+   public void createDeviceAllowed(TenantId tenantId) throws SubscriptionException {
+
+   }
+
+   @Override
+   public void createAssetAllowed(TenantId tenantId) throws SubscriptionException {
+
+   }
+
+   @Override
+   public void whiteLabelingAllowed(TenantId tenantId) throws SubscriptionException {
+
+   }
+
+   @Override
+   public boolean whiteLabelingEnabled(TenantId tenantId) throws SubscriptionException {
+      return true;
+   }</code></pre><p>   }</p>
+<pre><code>   (这步过程中`SubscriptionService`类中有个异常类`SubscriptionException`是在`common`模块下的，CE版中也没有这个类，需要按照路径在CE版中生成，然后重新编译`common`模块)
+6. 编译`dao`模块，拿到`BasicSubscriptionService.class`
+7. 重新生成`dao-2.4.2PE.jar`,使用jar命令替换，在`dao-2.4.2PE.jar`同目录下新建目录`org\thingsboard\server\dao\subscription`,将`BasicSubscriptionService.class`放到该目录下，
+   执行`jar uf dao-2.4.2PE.jar org\thingsboard\server\dao\subscription\BasicSubscriptionService.class`此时`dao-2.4.2PE.jar`已经更新完。
+8. 重新生成`thingsboard.jar`，解压之间的`thingsboard.jar`,得到3个目录`BOOT-INF`,`META-INF`,`org`,将上一步生成的`dao-2.4.2PE.jar`放入`BOOT-INF\lib`中，
+   执行`jar cf0M thingsboard.jar *`生成新的jar包
+9. 用新的thingsboard.jar重新install或者直接执行都可以。</code></pre><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -942,7 +1025,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
     <footer class="page-footer bg-color">
     
     <div class="container row center-align" style="margin-bottom: 0px !important;">
-        <div class="col s12 m8 l8 copy-right">
+        <div class="col s12 m12 l12 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2019</span>
             <a href="https://nww57.github.io" target="_blank">Niww</a>
@@ -971,6 +1054,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
         </div>
+        <!--
         <div class="col s12 m4 l4 social-link social-statis">
     <a href="https://github.com/nww57" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
@@ -991,6 +1075,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 </div>
+        -->
     </div>
 </footer>
 

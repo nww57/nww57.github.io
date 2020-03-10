@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SpringBoot下前后台分离时间处理, Hexo">
+    <meta name="keywords" content="SpringBoot下前后台分离时间处理, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>SpringBoot下前后台分离时间处理 | Hexo</title>
+    <title>SpringBoot下前后台分离时间处理 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -26,7 +26,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
     
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -38,7 +38,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">Niww's Blog</span>
                 </a>
             </div>
             
@@ -136,7 +136,7 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">Niww's Blog</div>
         <div class="logo-desc">
             
             Never really desperate, only the lost of the soul.
@@ -459,16 +459,58 @@
 </blockquote>
 <a id="more"></a>
 <h1 id="Controller接收参数"><a href="#Controller接收参数" class="headerlink" title="Controller接收参数"></a>Controller接收参数</h1><p>在Spring中，接收LocalDateTime日期时间数据时，只需要使用@DateTimeFormat注解即可。@DateTimeFormat可以注解在字段、参数以及方法上，如果接收的为DTO，则需要将@DateTimeFormat注解在DTO中的字段上。(注意：前台传的参数格式必须与<code>pattern</code>定义格式一致)</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@GetMapping("date")</span><br><span class="line">public Object date(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime date) {</span><br><span class="line">    return date;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">@GetMapping("date2")</span><br><span class="line">public Object date(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {</span><br><span class="line">    return date;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="ResponseBody格式化LocalDateTime"><a href="#ResponseBody格式化LocalDateTime" class="headerlink" title="ResponseBody格式化LocalDateTime"></a>ResponseBody格式化LocalDateTime</h1><p>Spring默认使用使用jackson来进行json格式转换。这里需要加入<code>jackson</code>的<code>jsr310</code>扩展包。</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.fasterxml.jackson.datatype&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;jackson-datatype-jsr310&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.8.9&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="使用-JsonFormat注解"><a href="#使用-JsonFormat注解" class="headerlink" title="使用@JsonFormat注解"></a>使用@JsonFormat注解</h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class InfoDTO {</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 创建时间</span><br><span class="line">     */</span><br><span class="line">    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")</span><br><span class="line">    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")</span><br><span class="line">    private LocalDateTime createDate;</span><br><span class="line"></span><br><span class="line">    //get/set方法省略</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="使用ObjectMapper"><a href="#使用ObjectMapper" class="headerlink" title="使用ObjectMapper"></a>使用ObjectMapper</h2><p>使用<code>@Bean</code>注解创建一个ObjectMapperBean，并将<code>JavaTimeModule</code>注册到ObjectMapper中即可，<code>spring</code>会使用该bean创建<code>MappingJackson2HttpMessageConverter</code>进行<code>json</code>格式转换。</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@Bean(name = "mapperObject")</span><br><span class="line">@Primary</span><br><span class="line">public ObjectMapper getObjectMapper() {</span><br><span class="line">    ObjectMapper om = new ObjectMapper();</span><br><span class="line">    JavaTimeModule javaTimeModule = new JavaTimeModule();</span><br><span class="line">    javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));</span><br><span class="line">    javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));</span><br><span class="line">    javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));</span><br><span class="line">    om.registerModule(javaTimeModule);</span><br><span class="line">    return om;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h1 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h1><p>在使用 <code>@DateFormat</code>进行参数转换的时候，只能接收url参数，或者表单提交参数。如果参数对象是以JSON传递过来的，这时使用该注解就无法进行转化。</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">public class Controller {</span><br><span class="line">    @PostMapping("/")</span><br><span class="line">    public void post(@RequestBody InfoDTO infoDTO) {}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class InfoDTO {</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 创建时间</span><br><span class="line">     */</span><br><span class="line">    @JsonDeserialize(using = LocalDateDeserializer.class)</span><br><span class="line">    @JsonFormat(pattern = "yyyyMMdd")</span><br><span class="line">    private LocalDateTime createDate;</span><br><span class="line"></span><br><span class="line">    //get/set方法省略</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<script>
+<pre><code>@GetMapping("date")
+public Object date(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime date) {
+    return date;
+}
+
+@GetMapping("date2")
+public Object date(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+    return date;
+}</code></pre><h1 id="ResponseBody格式化LocalDateTime"><a href="#ResponseBody格式化LocalDateTime" class="headerlink" title="ResponseBody格式化LocalDateTime"></a>ResponseBody格式化LocalDateTime</h1><p>Spring默认使用使用jackson来进行json格式转换。这里需要加入<code>jackson</code>的<code>jsr310</code>扩展包。</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.fasterxml.jackson.datatype&lt;/groupId&gt;
+    &lt;artifactId&gt;jackson-datatype-jsr310&lt;/artifactId&gt;
+    &lt;version&gt;2.8.9&lt;/version&gt;
+&lt;/dependency&gt;</code></pre><h2 id="使用-JsonFormat注解"><a href="#使用-JsonFormat注解" class="headerlink" title="使用@JsonFormat注解"></a>使用@JsonFormat注解</h2><pre><code>public class InfoDTO {
+
+    /**
+     * 创建时间
+     */
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createDate;
+
+    //get/set方法省略
+
+}</code></pre><h2 id="使用ObjectMapper"><a href="#使用ObjectMapper" class="headerlink" title="使用ObjectMapper"></a>使用ObjectMapper</h2><p>使用<code>@Bean</code>注解创建一个ObjectMapperBean，并将<code>JavaTimeModule</code>注册到ObjectMapper中即可，<code>spring</code>会使用该bean创建<code>MappingJackson2HttpMessageConverter</code>进行<code>json</code>格式转换。</p>
+<pre><code>@Bean(name = "mapperObject")
+@Primary
+public ObjectMapper getObjectMapper() {
+    ObjectMapper om = new ObjectMapper();
+    JavaTimeModule javaTimeModule = new JavaTimeModule();
+    javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+    javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
+    om.registerModule(javaTimeModule);
+    return om;
+}</code></pre><h1 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h1><p>在使用 <code>@DateFormat</code>进行参数转换的时候，只能接收url参数，或者表单提交参数。如果参数对象是以JSON传递过来的，这时使用该注解就无法进行转化。</p>
+<pre><code>@RestController
+public class Controller {
+    @PostMapping("/")
+    public void post(@RequestBody InfoDTO infoDTO) {}
+}</code></pre><pre><code>public class InfoDTO {
+
+    /**
+     * 创建时间
+     */
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(pattern = "yyyyMMdd")
+    private LocalDateTime createDate;
+
+    //get/set方法省略
+
+}</code></pre><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -930,7 +972,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
     <footer class="page-footer bg-color">
     
     <div class="container row center-align" style="margin-bottom: 0px !important;">
-        <div class="col s12 m8 l8 copy-right">
+        <div class="col s12 m12 l12 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2019</span>
             <a href="https://nww57.github.io" target="_blank">Niww</a>
@@ -959,6 +1001,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
         </div>
+        <!--
         <div class="col s12 m4 l4 social-link social-statis">
     <a href="https://github.com/nww57" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
@@ -979,6 +1022,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 </div>
+        -->
     </div>
 </footer>
 

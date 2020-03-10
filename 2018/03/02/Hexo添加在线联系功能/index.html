@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hexo添加在线联系功能, Hexo">
+    <meta name="keywords" content="Hexo添加在线联系功能, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Hexo添加在线联系功能 | Hexo</title>
+    <title>Hexo添加在线联系功能 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -26,7 +26,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
     
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -38,7 +38,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">Niww's Blog</span>
                 </a>
             </div>
             
@@ -136,7 +136,7 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">Niww's Blog</div>
         <div class="logo-desc">
             
             Never really desperate, only the lost of the soul.
@@ -467,10 +467,18 @@
 <h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><h2 id="注册DaoVoice，获取app-id"><a href="#注册DaoVoice，获取app-id" class="headerlink" title="注册DaoVoice，获取app_id"></a>注册DaoVoice，获取app_id</h2><p>首先到DaoVoice上注册一个账号,注册完成后会得到一个app_id，获取appid的步骤如下图所示:<br><img src="http://oxzz60egu.bkt.clouddn.com/hexo/image/daovoice-step4.png" alt=""></p>
 <a id="more"></a>
 <h2 id="主题集成"><a href="#主题集成" class="headerlink" title="主题集成"></a>主题集成</h2><p>打开/themes/next/layout/_partials/head.swig文件添加如下代码：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">{% if theme.daovoice %}</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")</span><br><span class="line">  daovoice('init', {</span><br><span class="line">      app_id: "{{theme.daovoice_app_id}}"</span><br><span class="line">    });</span><br><span class="line">  daovoice('update');</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">{% endif %}</span><br></pre></td></tr></tbody></table></figure>
-<p>接着打开主题配置文件_config.yml，添加如下代码：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Online contact</span><br><span class="line">daovoice: true</span><br><span class="line">daovoice_app_id: 这里输入前面获取的app_id</span><br></pre></td></tr></tbody></table></figure>
-<p>最后执行hexo cl &amp;&amp; hexo d -g 就能看到效果了。</p>
+<pre><code>{% if theme.daovoice %}
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "{{theme.daovoice_app_id}}"
+    });
+  daovoice('update');
+  </script>
+{% endif %}</code></pre><p>接着打开主题配置文件_config.yml，添加如下代码：</p>
+<pre><code># Online contact
+daovoice: true
+daovoice_app_id: 这里输入前面获取的app_id</code></pre><p>最后执行hexo cl &amp;&amp; hexo d -g 就能看到效果了。</p>
 <h2 id="定制聊天窗口样式"><a href="#定制聊天窗口样式" class="headerlink" title="定制聊天窗口样式"></a>定制聊天窗口样式</h2><p>集成DaoVoice后，聊天按钮的位置跟颜色是可以自定义的，到DaoVoice的控制台进行修改<br><img src="http://oxzz60egu.bkt.clouddn.com/hexo/image/daovoice-step2.png" alt=""></p>
 <h2 id="微信通知"><a href="#微信通知" class="headerlink" title="微信通知"></a>微信通知</h2><p>最后到右上角选择管理员，微信绑定,可以绑定你的微信号，关注公众号后打开小程序，就可以实时收发消息，有新的消息也会通过微信通知，设置页面如下:<br><img src="http://oxzz60egu.bkt.clouddn.com/hexo/image/daovoice-step3.png" alt=""></p>
 <script>
@@ -933,7 +941,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
     <footer class="page-footer bg-color">
     
     <div class="container row center-align" style="margin-bottom: 0px !important;">
-        <div class="col s12 m8 l8 copy-right">
+        <div class="col s12 m12 l12 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2019</span>
             <a href="https://nww57.github.io" target="_blank">Niww</a>
@@ -962,6 +970,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
         </div>
+        <!--
         <div class="col s12 m4 l4 social-link social-statis">
     <a href="https://github.com/nww57" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
@@ -982,6 +991,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 </div>
+        -->
     </div>
 </footer>
 

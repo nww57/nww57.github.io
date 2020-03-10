@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Keycloak配置, Hexo">
+    <meta name="keywords" content="Keycloak配置, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Keycloak配置 | Hexo</title>
+    <title>Keycloak配置 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -26,7 +26,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
     
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -38,7 +38,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">Niww's Blog</span>
                 </a>
             </div>
             
@@ -136,7 +136,7 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">Niww's Blog</div>
         <div class="logo-desc">
             
             Never really desperate, only the lost of the soul.
@@ -479,15 +479,36 @@
 </blockquote>
 </li>
 <li><p>在jar包同级目录下新建文件module.xml，文件内容如下:</p>
-<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">module</span> <span class="attr">xmlns</span>=<span class="string">"urn:jboss:module:1.3"</span> <span class="attr">name</span>=<span class="string">"com.mysql"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resource-root</span> <span class="attr">path</span>=<span class="string">"mysql-connector-java-8.0.19.jar"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">module</span> <span class="attr">name</span>=<span class="string">"javax.api"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">module</span> <span class="attr">name</span>=<span class="string">"javax.transaction.api"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>module</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>urn:jboss:module:1.3<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.mysql<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>resources</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>resource-root</span> <span class="token attr-name">path</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mysql-connector-java-8.0.19.jar<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>resources</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>module</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>javax.api<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>module</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>javax.transaction.api<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>module</span><span class="token punctuation">></span></span></code></pre>
 <p>其中name应为包名，后文配置数据源过程中会用到此name。dependencies包含可能会用到的依赖项。</p>
 <h3 id="在Keycloak配置文件中声明使用下载的MySQL驱动"><a href="#在Keycloak配置文件中声明使用下载的MySQL驱动" class="headerlink" title="在Keycloak配置文件中声明使用下载的MySQL驱动"></a>在Keycloak配置文件中声明使用下载的MySQL驱动</h3></li>
 <li><p>编辑standalone.xml,位置在keycloak-9.0.0\standalone\configuration\standalone.xml(若为集群模式编辑standalone-ha.xml)，<br>寻找drivers标签，默认有一个h2数据库的配置，我们要在同级增加一个mysql的配置，内容如下：</p>
-<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">driver</span> <span class="attr">name</span>=<span class="string">"mysql"</span> <span class="attr">module</span>=<span class="string">"com.mysql"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">xa-datasource-class</span>&gt;</span>com.mysql.cj.jdbc.MysqlXADataSource<span class="tag">&lt;/<span class="name">xa-datasource-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">driver</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>driver</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mysql<span class="token punctuation">"</span></span> <span class="token attr-name">module</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.mysql<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>xa-datasource-class</span><span class="token punctuation">></span></span>com.mysql.cj.jdbc.MysqlXADataSource<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>xa-datasource-class</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>driver</span><span class="token punctuation">></span></span></code></pre>
 <p>module即为之前module.xml中定义的name，此处的name为driver的名称，在接下来的数据源配置中会使用到。<br>此处注意，xa-datasource-class的路径可能会随着JDBC版本变化而变化，可从jar包中寻找到正确的路径。</p>
 </li>
 <li><p>向上寻找datasources标签，默认此处有两项datasource，我们注释掉名称为KeycloakDS的数据源，并加上mysql的。<br>注意不要把ExampleDS也注释掉，启动会报错的。新增内容如下：</p>
-<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">datasource</span> <span class="attr">jndi-name</span>=<span class="string">"java:jboss/datasources/KeycloakDS"</span> <span class="attr">pool-name</span>=<span class="string">"KeycloakDS"</span> <span class="attr">enabled</span>=<span class="string">"true"</span> <span class="attr">use-java-context</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">connection-url</span>&gt;</span>jdbc:mysql://localhost:3306/keycloak<span class="tag">&lt;/<span class="name">connection-url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">driver</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">driver</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pool</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">max-pool-size</span>&gt;</span>20<span class="tag">&lt;/<span class="name">max-pool-size</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">pool</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">security</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">user-name</span>&gt;</span>root<span class="tag">&lt;/<span class="name">user-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">password</span>&gt;</span>root<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">security</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">datasource</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>datasource</span> <span class="token attr-name">jndi-name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java:jboss/datasources/KeycloakDS<span class="token punctuation">"</span></span> <span class="token attr-name">pool-name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>KeycloakDS<span class="token punctuation">"</span></span> <span class="token attr-name">enabled</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token attr-name">use-java-context</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>connection-url</span><span class="token punctuation">></span></span>jdbc:mysql://localhost:3306/keycloak<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>connection-url</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>driver</span><span class="token punctuation">></span></span>mysql<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>driver</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>pool</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>max-pool-size</span><span class="token punctuation">></span></span>20<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>max-pool-size</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>pool</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>security</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>user-name</span><span class="token punctuation">></span></span>root<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>user-name</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>password</span><span class="token punctuation">></span></span>root<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>password</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>security</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>datasource</span><span class="token punctuation">></span></span></code></pre>
 <p>driver处对应上面定义driver标签中的name。其余项目见文知意，根据具体项目修改即可，此处需要手工建立keycloak库。</p>
 </li>
 <li><p>寻找name为connectionsJpa的spi标签，此标签内可定义诸多数据源选项，例如showsql，formatsql等等，可根据需要修改。支持的配置项详见官方文档。</p>
@@ -497,9 +518,19 @@
 </ol>
 <h1 id="Keycloak远程访问"><a href="#Keycloak远程访问" class="headerlink" title="Keycloak远程访问"></a>Keycloak远程访问</h1><p>keycloak使用JBoss服务器作为容器，而JBoss服务器由于一些安全问题默认是不允许外部访问的（比如远程连接），只允许本机访问，即localhost，<br>所以要想远程连接keycloak，就要更改一下设置。配置外网访问有下面两种方式。</p>
 <ol>
-<li>启动keycloak的时候在后面加上参数 -b  0.0.0.0<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./standalone.bat -b 0.0.0.0</span><br></pre></td></tr></tbody></table></figure></li>
-<li>修改keycloak/standalone/configuration/standalone.xml中修改一些配置来启动远程连接,找到<code>interfaces</code>标签，修改为下面的内容<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">interfaces</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">interface</span> <span class="attr">name</span>=<span class="string">"management"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inet-address</span> <span class="attr">value</span>=<span class="string">"${jboss.bind.address.management:127.0.0.1}"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">interface</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">interface</span> <span class="attr">name</span>=<span class="string">"public"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inet-address</span> <span class="attr">value</span>=<span class="string">"${jboss.bind.address:0.0.0.0}"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">interface</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">interfaces</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure></li>
+<li>启动keycloak的时候在后面加上参数 -b  0.0.0.0<pre><code>./standalone.bat -b 0.0.0.0</code></pre></li>
+<li>修改keycloak/standalone/configuration/standalone.xml中修改一些配置来启动远程连接,找到<code>interfaces</code>标签，修改为下面的内容<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>interfaces</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>interface</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>management<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>inet-address</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${jboss.bind.address.management:127.0.0.1}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>interface</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>interface</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>public<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>inet-address</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${jboss.bind.address:0.0.0.0}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>interface</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>interfaces</span><span class="token punctuation">></span></span>
+</code></pre>
+</li>
 </ol>
+<p>```</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -963,7 +994,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
     <footer class="page-footer bg-color">
     
     <div class="container row center-align" style="margin-bottom: 0px !important;">
-        <div class="col s12 m8 l8 copy-right">
+        <div class="col s12 m12 l12 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2019</span>
             <a href="https://nww57.github.io" target="_blank">Niww</a>
@@ -992,6 +1023,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
         </div>
+        <!--
         <div class="col s12 m4 l4 social-link social-statis">
     <a href="https://github.com/nww57" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
@@ -1012,6 +1044,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 </div>
+        -->
     </div>
 </footer>
 

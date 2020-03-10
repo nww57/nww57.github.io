@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ThingsBoard Gateway在树莓派上的使用-ModBus协议, Hexo">
+    <meta name="keywords" content="ThingsBoard Gateway在树莓派上的使用-ModBus协议, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>ThingsBoard Gateway在树莓派上的使用-ModBus协议 | Hexo</title>
+    <title>ThingsBoard Gateway在树莓派上的使用-ModBus协议 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -26,7 +26,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
     
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -38,7 +38,7 @@
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">Niww's Blog</span>
                 </a>
             </div>
             
@@ -136,7 +136,7 @@
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">Niww's Blog</div>
         <div class="logo-desc">
             
             Never really desperate, only the lost of the soul.
@@ -479,14 +479,102 @@
 <li><a href="https://thingsboard.io/docs/iot-gateway/getting-started/" target="_blank" rel="noopener">启动ThingsBoard GateWay服务</a></li>
 <li><a href="http://etrd.org/2017/01/29/%E6%A0%91%E8%8E%93%E6%B4%BE3%E7%A1%AC%E4%BB%B6%E4%B8%B2%E5%8F%A3%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E7%BC%96%E7%A8%8B/" target="_blank" rel="noopener">树莓派串口配置</a></li>
 <li><a href="http://www.waveshare.net/wiki/RS485_CAN_HAT" target="_blank" rel="noopener">树莓派RS485扩展板</a>一块,将扩展板插入树莓派，并与自己的传感设备连接好</li>
-<li><a href="https://harttle.land/2017/01/14/raspberrypi-uart.html" target="_blank" rel="noopener">将树莓派ttyAMA0串口权限开放</a><h1 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h1><h2 id="配置网关扩展"><a href="#配置网关扩展" class="headerlink" title="配置网关扩展"></a>配置网关扩展</h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[{</span><br><span class="line">    "id": "modbus-water",</span><br><span class="line">    "type": "MODBUS",</span><br><span class="line">    "configuration": {</span><br><span class="line">        "servers": [{</span><br><span class="line">            "transport": {</span><br><span class="line">                "type": "rtu",</span><br><span class="line">                "portName": "ttyAMA0",</span><br><span class="line">                "encoding": "rtu",</span><br><span class="line">                "timeout": 5000,</span><br><span class="line">                "baudRate": 9600,</span><br><span class="line">                "dataBits": 8,</span><br><span class="line">                "stopBits": 1,</span><br><span class="line">                "parity": "none"</span><br><span class="line">            },</span><br><span class="line">            "devices": [{</span><br><span class="line">                "unitId": 1,</span><br><span class="line">                "deviceName": "水压-设备1",</span><br><span class="line">                "attributesPollPeriod": 1000,</span><br><span class="line">                "timeseriesPollPeriod": 1000,</span><br><span class="line">                "attributes": [],</span><br><span class="line">                "timeseries": [{</span><br><span class="line">                    "tag": "pressure",</span><br><span class="line">                    "type": "long",</span><br><span class="line">                    "pollPeriod": 1000,</span><br><span class="line">                    "functionCode": 3,</span><br><span class="line">                    "address": 4,</span><br><span class="line">                    "registerCount": 1,</span><br><span class="line">                    "bit": 0,</span><br><span class="line">                    "byteOrder": "BIG"</span><br><span class="line">                }]</span><br><span class="line">            }]</span><br><span class="line">        }]</span><br><span class="line">    }</span><br><span class="line">}]</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="配置网关服务文件tb-gateway-yml"><a href="#配置网关服务文件tb-gateway-yml" class="headerlink" title="配置网关服务文件tb-gateway.yml"></a>配置网关服务文件tb-gateway.yml</h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  # Server bind address</span><br><span class="line">  address: "0.0.0.0"</span><br><span class="line">  # Server bind port</span><br><span class="line">  port: "9090"</span><br><span class="line"></span><br><span class="line"># Check new version updates parameters</span><br><span class="line">updates:</span><br><span class="line">  # Enable/disable updates checking.</span><br><span class="line">  enabled: "${UPDATES_ENABLED:true}"</span><br><span class="line"></span><br><span class="line">gateways:</span><br><span class="line">  tenants:</span><br><span class="line">    -</span><br><span class="line">      label: "Tenant"</span><br><span class="line">      reporting:</span><br><span class="line">        interval: 60000</span><br><span class="line">      persistence:</span><br><span class="line">        type: file</span><br><span class="line">        path: storage</span><br><span class="line">        bufferSize: 1000</span><br><span class="line">      connection:</span><br><span class="line">        host: #ThingsBoard服务地址#</span><br><span class="line">        port: 1883</span><br><span class="line">        retryInterval: 3000</span><br><span class="line">        maxInFlight: 1000</span><br><span class="line">        security:</span><br><span class="line">          accessToken: #网关设备的令牌#</span><br><span class="line">      remoteConfiguration: true</span><br><span class="line">      extensions:</span><br><span class="line">        -</span><br><span class="line">          id: "http"</span><br><span class="line">          type: "HTTP"</span><br><span class="line">          extensionConfiguration: http-config.json</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="重启GateWay服务"><a href="#重启GateWay服务" class="headerlink" title="重启GateWay服务"></a>重启GateWay服务</h2></li>
+<li><a href="https://harttle.land/2017/01/14/raspberrypi-uart.html" target="_blank" rel="noopener">将树莓派ttyAMA0串口权限开放</a><h1 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h1><h2 id="配置网关扩展"><a href="#配置网关扩展" class="headerlink" title="配置网关扩展"></a>配置网关扩展</h2><pre class=" language-$xslt"><code class="language-$xslt">[{
+ "id": "modbus-water",
+ "type": "MODBUS",
+ "configuration": {
+     "servers": [{
+         "transport": {
+             "type": "rtu",
+             "portName": "ttyAMA0",
+             "encoding": "rtu",
+             "timeout": 5000,
+             "baudRate": 9600,
+             "dataBits": 8,
+             "stopBits": 1,
+             "parity": "none"
+         },
+         "devices": [{
+             "unitId": 1,
+             "deviceName": "水压-设备1",
+             "attributesPollPeriod": 1000,
+             "timeseriesPollPeriod": 1000,
+             "attributes": [],
+             "timeseries": [{
+                 "tag": "pressure",
+                 "type": "long",
+                 "pollPeriod": 1000,
+                 "functionCode": 3,
+                 "address": 4,
+                 "registerCount": 1,
+                 "bit": 0,
+                 "byteOrder": "BIG"
+             }]
+         }]
+     }]
+ }
+}]
+</code></pre>
+</li>
 </ol>
-<p>#问题<br>整个安装配置过程中出现了一个问题花了好久，在配置并重启GateWay服务后，发现网关设备始终没有同步，查看日志后发现</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">2019-11-19 18:36:13,160 [pool-1-thread-1] ERROR o.t.g.extensions.modbus.ModbusClient - MBS[ttyAMA0] connection failed!</span><br><span class="line">java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid ports are: [ttyAMA0]</span><br><span class="line">	at com.ghgande.j2mod.modbus.net.SerialConnection.open(SerialConnection.java:127)</span><br><span class="line">	at com.ghgande.j2mod.modbus.facade.ModbusSerialMaster.connect(ModbusSerialMaster.java:96)</span><br><span class="line">	at org.thingsboard.gateway.extensions.modbus.ModbusClient.connect(ModbusClient.java:121)</span><br><span class="line">	at java.util.ArrayList.forEach(ArrayList.java:1257)</span><br><span class="line">	at org.thingsboard.gateway.extensions.modbus.DefaultModbusService.init(DefaultModbusService.java:64)</span><br><span class="line">	at org.thingsboard.gateway.service.TenantServiceRegistry.updateExtensionConfiguration(TenantServiceRegistry.java:83)</span><br><span class="line">	at org.thingsboard.gateway.service.DefaultTenantManagerService.lambda$init$0(DefaultTenantManagerService.java:64)</span><br><span class="line">	at org.thingsboard.gateway.service.gateway.MqttGatewayService.updateConfiguration(MqttGatewayService.java:515)</span><br><span class="line">	at org.thingsboard.gateway.service.gateway.MqttGatewayService.onGatewayAttributesGet(MqttGatewayService.java:496)</span><br><span class="line">	at org.thingsboard.gateway.service.gateway.MqttGatewayService.lambda$onMessage$17(MqttGatewayService.java:426)</span><br><span class="line">	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)</span><br><span class="line">	at java.util.concurrent.FutureTask.run(FutureTask.java:266)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:748)</span><br><span class="line">2019-11-19 18:36:13,165 [pool-1-thread-1] ERROR o.t.g.e.modbus.DefaultModbusService - [Tenant] Modbus service initialization failed</span><br></pre></td></tr></tbody></table></figure>
+<pre><code>## 配置网关服务文件tb-gateway.yml
+```$xslt
+server:
+  # Server bind address
+  address: "0.0.0.0"
+  # Server bind port
+  port: "9090"
+
+# Check new version updates parameters
+updates:
+  # Enable/disable updates checking.
+  enabled: "${UPDATES_ENABLED:true}"
+
+gateways:
+  tenants:
+    -
+      label: "Tenant"
+      reporting:
+        interval: 60000
+      persistence:
+        type: file
+        path: storage
+        bufferSize: 1000
+      connection:
+        host: #ThingsBoard服务地址#
+        port: 1883
+        retryInterval: 3000
+        maxInFlight: 1000
+        security:
+          accessToken: #网关设备的令牌#
+      remoteConfiguration: true
+      extensions:
+        -
+          id: "http"
+          type: "HTTP"
+          extensionConfiguration: http-config.json</code></pre><h2 id="重启GateWay服务"><a href="#重启GateWay服务" class="headerlink" title="重启GateWay服务"></a>重启GateWay服务</h2><p>#问题<br>整个安装配置过程中出现了一个问题花了好久，在配置并重启GateWay服务后，发现网关设备始终没有同步，查看日志后发现</p>
+<pre class=" language-$xslt"><code class="language-$xslt">2019-11-19 18:36:13,160 [pool-1-thread-1] ERROR o.t.g.extensions.modbus.ModbusClient - MBS[ttyAMA0] connection failed!
+java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid ports are: [ttyAMA0]
+    at com.ghgande.j2mod.modbus.net.SerialConnection.open(SerialConnection.java:127)
+    at com.ghgande.j2mod.modbus.facade.ModbusSerialMaster.connect(ModbusSerialMaster.java:96)
+    at org.thingsboard.gateway.extensions.modbus.ModbusClient.connect(ModbusClient.java:121)
+    at java.util.ArrayList.forEach(ArrayList.java:1257)
+    at org.thingsboard.gateway.extensions.modbus.DefaultModbusService.init(DefaultModbusService.java:64)
+    at org.thingsboard.gateway.service.TenantServiceRegistry.updateExtensionConfiguration(TenantServiceRegistry.java:83)
+    at org.thingsboard.gateway.service.DefaultTenantManagerService.lambda$init$0(DefaultTenantManagerService.java:64)
+    at org.thingsboard.gateway.service.gateway.MqttGatewayService.updateConfiguration(MqttGatewayService.java:515)
+    at org.thingsboard.gateway.service.gateway.MqttGatewayService.onGatewayAttributesGet(MqttGatewayService.java:496)
+    at org.thingsboard.gateway.service.gateway.MqttGatewayService.lambda$onMessage$17(MqttGatewayService.java:426)
+    at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+    at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+    at java.lang.Thread.run(Thread.java:748)
+2019-11-19 18:36:13,165 [pool-1-thread-1] ERROR o.t.g.e.modbus.DefaultModbusService - [Tenant] Modbus service initialization failed
+</code></pre>
 <p>日志显示ttyAMA0口不能打开或不存在。dose not exist肯定是不可能的，那就是串口打不开。<br>最后在<a href="https://harttle.land/2017/01/14/raspberrypi-uart.html" target="_blank" rel="noopener">这里</a>找到了解决办法。将ttyAMA0口的权限设置为任何人可以读，写。<br>在<code>/etc/udev/rules.d</code>中添加100-ttyAMA0.rules,内容为：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">KERNEL=="ttyAMA0", MODE="666"</span><br></pre></td></tr></tbody></table></figure><script>
+<pre class=" language-$xslt"><code class="language-$xslt">KERNEL=="ttyAMA0", MODE="666"</code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -750,7 +838,8 @@
 
 
 按照官方文档进行安装，跳过步骤中的填写license部分
-启动服务，当然此时是无法访问
+
+启动服务，当然此时是无法访
                         
                     </div>
                     <div class="publish-info">
@@ -946,7 +1035,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
     <footer class="page-footer bg-color">
     
     <div class="container row center-align" style="margin-bottom: 0px !important;">
-        <div class="col s12 m8 l8 copy-right">
+        <div class="col s12 m12 l12 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2019</span>
             <a href="https://nww57.github.io" target="_blank">Niww</a>
@@ -975,6 +1064,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
         </div>
+        <!--
         <div class="col s12 m4 l4 social-link social-statis">
     <a href="https://github.com/nww57" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
@@ -995,6 +1085,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 </div>
+        -->
     </div>
 </footer>
 
