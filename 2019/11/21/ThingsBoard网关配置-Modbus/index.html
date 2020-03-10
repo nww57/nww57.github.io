@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="friends, Hexo">
+    <meta name="keywords" content="ThingsBoard Gateway在树莓派上的使用-ModBus协议, Hexo">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>friends | Hexo</title>
+    <title>ThingsBoard Gateway在树莓派上的使用-ModBus协议 | Hexo</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -303,12 +303,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">friends</h1>
+                    <h1 class="description center-align post-title">ThingsBoard Gateway在树莓派上的使用-ModBus协议</h1>
                 </div>
             </div>
         </div>
@@ -430,6 +430,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/ThingsBoard/" class="post-category">
+                                ThingsBoard
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -437,7 +446,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-09
+                    2019-11-21
                 </div>
                 
 
@@ -454,7 +463,30 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <script>
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>ThingsBoard GateWay 是在ThingsBoard下的一款高度集成遗留系统和第三方系统上联接设备的开源解决方案。<br>具有以下几个特点：</p>
+<ul>
+<li>MQTT扩展 - 于控制、配置和收集使用现有协议连接到外部MQTT代理的IoT设备数据。</li>
+<li>OPC-UA扩展 - 收集连接到OPC-UA服务端的IoT设备数据。</li>
+<li>Sigfox扩展 - 收集连接到Sigfox后端的IoT设备数据。</li>
+<li>数据持久 - 网络和硬件异常时保证数据正常传输。</li>
+<li>自动重新连接到UlyncThings集群。</li>
+<li>将传入的数据和消息映射到统一格式。<br>本篇将介绍在树莓派上安装ThingsBoard GateWay使用Modbus协议遥测数据。<a id="more"></a>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1></li>
+</ul>
+<ol>
+<li>启动ThingsBoard服务</li>
+<li><a href="https://thingsboard.io/docs/iot-gateway/install/rpi/" target="_blank" rel="noopener">在树莓派上安装ThingsBoard GateWay</a></li>
+<li><a href="https://thingsboard.io/docs/iot-gateway/getting-started/" target="_blank" rel="noopener">启动ThingsBoard GateWay服务</a></li>
+<li><a href="http://etrd.org/2017/01/29/%E6%A0%91%E8%8E%93%E6%B4%BE3%E7%A1%AC%E4%BB%B6%E4%B8%B2%E5%8F%A3%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E7%BC%96%E7%A8%8B/" target="_blank" rel="noopener">树莓派串口配置</a></li>
+<li><a href="http://www.waveshare.net/wiki/RS485_CAN_HAT" target="_blank" rel="noopener">树莓派RS485扩展板</a>一块,将扩展板插入树莓派，并与自己的传感设备连接好</li>
+<li><a href="https://harttle.land/2017/01/14/raspberrypi-uart.html" target="_blank" rel="noopener">将树莓派ttyAMA0串口权限开放</a><h1 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h1><h2 id="配置网关扩展"><a href="#配置网关扩展" class="headerlink" title="配置网关扩展"></a>配置网关扩展</h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[{</span><br><span class="line">    "id": "modbus-water",</span><br><span class="line">    "type": "MODBUS",</span><br><span class="line">    "configuration": {</span><br><span class="line">        "servers": [{</span><br><span class="line">            "transport": {</span><br><span class="line">                "type": "rtu",</span><br><span class="line">                "portName": "ttyAMA0",</span><br><span class="line">                "encoding": "rtu",</span><br><span class="line">                "timeout": 5000,</span><br><span class="line">                "baudRate": 9600,</span><br><span class="line">                "dataBits": 8,</span><br><span class="line">                "stopBits": 1,</span><br><span class="line">                "parity": "none"</span><br><span class="line">            },</span><br><span class="line">            "devices": [{</span><br><span class="line">                "unitId": 1,</span><br><span class="line">                "deviceName": "水压-设备1",</span><br><span class="line">                "attributesPollPeriod": 1000,</span><br><span class="line">                "timeseriesPollPeriod": 1000,</span><br><span class="line">                "attributes": [],</span><br><span class="line">                "timeseries": [{</span><br><span class="line">                    "tag": "pressure",</span><br><span class="line">                    "type": "long",</span><br><span class="line">                    "pollPeriod": 1000,</span><br><span class="line">                    "functionCode": 3,</span><br><span class="line">                    "address": 4,</span><br><span class="line">                    "registerCount": 1,</span><br><span class="line">                    "bit": 0,</span><br><span class="line">                    "byteOrder": "BIG"</span><br><span class="line">                }]</span><br><span class="line">            }]</span><br><span class="line">        }]</span><br><span class="line">    }</span><br><span class="line">}]</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="配置网关服务文件tb-gateway-yml"><a href="#配置网关服务文件tb-gateway-yml" class="headerlink" title="配置网关服务文件tb-gateway.yml"></a>配置网关服务文件tb-gateway.yml</h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  # Server bind address</span><br><span class="line">  address: "0.0.0.0"</span><br><span class="line">  # Server bind port</span><br><span class="line">  port: "9090"</span><br><span class="line"></span><br><span class="line"># Check new version updates parameters</span><br><span class="line">updates:</span><br><span class="line">  # Enable/disable updates checking.</span><br><span class="line">  enabled: "${UPDATES_ENABLED:true}"</span><br><span class="line"></span><br><span class="line">gateways:</span><br><span class="line">  tenants:</span><br><span class="line">    -</span><br><span class="line">      label: "Tenant"</span><br><span class="line">      reporting:</span><br><span class="line">        interval: 60000</span><br><span class="line">      persistence:</span><br><span class="line">        type: file</span><br><span class="line">        path: storage</span><br><span class="line">        bufferSize: 1000</span><br><span class="line">      connection:</span><br><span class="line">        host: #ThingsBoard服务地址#</span><br><span class="line">        port: 1883</span><br><span class="line">        retryInterval: 3000</span><br><span class="line">        maxInFlight: 1000</span><br><span class="line">        security:</span><br><span class="line">          accessToken: #网关设备的令牌#</span><br><span class="line">      remoteConfiguration: true</span><br><span class="line">      extensions:</span><br><span class="line">        -</span><br><span class="line">          id: "http"</span><br><span class="line">          type: "HTTP"</span><br><span class="line">          extensionConfiguration: http-config.json</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="重启GateWay服务"><a href="#重启GateWay服务" class="headerlink" title="重启GateWay服务"></a>重启GateWay服务</h2></li>
+</ol>
+<p>#问题<br>整个安装配置过程中出现了一个问题花了好久，在配置并重启GateWay服务后，发现网关设备始终没有同步，查看日志后发现</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">2019-11-19 18:36:13,160 [pool-1-thread-1] ERROR o.t.g.extensions.modbus.ModbusClient - MBS[ttyAMA0] connection failed!</span><br><span class="line">java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid ports are: [ttyAMA0]</span><br><span class="line">	at com.ghgande.j2mod.modbus.net.SerialConnection.open(SerialConnection.java:127)</span><br><span class="line">	at com.ghgande.j2mod.modbus.facade.ModbusSerialMaster.connect(ModbusSerialMaster.java:96)</span><br><span class="line">	at org.thingsboard.gateway.extensions.modbus.ModbusClient.connect(ModbusClient.java:121)</span><br><span class="line">	at java.util.ArrayList.forEach(ArrayList.java:1257)</span><br><span class="line">	at org.thingsboard.gateway.extensions.modbus.DefaultModbusService.init(DefaultModbusService.java:64)</span><br><span class="line">	at org.thingsboard.gateway.service.TenantServiceRegistry.updateExtensionConfiguration(TenantServiceRegistry.java:83)</span><br><span class="line">	at org.thingsboard.gateway.service.DefaultTenantManagerService.lambda$init$0(DefaultTenantManagerService.java:64)</span><br><span class="line">	at org.thingsboard.gateway.service.gateway.MqttGatewayService.updateConfiguration(MqttGatewayService.java:515)</span><br><span class="line">	at org.thingsboard.gateway.service.gateway.MqttGatewayService.onGatewayAttributesGet(MqttGatewayService.java:496)</span><br><span class="line">	at org.thingsboard.gateway.service.gateway.MqttGatewayService.lambda$onMessage$17(MqttGatewayService.java:426)</span><br><span class="line">	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)</span><br><span class="line">	at java.util.concurrent.FutureTask.run(FutureTask.java:266)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:748)</span><br><span class="line">2019-11-19 18:36:13,165 [pool-1-thread-1] ERROR o.t.g.e.modbus.DefaultModbusService - [Tenant] Modbus service initialization failed</span><br></pre></td></tr></tbody></table></figure>
+<p>日志显示ttyAMA0口不能打开或不存在。dose not exist肯定是不可能的，那就是串口打不开。<br>最后在<a href="https://harttle.land/2017/01/14/raspberrypi-uart.html" target="_blank" rel="noopener">这里</a>找到了解决办法。将ttyAMA0口的权限设置为任何人可以读，写。<br>在<code>/etc/udev/rules.d</code>中添加100-ttyAMA0.rules,内容为：</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">KERNEL=="ttyAMA0", MODE="666"</span><br></pre></td></tr></tbody></table></figure><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -497,7 +529,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://nww57.github.io/friends/index.html">https://nww57.github.io/friends/index.html</a>
+                    <a href="https://nww57.github.io/2019/11/21/ThingsBoard%E7%BD%91%E5%85%B3%E9%85%8D%E7%BD%AE-Modbus/">https://nww57.github.io/2019/11/21/ThingsBoard%E7%BD%91%E5%85%B3%E9%85%8D%E7%BD%AE-Modbus/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -698,42 +730,45 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/friends/index.html">
+                <a href="/2019/12/23/ThingsBoard-PE%E7%89%88%E7%A0%B4%E8%A7%A3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="friends">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="ThingsBoard PE版破解">
                         
-                        <span class="card-title">friends</span>
+                        <span class="card-title">ThingsBoard PE版破解</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            ThingsBoard是一款开源的IOT平台，有CE,PE两个版本，PE版需要付费，功能也更加丰富。为了体验下PE版的功能，尝试着对PE版进行破解。
+
+
+按照官方文档进行安装，跳过步骤中的填写license部分
+启动服务，当然此时是无法访问
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-09
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-23
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/ThingsBoard/" class="post-category">
+                                    ThingsBoard
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -741,30 +776,28 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/friends/index.html">
+                <a href="/2018/04/24/SpringBoot%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="friends">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="SpringBoot下前后台分离时间处理">
                         
-                        <span class="card-title">friends</span>
+                        <span class="card-title">SpringBoot下前后台分离时间处理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+之前在前后端交互过程中，针对时间类型的字段，在DTO中使用String类型接收，在后台转成Date类型。但这样处理太麻烦。JDK8的新特性中Time API，其包括Clock、Duration、Instant、LocalDate、Loca
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-04-24
                             </span>
                         <span class="publish-author">
                             
@@ -774,7 +807,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>

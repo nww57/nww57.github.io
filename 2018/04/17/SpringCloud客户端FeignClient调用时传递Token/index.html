@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="friends, Hexo">
+    <meta name="keywords" content="SpringCloud客户端FeignClient调用时传递Token, Hexo">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>friends | Hexo</title>
+    <title>SpringCloud客户端FeignClient调用时传递Token | Hexo</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -303,12 +303,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">friends</h1>
+                    <h1 class="description center-align post-title">SpringCloud客户端FeignClient调用时传递Token</h1>
                 </div>
             </div>
         </div>
@@ -430,6 +430,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/SpringCloud/" class="post-category">
+                                SpringCloud
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -437,7 +446,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-09
+                    2018-04-17
                 </div>
                 
 
@@ -454,7 +463,20 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <script>
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Feign是一个声明式WebService客户端。在SpringCloud中可以通过FeignClient来进行服务间的调用。</p>
+<p>而为了对API进行权限控制，项目中会进行权限认证，JWT或者Security。这时问题就会出现了，在加了授权认证之后，不管是JWT也好，Security也好，Feign调用总是没有权限。</p>
+<p>其实我们知道不管是选择哪种，最终token都是放在请求头里面，访问时携带以通过认证。</p>
+<p>可是当使用Feign时就会发现这样一个问题，外部请求到A服务的时候，A服务是可以拿到token(认证信息)的，然而当A使用Feign调用B服务时，token就会丢失，进而认证失败，权限不足。</p>
+<a id="more"></a>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>这时候我们需要做的就是在Feign调用的时候，向其请求头里面添加上Token</p>
+<h2 id="实现接口RequestInterceptor"><a href="#实现接口RequestInterceptor" class="headerlink" title="实现接口RequestInterceptor"></a>实现接口RequestInterceptor</h2><p>假设我们在验证权限的时候放在请求头里面的就叫token，我们先获取当前请求中的token，然后放到Feign的请求头上，当然具体还是要根据自己的业务来,这里就简单实现一下</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class FeignConfigInterceptor implements RequestInterceptor{</span><br><span class="line"></span><br><span class="line">    @Value("${jwt.header}")</span><br><span class="line">    private String tokenHeader;</span><br><span class="line">    @Override</span><br><span class="line">    public void apply(RequestTemplate requestTemplate) {</span><br><span class="line">        requestTemplate.header(tokenHeader, getHeaders(getHttpServletRequest()).get(tokenHeader));</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    private HttpServletRequest getHttpServletRequest() {</span><br><span class="line">        try {</span><br><span class="line">            return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();</span><br><span class="line">        } catch (Exception e) {</span><br><span class="line">            return null;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    private Map&lt;String, String&gt; getHeaders(HttpServletRequest request) {</span><br><span class="line">        Map&lt;String, String&gt; map = new LinkedHashMap&lt;&gt;();</span><br><span class="line">        Enumeration&lt;String&gt; enumeration = request.getHeaderNames();</span><br><span class="line">        while (enumeration.hasMoreElements()) {</span><br><span class="line">            String key = enumeration.nextElement();</span><br><span class="line">            String value = request.getHeader(key);</span><br><span class="line">            map.put(key, value);</span><br><span class="line">        }</span><br><span class="line">        return map;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="使用创建的FeignConfigInterceptor"><a href="#使用创建的FeignConfigInterceptor" class="headerlink" title="使用创建的FeignConfigInterceptor"></a>使用创建的FeignConfigInterceptor</h2><p>在@FeignClient注解里面的属性加上configuration = FeignConfigInterceptor.class</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@FeignClient(name = "user",url = "localhost:8081",configuration = FeignConfigInterceptor.class)</span><br><span class="line">public interface UserServiceClient {</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>这时候再调用就会发现已经携带token了。</p>
+<h2 id="插曲"><a href="#插曲" class="headerlink" title="插曲"></a>插曲</h2><p>在获取request所有的头信息的时候，使用 <code>request.getHeaderNames()</code>遍历后(即上文的<code>private Map&lt;String String&gt; getHeaders(HttpServletRequest request)</code>方法)，其中的key全部为小写。而我定义的<code>tokenHeader</code>是有大小写的，因此任然匹配不上。最后发现，直接使用<code>request.getHeader(String var1)</code>这个方法就可以获取到值。</p>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>其实实现了RequestInterceptor后，直接使用@Configuration注解，不在FeignClient里面加属性也是可以的。</p>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -497,7 +519,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://nww57.github.io/friends/index.html">https://nww57.github.io/friends/index.html</a>
+                    <a href="https://nww57.github.io/2018/04/17/SpringCloud%E5%AE%A2%E6%88%B7%E7%AB%AFFeignClient%E8%B0%83%E7%94%A8%E6%97%B6%E4%BC%A0%E9%80%92Token/">https://nww57.github.io/2018/04/17/SpringCloud%E5%AE%A2%E6%88%B7%E7%AB%AFFeignClient%E8%B0%83%E7%94%A8%E6%97%B6%E4%BC%A0%E9%80%92Token/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -698,33 +720,30 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/friends/index.html">
+                <a href="/2018/04/24/SpringBoot%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="friends">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="SpringBoot下前后台分离时间处理">
                         
-                        <span class="card-title">friends</span>
+                        <span class="card-title">SpringBoot下前后台分离时间处理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+之前在前后端交互过程中，针对时间类型的字段，在DTO中使用String类型接收，在后台转成Date类型。但这样处理太麻烦。JDK8的新特性中Time API，其包括Clock、Duration、Instant、LocalDate、Loca
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-09
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-04-24
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -733,7 +752,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -741,40 +759,43 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/friends/index.html">
+                <a href="/2018/03/25/Win7%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85RabbitMQ/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="friends">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="Win7 环境安装RabbitMQ">
                         
-                        <span class="card-title">friends</span>
+                        <span class="card-title">Win7 环境安装RabbitMQ</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            在Windows环境下安装RabbitMQ时遇到了一个坑，当启动服务时(``rabbitmq-service start`)，出现一串乱码错误，如图：原因是需要以管理员身份运行cmd命令窗口。
+
+安装步骤
+RabbitMQ依赖erlang,
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-03-25
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/RabbitMQ/" class="post-category">
+                                    RabbitMQ
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>

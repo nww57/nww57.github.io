@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="friends, Hexo">
+    <meta name="keywords" content="Hexo添加站内搜索, Hexo">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>friends | Hexo</title>
+    <title>Hexo添加站内搜索 | Hexo</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -303,12 +303,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">friends</h1>
+                    <h1 class="description center-align post-title">Hexo添加站内搜索</h1>
                 </div>
             </div>
         </div>
@@ -430,6 +430,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Hexo/" class="post-category">
+                                Hexo
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -437,7 +446,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-09
+                    2018-03-01
                 </div>
                 
 
@@ -454,7 +463,27 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <script>
+                <p>NexT主题支持集成 Swiftype、 微搜索、Local Search 和 Algolia。Swiftype开始收费，而且只对企业邮箱开放注册。本篇将讲述Algolia和Local Search两种方式进行站内搜索。</p>
+<h1 id="一、Algolia"><a href="#一、Algolia" class="headerlink" title="一、Algolia"></a>一、Algolia</h1><p>Next主题在 <code>5.1.0</code>版本中就已经引入了Algolia,因此省去很多配置。如需按照以下步骤执行，请确保所使用的 NexT 版本在此之后。</p>
+<h2 id="注册Algolia-创建Index"><a href="#注册Algolia-创建Index" class="headerlink" title="注册Algolia,创建Index"></a>注册Algolia,创建Index</h2><p>前往 <a href="https://www.algolia.com/" target="_blank" rel="noopener">Algolia注册页面</a> 注册一个新账户。 可以使用 GitHub 或者 Google 账户直接登录，注册后的 14 天内拥有所有功能（包括收费类别的）免费。之后若未续费会自动降级为免费账户，免费账户 总共有 10,000 条记录，每月有 100,000 的可以操作数。注册完成后，创建一个新的 Index，这个 Index 将在后面使用。<br><img src="http://oxzz60egu.bkt.clouddn.com/hexo/image/hexo-algolia-step1.png" alt=""></p>
+<a id="more"></a>
+<h2 id="安装-Hexo-Algolia"><a href="#安装-Hexo-Algolia" class="headerlink" title="安装 Hexo Algolia"></a>安装 Hexo Algolia</h2><p>Index 创建完成后，此时这个 Index 里未包含任何数据。 接下来需要安装 Hexo Algolia 扩展， 这个扩展的功能是搜集站点的内容并通过 API 发送给 Algolia。前往站点根目录，执行命令安装：<br><code>npm install --save hexo-algolia</code></p>
+<h2 id="获取Algolia中的Key-更新站点配置"><a href="#获取Algolia中的Key-更新站点配置" class="headerlink" title="获取Algolia中的Key,更新站点配置"></a>获取Algolia中的Key,更新站点配置</h2><p>在 Algolia服务站点上 点击菜单中的 <code>API Keys</code> ，里面有需要使用的配置key，包括 ApplicationID、Search-Only API Key、 Admin API Key。注意，Admin API Key 需要保密保存。点击ALL API KEYS 找到新建INDEX对应的key， 编辑权限，在弹出框中找到ACL选择勾选Add records, Delete records, List indices, Delete index权限，点击update更新。<br><img src="http://oxzz60egu.bkt.clouddn.com/hexo/image/hexo-algolia-step2.png" alt=""><br><img src="http://oxzz60egu.bkt.clouddn.com/hexo/image/hexo-algolia-step3.png" alt=""></p>
+<h2 id="更新Index"><a href="#更新Index" class="headerlink" title="更新Index"></a>更新Index</h2><p>回到你的博客站点目录，在根目录下执行：</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export(windows 为 set) HEXO_ALGOLIA_INDEXING_KEY=Search-Only API key</span><br><span class="line">hexo algolia</span><br></pre></td></tr></tbody></table></figure>
+<p>来更新 Index。</p>
+<h2 id="主题集成"><a href="#主题集成" class="headerlink" title="主题集成"></a>主题集成</h2><p>更改主题配置文件，找到 Algolia Search 配置部分：</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># Algolia Search</span><br><span class="line">algolia_search:</span><br><span class="line">  enable: false</span><br><span class="line">  hits:</span><br><span class="line">    per_page: 10</span><br><span class="line">  labels:</span><br><span class="line">    input_placeholder: Search for Posts</span><br><span class="line">    hits_empty: "We didn't find any results for the search: ${query}"</span><br><span class="line">    hits_stats: "${hits} results found in ${time} ms"</span><br></pre></td></tr></tbody></table></figure>
+<p>将 enable 改为 true 即可，根据需要你可以调整 labels 中的文本。</p>
+<h2 id="全文搜索"><a href="#全文搜索" class="headerlink" title="全文搜索"></a>全文搜索</h2><p>到上一步已经可以进行全局搜索，不过发现不支持全文搜索。查看Algolia控制台，发现只有文章的基本信息，并没有把文章的内容推送到Algolia。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>找到hexo-algolia插件的配置文件，添加 <code>content</code> 配置。<br>文件路径 <code>node_modules/hexo-algolia/lib/command.js</code></p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var INDEXED_PROPERTIES = [</span><br><span class="line">  'title',</span><br><span class="line">  'date',</span><br><span class="line">  'updated',</span><br><span class="line">  'slug',</span><br><span class="line">  'excerpt',</span><br><span class="line">  'permalink',</span><br><span class="line">  'layout',</span><br><span class="line">  'content'</span><br><span class="line">];</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="二、Local-Search"><a href="#二、Local-Search" class="headerlink" title="二、Local Search"></a>二、Local Search</h1><p>Local Search,原理是通过hexo-generator-search插件在本地生成一个search.xml文件，搜索的时候从这个文件中根据关键字检索出相应的链接。</p>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><h3 id="安装-hexo-generator-searchdb"><a href="#安装-hexo-generator-searchdb" class="headerlink" title="安装 hexo-generator-searchdb"></a>安装 hexo-generator-searchdb</h3><p>在站点的根目录下执行以下命令：<br>    </p><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h3 id="站点文件配置"><a href="#站点文件配置" class="headerlink" title="站点文件配置"></a>站点文件配置</h3><p>编辑 站点配置文件，新增以下内容到任意位置：<br>    </p><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h3 id="主题文件配置"><a href="#主题文件配置" class="headerlink" title="主题文件配置"></a>主题文件配置</h3><p>找到local search配置<br>    </p><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Local search</span><br><span class="line"># Dependencies: https://github.com/flashlab/hexo-generator-search</span><br><span class="line">local_search:</span><br><span class="line">  enable: true</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>以上两种方式都能实现全局搜索，不过相比较与Algolia，使用Local Search更加简便一些。想折腾的同学也可以去尝试下。</p>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -497,7 +526,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://nww57.github.io/friends/index.html">https://nww57.github.io/friends/index.html</a>
+                    <a href="https://nww57.github.io/2018/03/01/Hexo%E6%B7%BB%E5%8A%A0%E7%AB%99%E5%86%85%E6%90%9C%E7%B4%A2/">https://nww57.github.io/2018/03/01/Hexo%E6%B7%BB%E5%8A%A0%E7%AB%99%E5%86%85%E6%90%9C%E7%B4%A2/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -698,42 +727,42 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/friends/index.html">
+                <a href="/2018/03/02/Hexo%E6%B7%BB%E5%8A%A0%E5%9C%A8%E7%BA%BF%E8%81%94%E7%B3%BB%E5%8A%9F%E8%83%BD/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="friends">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Hexo添加在线联系功能">
                         
-                        <span class="card-title">friends</span>
+                        <span class="card-title">Hexo添加在线联系功能</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            最近在浏览博客的时候，发现了一个在线联系功能 DaoVoice：当有用户在网页上给你留言后会通过邮件或者微信通知你。于是也想整合一下。最终效果是在右下角生成了一聊天按钮，点击即可进行交流。
+安装步骤注册DaoVoice，获取app_id首先
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-09
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-03-02
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Hexo/" class="post-category">
+                                    Hexo
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -744,32 +773,34 @@
                 本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
-                <a href="/friends/index.html">
+                <a href="/2018/03/01/Hexo%E6%B7%BB%E5%8A%A0%E7%AB%99%E5%86%85%E6%90%9C%E7%B4%A2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="friends">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Hexo添加站内搜索">
                         
-                        <span class="card-title">friends</span>
+                        <span class="card-title">Hexo添加站内搜索</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            NexT主题支持集成 Swiftype、 微搜索、Local Search 和 Algolia。Swiftype开始收费，而且只对企业邮箱开放注册。本篇将讲述Algolia和Local Search两种方式进行站内搜索。
+一、Algolia
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-03-01
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Hexo/" class="post-category">
+                                    Hexo
+                                </a>
+                            
                             
                         </span>
                     </div>

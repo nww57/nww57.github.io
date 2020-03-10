@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="friends, Hexo">
+    <meta name="keywords" content="Win7 环境安装RabbitMQ, Hexo">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>friends | Hexo</title>
+    <title>Win7 环境安装RabbitMQ | Hexo</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -303,12 +303,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">friends</h1>
+                    <h1 class="description center-align post-title">Win7 环境安装RabbitMQ</h1>
                 </div>
             </div>
         </div>
@@ -430,6 +430,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/RabbitMQ/" class="post-category">
+                                RabbitMQ
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -437,7 +446,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-09
+                    2018-03-25
                 </div>
                 
 
@@ -454,7 +463,21 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <script>
+                <p>在Windows环境下安装RabbitMQ时遇到了一个坑，当启动服务时(``rabbitmq-service start`)，出现一串乱码错误，如图：<br><img src="http://oxzz60egu.bkt.clouddn.com/hexo/image/rabbitmq-error.jpg" alt=""><br>原因是需要以管理员身份运行cmd命令窗口。</p>
+<a id="more"></a>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><ol>
+<li>RabbitMQ依赖erlang,所以先安装erlang，然后再安装RabbitMQ;</li>
+<li>下载RabbitMQ,下载地址： <a href="https://github.com/rabbitmq/rabbitmq-server/releases/download/rabbitmq_v3_5_6/rabbitmq-server-3.5.6.exe" target="_blank" rel="noopener">rabbitmq-server-3.5.6.exe</a>和erlang，下载地址：<a href="http://www.erlang.org/download/otp_win64_18.1.exe" target="_blank" rel="noopener">otp_win64_18.1.exe</a></li>
+<li>先安装erlang,双击erlang的安装文件即可，然后配置环境变量：<br> ERLANG_HOME=D:\Program Files\erl7.1<br> 追加到path=%ERLANG_HOME%\bin;</li>
+<li>验证erlang是否安装成功， 打开cmd命令窗口，进入erlang的bin路径，输入erl命令，如果出现如下提示，则说明erlang安装成功：<br> D:\Program Files\erl7.1\bin&gt;erl<br> Eshell V7.1  (abort with ^G)</li>
+<li>再安装RabbitMQ，双击安装文件即可，安装完毕后， 设置环境变量：<br>  RABBITMQ_SERVER=D:\Program Files\RabbitMQ Server\rabbitmq_server-3.5.6<br>  追加到path=%RABBITMQ_SERVER%\sbin;</li>
+<li>验证RabbitMQ是否安装成功，在CMD命令窗口输入(注意：<a href="https://jingyan.baidu.com/album/fb48e8be1b785d6e622e1495.html?picindex=8" target="_blank" rel="noopener">这里启动CMD命令窗口需要以管理员身份运行</a>)：<br>C:\Windows\system32&gt;rabbitmq-service<br>出现以下命令，则说明安装成功：<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">*********************</span><br><span class="line">Service control usage</span><br><span class="line">*********************</span><br><span class="line"></span><br><span class="line">rabbitmq-service help    - Display this help</span><br><span class="line">rabbitmq-service install - Install the RabbitMQ service</span><br><span class="line">rabbitmq-service remove  - Remove the RabbitMQ service</span><br><span class="line"></span><br><span class="line">The following actions can also be accomplished by using</span><br><span class="line">Windows Services Management Console (services.msc):</span><br><span class="line"></span><br><span class="line">rabbitmq-service start   - Start the RabbitMQ service</span><br><span class="line">rabbitmq-service stop    - Stop the RabbitMQ service</span><br><span class="line">rabbitmq-service disable - Disable the RabbitMQ service</span><br><span class="line">rabbitmq-service enable  - Enable the RabbitMQ service</span><br></pre></td></tr></tbody></table></figure></li>
+<li>安装服务，打开cmd窗体，进入D:\Program Files\RabbitMQ Server\rabbitmq_server-3.5.6\sbin路径，然后执行 <code>rabbitmq-service install</code>，提示安装成功 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">D:\Program Files\RabbitMQ Server\rabbitmq_server-3.5.6\sbin&gt;rabbitmq-service install</span><br><span class="line">D:\Program Files\erl7.1\erts-7.1\bin\erlsrv: Service RabbitMQ added to system.</span><br></pre></td></tr></tbody></table></figure>
+ 然后启动：<code>rabbitmq-service start</code> <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">D:\Program Files\RabbitMQ Server\rabbitmq_server-3.5.6\sbin&gt;</span><br><span class="line">D:\Program Files\erl7.1\erts-7.1\bin\erlsrv: Service RabbitMQ started.</span><br></pre></td></tr></tbody></table></figure>
+ 提示启动成功；<br> 然后安装web管理插件，执行命令如下：<br> <code>rabbitmq-plugins enable rabbitmq_management</code><br> 出现以下命令则说明安装成功： <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">D:\Program Files\RabbitMQ Server\rabbitmq_server-3.5.6\sbin&gt;rabbitmq-plugins enable rabbitmq_management</span><br><span class="line">The following plugins have been enabled:</span><br><span class="line">mochiweb</span><br><span class="line">webmachine</span><br><span class="line">rabbitmq_web_dispatch</span><br><span class="line">amqp_client</span><br><span class="line">rabbitmq_management_agent</span><br><span class="line">rabbitmq_management</span><br></pre></td></tr></tbody></table></figure></li>
+<li>测试 访问<a href="http://localhost:15672" target="_blank" rel="noopener">http://localhost:15672</a>,出现登录页面，默认的登陆账号为：guest，密码为：guest</li>
+</ol>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -497,7 +520,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://nww57.github.io/friends/index.html">https://nww57.github.io/friends/index.html</a>
+                    <a href="https://nww57.github.io/2018/03/25/Win7%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85RabbitMQ/">https://nww57.github.io/2018/03/25/Win7%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85RabbitMQ/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -698,42 +721,42 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/friends/index.html">
+                <a href="/2018/04/17/SpringCloud%E5%AE%A2%E6%88%B7%E7%AB%AFFeignClient%E8%B0%83%E7%94%A8%E6%97%B6%E4%BC%A0%E9%80%92Token/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="friends">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="SpringCloud客户端FeignClient调用时传递Token">
                         
-                        <span class="card-title">friends</span>
+                        <span class="card-title">SpringCloud客户端FeignClient调用时传递Token</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            前言Feign是一个声明式WebService客户端。在SpringCloud中可以通过FeignClient来进行服务间的调用。
+而为了对API进行权限控制，项目中会进行权限认证，JWT或者Security。这时问题就会出现了，在加了授权
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-09
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2018-04-17
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/SpringCloud/" class="post-category">
+                                    SpringCloud
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -741,40 +764,42 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/friends/index.html">
+                <a href="/2018/03/12/npm%E5%AE%89%E8%A3%85express%20npm%20ERR!/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="friends">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="npm 安装express npm ERR!">
                         
-                        <span class="card-title">friends</span>
+                        <span class="card-title">npm 安装express npm ERR!</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            换了台电脑，想把博客环境在本机搭建起来，在执行npm时报错了。
+npm  安装 express  出现
+123npm ERR! code UNABLE_TO_VERIFY_LEAF_SIGNATUREnpm ERR! errno UNABL
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-03-12
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Node/" class="post-category">
+                                    Node
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>

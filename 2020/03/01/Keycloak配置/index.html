@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="friends, Hexo">
+    <meta name="keywords" content="Keycloak配置, Hexo">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>friends | Hexo</title>
+    <title>Keycloak配置 | Hexo</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -303,12 +303,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">friends</h1>
+                    <h1 class="description center-align post-title">Keycloak配置</h1>
                 </div>
             </div>
         </div>
@@ -430,6 +430,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Keycloak/" class="post-category">
+                                Keycloak
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -437,7 +446,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-09
+                    2020-03-01
                 </div>
                 
 
@@ -454,7 +463,44 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <script>
+                <h1 id="Keycloak切换MySQL数据库"><a href="#Keycloak切换MySQL数据库" class="headerlink" title="Keycloak切换MySQL数据库"></a>Keycloak切换MySQL数据库</h1><p>Keycloak默认使用嵌入式关系数据库H2，真实生产环境肯定是不符合要求的，在其官方文档中有这么一段话：</p>
+<blockquote>
+<p>We highly recommend that you replace it with a more production ready external database.<br>  The H2 database is not very viable in high concurrency situations and should not be used in a cluster either.</p>
+</blockquote>
+<p>下面列出Keycloak配置MySQL的步骤。</p>
+<a id="more"></a>
+
+<h2 id="MySQL配置"><a href="#MySQL配置" class="headerlink" title="MySQL配置"></a>MySQL配置</h2><h3 id="下载JDBC驱动，将驱动安装到Keycloak中"><a href="#下载JDBC驱动，将驱动安装到Keycloak中" class="headerlink" title="下载JDBC驱动，将驱动安装到Keycloak中"></a>下载JDBC驱动，将驱动安装到Keycloak中</h3><ol>
+<li><p>下载JDBC驱动，可从官网或maven仓库直接下载，不再赘述。我下载的版本是 <code>mysql-connector-java-8.0.19.jar</code></p>
+</li>
+<li><p>在keycloak-9.0.0\modules\system\layers\base下新建目录com\mysql\main,将上面下载的jar包放入此目录。<br>目录名称可随意修改，不过官方推荐使用包路径作为目录。</p>
+<blockquote>
+<p>The convention is use the Java package name of the JDBC driver for the name of the directory structure. For PostgreSQL, create the directory org/postgresql/main.</p>
+</blockquote>
+</li>
+<li><p>在jar包同级目录下新建文件module.xml，文件内容如下:</p>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">module</span> <span class="attr">xmlns</span>=<span class="string">"urn:jboss:module:1.3"</span> <span class="attr">name</span>=<span class="string">"com.mysql"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resource-root</span> <span class="attr">path</span>=<span class="string">"mysql-connector-java-8.0.19.jar"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">module</span> <span class="attr">name</span>=<span class="string">"javax.api"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">module</span> <span class="attr">name</span>=<span class="string">"javax.transaction.api"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>其中name应为包名，后文配置数据源过程中会用到此name。dependencies包含可能会用到的依赖项。</p>
+<h3 id="在Keycloak配置文件中声明使用下载的MySQL驱动"><a href="#在Keycloak配置文件中声明使用下载的MySQL驱动" class="headerlink" title="在Keycloak配置文件中声明使用下载的MySQL驱动"></a>在Keycloak配置文件中声明使用下载的MySQL驱动</h3></li>
+<li><p>编辑standalone.xml,位置在keycloak-9.0.0\standalone\configuration\standalone.xml(若为集群模式编辑standalone-ha.xml)，<br>寻找drivers标签，默认有一个h2数据库的配置，我们要在同级增加一个mysql的配置，内容如下：</p>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">driver</span> <span class="attr">name</span>=<span class="string">"mysql"</span> <span class="attr">module</span>=<span class="string">"com.mysql"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">xa-datasource-class</span>&gt;</span>com.mysql.cj.jdbc.MysqlXADataSource<span class="tag">&lt;/<span class="name">xa-datasource-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">driver</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>module即为之前module.xml中定义的name，此处的name为driver的名称，在接下来的数据源配置中会使用到。<br>此处注意，xa-datasource-class的路径可能会随着JDBC版本变化而变化，可从jar包中寻找到正确的路径。</p>
+</li>
+<li><p>向上寻找datasources标签，默认此处有两项datasource，我们注释掉名称为KeycloakDS的数据源，并加上mysql的。<br>注意不要把ExampleDS也注释掉，启动会报错的。新增内容如下：</p>
+<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">datasource</span> <span class="attr">jndi-name</span>=<span class="string">"java:jboss/datasources/KeycloakDS"</span> <span class="attr">pool-name</span>=<span class="string">"KeycloakDS"</span> <span class="attr">enabled</span>=<span class="string">"true"</span> <span class="attr">use-java-context</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">connection-url</span>&gt;</span>jdbc:mysql://localhost:3306/keycloak<span class="tag">&lt;/<span class="name">connection-url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">driver</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">driver</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pool</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">max-pool-size</span>&gt;</span>20<span class="tag">&lt;/<span class="name">max-pool-size</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">pool</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">security</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">user-name</span>&gt;</span>root<span class="tag">&lt;/<span class="name">user-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">password</span>&gt;</span>root<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">security</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">datasource</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>driver处对应上面定义driver标签中的name。其余项目见文知意，根据具体项目修改即可，此处需要手工建立keycloak库。</p>
+</li>
+<li><p>寻找name为connectionsJpa的spi标签，此标签内可定义诸多数据源选项，例如showsql，formatsql等等，可根据需要修改。支持的配置项详见官方文档。</p>
+</li>
+<li><p>配置完成，启动对应的bat或shell文件，通过数据库工具可以看到自动新建了93张表。</p>
+</li>
+</ol>
+<h1 id="Keycloak远程访问"><a href="#Keycloak远程访问" class="headerlink" title="Keycloak远程访问"></a>Keycloak远程访问</h1><p>keycloak使用JBoss服务器作为容器，而JBoss服务器由于一些安全问题默认是不允许外部访问的（比如远程连接），只允许本机访问，即localhost，<br>所以要想远程连接keycloak，就要更改一下设置。配置外网访问有下面两种方式。</p>
+<ol>
+<li>启动keycloak的时候在后面加上参数 -b  0.0.0.0<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./standalone.bat -b 0.0.0.0</span><br></pre></td></tr></tbody></table></figure></li>
+<li>修改keycloak/standalone/configuration/standalone.xml中修改一些配置来启动远程连接,找到<code>interfaces</code>标签，修改为下面的内容<figure class="highlight xml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">interfaces</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">interface</span> <span class="attr">name</span>=<span class="string">"management"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inet-address</span> <span class="attr">value</span>=<span class="string">"${jboss.bind.address.management:127.0.0.1}"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">interface</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">interface</span> <span class="attr">name</span>=<span class="string">"public"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inet-address</span> <span class="attr">value</span>=<span class="string">"${jboss.bind.address:0.0.0.0}"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">interface</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">interfaces</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -497,7 +543,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://nww57.github.io/friends/index.html">https://nww57.github.io/friends/index.html</a>
+                    <a href="https://nww57.github.io/2020/03/01/Keycloak%E9%85%8D%E7%BD%AE/">https://nww57.github.io/2020/03/01/Keycloak%E9%85%8D%E7%BD%AE/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -703,32 +749,35 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/friends/index.html">
+                <a href="/2020/03/01/Keycloak%E9%85%8D%E7%BD%AE/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="friends">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Keycloak配置">
                         
-                        <span class="card-title">friends</span>
+                        <span class="card-title">Keycloak配置</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            Keycloak切换MySQL数据库Keycloak默认使用嵌入式关系数据库H2，真实生产环境肯定是不符合要求的，在其官方文档中有这么一段话：
+
+We highly recommend that you replace it with a 
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-01
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Keycloak/" class="post-category">
+                                    Keycloak
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -741,40 +790,40 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/friends/index.html">
+                <a href="/2020/01/13/OAuth2%E5%8D%8F%E8%AE%AE-%E6%8E%88%E6%9D%83%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="friends">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="OAuth2协议-授权模式详解">
                         
-                        <span class="card-title">friends</span>
+                        <span class="card-title">OAuth2协议-授权模式详解</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            什么是 OAuth 2.0OAuth 2.0 是一个行业的标准授权协议。OAuth 2.0 专注于简化客户端开发人员，同时为 Web 应用程序，桌面应用程序，手机和客厅设备提供特定的授权流程。下面我们对OAuth2的4中授权模式进行详细的介
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-13
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/OAuth2/" class="post-category">
+                                    OAuth2
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>

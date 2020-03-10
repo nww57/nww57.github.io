@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="friends, Hexo">
+    <meta name="keywords" content="SpringBoot下前后台分离时间处理, Hexo">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>friends | Hexo</title>
+    <title>SpringBoot下前后台分离时间处理 | Hexo</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -303,12 +303,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">friends</h1>
+                    <h1 class="description center-align post-title">SpringBoot下前后台分离时间处理</h1>
                 </div>
             </div>
         </div>
@@ -437,7 +437,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-09
+                    2018-04-24
                 </div>
                 
 
@@ -454,7 +454,21 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <script>
+                <blockquote>
+<p>之前在前后端交互过程中，针对时间类型的字段，在DTO中使用<code>String</code>类型接收，在后台转成<code>Date</code>类型。但这样处理太麻烦。<br>JDK8的新特性中Time API，其包括<code>Clock</code>、<code>Duration</code>、<code>Instant</code>、<code>LocalDate</code>、<code>LocalTime</code>、<code>LocalDateTime</code>、<code>ZonedDateTime</code>，这里介绍Spring Boot处理LocalDateTime格式。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Controller接收参数"><a href="#Controller接收参数" class="headerlink" title="Controller接收参数"></a>Controller接收参数</h1><p>在Spring中，接收LocalDateTime日期时间数据时，只需要使用@DateTimeFormat注解即可。@DateTimeFormat可以注解在字段、参数以及方法上，如果接收的为DTO，则需要将@DateTimeFormat注解在DTO中的字段上。(注意：前台传的参数格式必须与<code>pattern</code>定义格式一致)</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@GetMapping("date")</span><br><span class="line">public Object date(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime date) {</span><br><span class="line">    return date;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">@GetMapping("date2")</span><br><span class="line">public Object date(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {</span><br><span class="line">    return date;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="ResponseBody格式化LocalDateTime"><a href="#ResponseBody格式化LocalDateTime" class="headerlink" title="ResponseBody格式化LocalDateTime"></a>ResponseBody格式化LocalDateTime</h1><p>Spring默认使用使用jackson来进行json格式转换。这里需要加入<code>jackson</code>的<code>jsr310</code>扩展包。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.fasterxml.jackson.datatype&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;jackson-datatype-jsr310&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.8.9&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="使用-JsonFormat注解"><a href="#使用-JsonFormat注解" class="headerlink" title="使用@JsonFormat注解"></a>使用@JsonFormat注解</h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class InfoDTO {</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 创建时间</span><br><span class="line">     */</span><br><span class="line">    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")</span><br><span class="line">    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")</span><br><span class="line">    private LocalDateTime createDate;</span><br><span class="line"></span><br><span class="line">    //get/set方法省略</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="使用ObjectMapper"><a href="#使用ObjectMapper" class="headerlink" title="使用ObjectMapper"></a>使用ObjectMapper</h2><p>使用<code>@Bean</code>注解创建一个ObjectMapperBean，并将<code>JavaTimeModule</code>注册到ObjectMapper中即可，<code>spring</code>会使用该bean创建<code>MappingJackson2HttpMessageConverter</code>进行<code>json</code>格式转换。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@Bean(name = "mapperObject")</span><br><span class="line">@Primary</span><br><span class="line">public ObjectMapper getObjectMapper() {</span><br><span class="line">    ObjectMapper om = new ObjectMapper();</span><br><span class="line">    JavaTimeModule javaTimeModule = new JavaTimeModule();</span><br><span class="line">    javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));</span><br><span class="line">    javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));</span><br><span class="line">    javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));</span><br><span class="line">    om.registerModule(javaTimeModule);</span><br><span class="line">    return om;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h1><p>在使用 <code>@DateFormat</code>进行参数转换的时候，只能接收url参数，或者表单提交参数。如果参数对象是以JSON传递过来的，这时使用该注解就无法进行转化。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">public class Controller {</span><br><span class="line">    @PostMapping("/")</span><br><span class="line">    public void post(@RequestBody InfoDTO infoDTO) {}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class InfoDTO {</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 创建时间</span><br><span class="line">     */</span><br><span class="line">    @JsonDeserialize(using = LocalDateDeserializer.class)</span><br><span class="line">    @JsonFormat(pattern = "yyyyMMdd")</span><br><span class="line">    private LocalDateTime createDate;</span><br><span class="line"></span><br><span class="line">    //get/set方法省略</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -497,7 +511,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://nww57.github.io/friends/index.html">https://nww57.github.io/friends/index.html</a>
+                    <a href="https://nww57.github.io/2018/04/24/SpringBoot%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86/">https://nww57.github.io/2018/04/24/SpringBoot%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -698,42 +712,43 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/friends/index.html">
+                <a href="/2019/11/21/ThingsBoard%E7%BD%91%E5%85%B3%E9%85%8D%E7%BD%AE-Modbus/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="friends">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="ThingsBoard Gateway在树莓派上的使用-ModBus协议">
                         
-                        <span class="card-title">friends</span>
+                        <span class="card-title">ThingsBoard Gateway在树莓派上的使用-ModBus协议</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            前言ThingsBoard GateWay 是在ThingsBoard下的一款高度集成遗留系统和第三方系统上联接设备的开源解决方案。具有以下几个特点：
+
+MQTT扩展 - 于控制、配置和收集使用现有协议连接到外部MQTT代理的IoT设备数据
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-09
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-11-21
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/ThingsBoard/" class="post-category">
+                                    ThingsBoard
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -741,40 +756,41 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/friends/index.html">
+                <a href="/2018/04/17/SpringCloud%E5%AE%A2%E6%88%B7%E7%AB%AFFeignClient%E8%B0%83%E7%94%A8%E6%97%B6%E4%BC%A0%E9%80%92Token/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="friends">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="SpringCloud客户端FeignClient调用时传递Token">
                         
-                        <span class="card-title">friends</span>
+                        <span class="card-title">SpringCloud客户端FeignClient调用时传递Token</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            前言Feign是一个声明式WebService客户端。在SpringCloud中可以通过FeignClient来进行服务间的调用。
+而为了对API进行权限控制，项目中会进行权限认证，JWT或者Security。这时问题就会出现了，在加了授权
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-04-17
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/SpringCloud/" class="post-category">
+                                    SpringCloud
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
