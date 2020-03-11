@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Keycloak配置, Niww&#39;s Blog">
+    <meta name="keywords" content="CRLF导致shell脚本报错, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Keycloak配置 | Niww&#39;s Blog</title>
+    <title>CRLF导致shell脚本报错 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -303,12 +303,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Keycloak配置</h1>
+                    <h1 class="description center-align post-title">CRLF导致shell脚本报错</h1>
                 </div>
             </div>
         </div>
@@ -425,8 +425,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Keycloak/">
-                                <span class="chip bg-color">Keycloak</span>
+                            <a href="/tags/CentOS/">
+                                <span class="chip bg-color">CentOS</span>
                             </a>
                         
                     </div>
@@ -437,8 +437,12 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-SSO/" class="post-category">
-                                单点登录(SSO)
+                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" class="post-category">
+                                问题记录
+                            </a>
+                        
+                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/%E8%BF%90%E7%BB%B4/" class="post-category">
+                                运维
                             </a>
                         
                     </div>
@@ -450,7 +454,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-01
+                    2020-03-11
                 </div>
                 
 
@@ -467,74 +471,12 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Keycloak切换MySQL数据库"><a href="#Keycloak切换MySQL数据库" class="headerlink" title="Keycloak切换MySQL数据库"></a>Keycloak切换MySQL数据库</h1><p>Keycloak默认使用嵌入式关系数据库H2，真实生产环境肯定是不符合要求的，在其官方文档中有这么一段话：</p>
-<blockquote>
-<p>We highly recommend that you replace it with a more production ready external database.<br>  The H2 database is not very viable in high concurrency situations and should not be used in a cluster either.</p>
-</blockquote>
-<p>下面列出Keycloak配置MySQL的步骤。</p>
-<a id="more"></a>
-
-<h2 id="MySQL配置"><a href="#MySQL配置" class="headerlink" title="MySQL配置"></a>MySQL配置</h2><h3 id="下载JDBC驱动，将驱动安装到Keycloak中"><a href="#下载JDBC驱动，将驱动安装到Keycloak中" class="headerlink" title="下载JDBC驱动，将驱动安装到Keycloak中"></a>下载JDBC驱动，将驱动安装到Keycloak中</h3><ol>
-<li><p>下载JDBC驱动，可从官网或maven仓库直接下载，不再赘述。我下载的版本是 <code>mysql-connector-java-8.0.19.jar</code></p>
-</li>
-<li><p>在keycloak-9.0.0\modules\system\layers\base下新建目录com\mysql\main,将上面下载的jar包放入此目录。<br>目录名称可随意修改，不过官方推荐使用包路径作为目录。</p>
-<blockquote>
-<p>The convention is use the Java package name of the JDBC driver for the name of the directory structure. For PostgreSQL, create the directory org/postgresql/main.</p>
-</blockquote>
-</li>
-<li><p>在jar包同级目录下新建文件module.xml，文件内容如下:</p>
-<pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>module</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>urn:jboss:module:1.3<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.mysql<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>resources</span><span class="token punctuation">></span></span>
-     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>resource-root</span> <span class="token attr-name">path</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mysql-connector-java-8.0.19.jar<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>resources</span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
-     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>module</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>javax.api<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>module</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>javax.transaction.api<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>module</span><span class="token punctuation">></span></span></code></pre>
-<p>其中name应为包名，后文配置数据源过程中会用到此name。dependencies包含可能会用到的依赖项。</p>
-<h3 id="在Keycloak配置文件中声明使用下载的MySQL驱动"><a href="#在Keycloak配置文件中声明使用下载的MySQL驱动" class="headerlink" title="在Keycloak配置文件中声明使用下载的MySQL驱动"></a>在Keycloak配置文件中声明使用下载的MySQL驱动</h3></li>
-<li><p>编辑standalone.xml,位置在keycloak-9.0.0\standalone\configuration\standalone.xml(若为集群模式编辑standalone-ha.xml)，<br>寻找drivers标签，默认有一个h2数据库的配置，我们要在同级增加一个mysql的配置，内容如下：</p>
-<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>driver</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mysql<span class="token punctuation">"</span></span> <span class="token attr-name">module</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.mysql<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>xa-datasource-class</span><span class="token punctuation">></span></span>com.mysql.cj.jdbc.MysqlXADataSource<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>xa-datasource-class</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>driver</span><span class="token punctuation">></span></span></code></pre>
-<p>module即为之前module.xml中定义的name，此处的name为driver的名称，在接下来的数据源配置中会使用到。<br>此处注意，xa-datasource-class的路径可能会随着JDBC版本变化而变化，可从jar包中寻找到正确的路径。</p>
-</li>
-<li><p>向上寻找datasources标签，默认此处有两项datasource，我们注释掉名称为KeycloakDS的数据源，并加上mysql的。<br>注意不要把ExampleDS也注释掉，启动会报错的。新增内容如下：</p>
-<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>datasource</span> <span class="token attr-name">jndi-name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java:jboss/datasources/KeycloakDS<span class="token punctuation">"</span></span> <span class="token attr-name">pool-name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>KeycloakDS<span class="token punctuation">"</span></span> <span class="token attr-name">enabled</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token attr-name">use-java-context</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>connection-url</span><span class="token punctuation">></span></span>jdbc:mysql://localhost:3306/keycloak<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>connection-url</span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>driver</span><span class="token punctuation">></span></span>mysql<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>driver</span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>pool</span><span class="token punctuation">></span></span>
-     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>max-pool-size</span><span class="token punctuation">></span></span>20<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>max-pool-size</span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>pool</span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>security</span><span class="token punctuation">></span></span>
-     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>user-name</span><span class="token punctuation">></span></span>root<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>user-name</span><span class="token punctuation">></span></span>
-     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>password</span><span class="token punctuation">></span></span>root<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>password</span><span class="token punctuation">></span></span>
- <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>security</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>datasource</span><span class="token punctuation">></span></span></code></pre>
-<p>driver处对应上面定义driver标签中的name。其余项目见文知意，根据具体项目修改即可，此处需要手工建立keycloak库。</p>
-</li>
-<li><p>寻找name为connectionsJpa的spi标签，此标签内可定义诸多数据源选项，例如showsql，formatsql等等，可根据需要修改。支持的配置项详见官方文档。</p>
-</li>
-<li><p>配置完成，启动对应的bat或shell文件，通过数据库工具可以看到自动新建了93张表。</p>
-</li>
+                <h1 id="问题出现"><a href="#问题出现" class="headerlink" title="问题出现"></a>问题出现</h1><p>开发的时候在Windows环境中打包了一个rpm包，放到CentOS去执行的时候，当运行start.sh文件的时候，一直报错 “No such file or directory”。</p>
+<h1 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h1><p>Linux和Windows文本文件的行结束标志不同。在Linux中，文本文件用”/n”表示回车换行，而Windows用”/r/n”表示回车换行。<br>有时候在Windows编写shell脚本时需要注意这个，否则shell脚本会报”No such file or directory”或”command not found line x”之类的错误。</p>
+<h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><ol>
+<li>在CentOS中，直接使用vi编辑器重新编写shell脚本</li>
+<li>使用dos2unix工具将DOS格式文本文件转换成Unix格式或Linux格式</li>
 </ol>
-<h1 id="Keycloak远程访问"><a href="#Keycloak远程访问" class="headerlink" title="Keycloak远程访问"></a>Keycloak远程访问</h1><p>keycloak使用JBoss服务器作为容器，而JBoss服务器由于一些安全问题默认是不允许外部访问的（比如远程连接），只允许本机访问，即localhost，<br>所以要想远程连接keycloak，就要更改一下设置。配置外网访问有下面两种方式。</p>
-<ol>
-<li>启动keycloak的时候在后面加上参数 -b  0.0.0.0<pre><code>./standalone.bat -b 0.0.0.0</code></pre></li>
-<li>修改keycloak/standalone/configuration/standalone.xml中修改一些配置来启动远程连接,找到<code>interfaces</code>标签，修改为下面的内容<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>interfaces</span><span class="token punctuation">></span></span>
-     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>interface</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>management<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>inet-address</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${jboss.bind.address.management:127.0.0.1}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>interface</span><span class="token punctuation">></span></span>
-     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>interface</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>public<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>inet-address</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${jboss.bind.address:0.0.0.0}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>interface</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>interfaces</span><span class="token punctuation">></span></span>
-</code></pre>
-</li>
-</ol>
-<p>```</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -578,7 +520,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://nww57.github.io/2020/03/01/Keycloak%E9%85%8D%E7%BD%AE/">https://nww57.github.io/2020/03/01/Keycloak%E9%85%8D%E7%BD%AE/</a>
+                    <a href="https://nww57.github.io/2020/03/11/CRLF%E5%AF%BC%E8%87%B4shell%E8%84%9A%E6%9C%AC%E6%8A%A5%E9%94%99/">https://nww57.github.io/2020/03/11/CRLF%E5%AF%BC%E8%87%B4shell%E8%84%9A%E6%9C%AC%E6%8A%A5%E9%94%99/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -616,8 +558,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Keycloak/">
-                                    <span class="chip bg-color">Keycloak</span>
+                                <a href="/tags/CentOS/">
+                                    <span class="chip bg-color">CentOS</span>
                                 </a>
                             
                         </div>
@@ -785,9 +727,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/03/11/CRLF%E5%AF%BC%E8%87%B4shell%E8%84%9A%E6%9C%AC%E6%8A%A5%E9%94%99/">
                     <div class="card-image">
@@ -806,9 +749,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-11
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-11
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -825,6 +768,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -843,31 +787,33 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/01/13/OAuth2%E5%8D%8F%E8%AE%AE-%E6%8E%88%E6%9D%83%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/">
+                <a href="/2020/03/01/Keycloak%E9%85%8D%E7%BD%AE/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="OAuth2协议-授权模式详解">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Keycloak配置">
                         
-                        <span class="card-title">OAuth2协议-授权模式详解</span>
+                        <span class="card-title">Keycloak配置</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            什么是 OAuth 2.0OAuth 2.0 是一个行业的标准授权协议。OAuth 2.0 专注于简化客户端开发人员，同时为 Web 应用程序，桌面应用程序，手机和客厅设备提供特定的授权流程。下面我们对OAuth2的4中授权模式进行详细的介
+                            Keycloak切换MySQL数据库Keycloak默认使用嵌入式关系数据库H2，真实生产环境肯定是不符合要求的，在其官方文档中有这么一段话：
+
+We highly recommend that you replace it with a 
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/OAuth2/" class="post-category">
-                                    OAuth2
+                            <a href="/categories/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95-SSO/" class="post-category">
+                                    单点登录(SSO)
                                 </a>
                             
                             
@@ -877,8 +823,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Oauth2/">
-                        <span class="chip bg-color">Oauth2</span>
+                    <a href="/tags/Keycloak/">
+                        <span class="chip bg-color">Keycloak</span>
                     </a>
                     
                 </div>
