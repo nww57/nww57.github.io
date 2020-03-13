@@ -62,6 +62,15 @@
     src: url('../font/Shrikhand-Regular.ttf');
 }
 
+@font-face {
+    font-family: 'GTXK';
+    src: url('../font/GT_XK.ttf');
+}
+
 .logo-span-font{
     font-family: 'Shrikhand';
+}
+
+.sub-title-font{
+    font-family: 'GTXK';
 }
