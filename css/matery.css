@@ -179,8 +179,8 @@ code {
     top: 4px;
     right: 0px;
     filter: invert(50%);
-    padding: 7px 10px;
-    z-index: 1;
+    padding: 7px;
+    z-index: 999 !important;
     cursor: pointer;
     transition: all .3s;
     transform: rotate(0deg);
@@ -241,6 +241,8 @@ mark {
 
 .card .card-image img {
     border-radius: 8px 8px 0 0;
+    /* 修改文章列表图片填充样式为 cover 以覆盖整个区域而不会被缩放 */
+    object-fit: cover;
 }
 
 .container .row {
@@ -248,9 +250,7 @@ mark {
 }
 
 .bg-color {
-    /*background-image: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%);*/
-    background-image: linear-gradient(to right, #bf30ac 0%, #0f9d58 100%);
-    opacity: 0.8
+    background-image: linear-gradient(to right, #b0bec5 10%, #455a64 100%);
 }
 
 .text-color {
@@ -266,7 +266,7 @@ mark {
     position: fixed;
     bottom: 0;
     z-index: 300;
-    background: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%);
+    background: linear-gradient(to right, #b0bec5 10%, #455a64 100%);
     opacity: 0.8;
 }
 
@@ -306,6 +306,11 @@ header .brand-logo .logo-img {
 
 header .brand-logo .logo-span {
     font-size: 2rem;
+}
+
+/*修改顶部 logo 的文字垂直对齐为 top，避免默认 middle 看起来偏下*/
+header .brand-logo .waves-effect {
+    vertical-align: top;
 }
 
 header .button-collapse i {
@@ -384,6 +389,7 @@ header .side-nav .social-link {
     line-height: 45px;
     font-size: 1rem;
     color: #fff;
+    border: 1px solid #fff;
     background-color: transparent;
     border-radius: 30px;
     box-shadow: none;
@@ -503,8 +509,8 @@ header .side-nav .social-link {
 }
 
 .cover-social-link {
-    margin-top: 50px ;
-    bottom: 0;
+    position: relative;
+    top: 23vh;
     width: 100%;
     text-align: center;
 }
@@ -551,7 +557,7 @@ header .go-back i {
 .post-cover {
     height: 40vh !important;
 }
-
+/**
 .bg-cover:after {
     -webkit-animation: rainbow 60s infinite;
     animation: rainbow 60s infinite;
@@ -568,35 +574,35 @@ header .go-back i {
     top: 0;
     content: "";
 }
-
+**/
 .bg-cover .container {
-    position: absolute;
-    top: 25%;
+    position: relative;
     color: #fff;
     z-index: 2;
-    left: 0;
-    right: 0;
 }
 
 .bg-cover .title {
     font-size: 4rem;
     line-height: 1.85em;
-    margin-bottom: -20px;
+    margin-bottom: 20px;
     position: relative;
 }
 
 .bg-cover .description {
-    padding: 46px;
+    font-weight: 300;
     font-size: 1.25rem;
     line-height: 1.4em;
     color: #eee;
 }
 
 .bg-cover .post-title {
-    font-size: 3rem;
+    margin: 0 auto;
+    font-size: 2.5rem;
+    font-weight: 400;
 }
 
-/*@-webkit-keyframes rainbow {
+/*
+@-webkit-keyframes rainbow {
 
     0%,
     100% {
@@ -688,9 +694,7 @@ header .go-back i {
     }
 }
 */
-.carousel .indicators {
-    bottom: 40px;
-}
+
 
 .index-card {
     margin-top: -10px;
@@ -1302,6 +1306,7 @@ thead {
     border-radius: 5px;
     cursor: pointer;
     box-shadow: 0 3px 5px rgba(0, 0, 0, .12);
+    z-index: 0;
 }
 
 .chip-container .chip:hover {
@@ -1885,8 +1890,7 @@ footer .copy-right {
     display: none;
     position: fixed;
     right: 15px;
-    /* 修改 */
-    bottom: 86px;
+    bottom: 15px;
     padding-top: 15px;
     margin-bottom: 0;
     z-index: 998;
@@ -2130,5 +2134,3 @@ footer .copy-right {
     padding: 0px;
     margin: 0px;
 }
-
-
