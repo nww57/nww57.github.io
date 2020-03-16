@@ -439,7 +439,7 @@
 <span class="token function">mkdir</span> backup/old
 
 <span class="token comment" spellcheck="true"># 在 backup 中的绝对路径中创建一个名为 old 的目录</span>
-<span class="token function">mkdir</span> /home/blinkfox/backup/old
+<span class="token function">mkdir</span> /home/niww/backup/old
 
 <span class="token comment" spellcheck="true"># 使用 -p 选项，会自动创建所有还不存在的父目录</span>
 <span class="token function">mkdir</span> -p backup/old
@@ -472,13 +472,13 @@
 
 <span class="token comment" spellcheck="true"># 使用 -R 或 -r 选项，恶意递归地复制一个目录</span>
 <span class="token comment" spellcheck="true"># 即将一个目录及其下的所有文件和子目录都复制到另一个目录</span>
-<span class="token function">cp</span> -R * /home/blinkfox/backup</code></pre>
+<span class="token function">cp</span> -R * /home/niww/backup</code></pre>
 <h2 id="4-ln-链接文件或目录"><a href="#4-ln-链接文件或目录" class="headerlink" title="4.ln - 链接文件或目录"></a>4.ln - 链接文件或目录</h2><p><code>ln</code>命令用于创建软链接或硬链接。使用 -s 选项，可以创建一个软链接：</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 在目录 lib 下创建一个软链接 library.so，链接到 /home/blinkfox/src/library.so</span>
-<span class="token function">ln</span> -s /home/blinkfox/src/library.so /home/blinkfox/lib
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 在目录 lib 下创建一个软链接 library.so，链接到 /home/niww/src/library.so</span>
+<span class="token function">ln</span> -s /home/niww/src/library.so /home/niww/lib
 
 <span class="token comment" spellcheck="true"># 创建目录的软链接</span>
-<span class="token function">ln</span> -s /home/blinkfox/src <span class="token function">source</span></code></pre>
+<span class="token function">ln</span> -s /home/niww/src <span class="token function">source</span></code></pre>
 <h2 id="5-mv-移动文件或目录"><a href="#5-mv-移动文件或目录" class="headerlink" title="5. mv - 移动文件或目录"></a>5. mv - 移动文件或目录</h2><p><code>mv</code>命令用于将文件和目录从一个位置移到另外一个位置。除了移动文件，<code>mv</code>命令还可用于修改文件或目录的名字。</p>
 <p>mv 命令的基本语法如下所示：</p>
 <pre class=" language-bash"><code class="language-bash"><span class="token function">mv</span> SOURCE<span class="token punctuation">..</span>. DIRECTORY</code></pre>

@@ -472,29 +472,29 @@
 <p><code>grep</code>命令的语法如下所示：</p>
 <pre class=" language-bash"><code class="language-bash"><span class="token function">grep</span> <span class="token punctuation">[</span>OPTION<span class="token punctuation">]</span><span class="token punctuation">..</span>. PATTERN <span class="token punctuation">[</span>FILE<span class="token punctuation">]</span><span class="token punctuation">..</span>.
 <span class="token function">grep</span> <span class="token punctuation">[</span>OPTION<span class="token punctuation">]</span><span class="token punctuation">..</span>. <span class="token punctuation">[</span>-e PATTERN <span class="token operator">|</span> -f FILE<span class="token punctuation">]</span> <span class="token punctuation">[</span>FILE<span class="token punctuation">]</span><span class="token punctuation">..</span>.</code></pre>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># `grep`命令查找文件/etc/passwd 中帐号 blinkfox 的信息</span>
-<span class="token function">grep</span> blinkfox /etc/passwd
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># `grep`命令查找文件/etc/passwd 中帐号 niww 的信息</span>
+<span class="token function">grep</span> niww /etc/passwd
 
 <span class="token comment" spellcheck="true"># 使用 -i 选项，强制 grep 命令忽略搜索关键字的大小写</span>
-<span class="token function">grep</span> -i blinkfox /etc/passwd
+<span class="token function">grep</span> -i niww /etc/passwd
 
 <span class="token comment" spellcheck="true"># 使用 -r 选项，可以递归搜索指定目录下的所有文件</span>
-<span class="token function">grep</span> -r blinkfox /etc/
+<span class="token function">grep</span> -r niww /etc/
 
 <span class="token comment" spellcheck="true"># 使用 -w 选项，只匹配包含指定单词的行</span>
-<span class="token function">grep</span> -w blinkfox /etc/
+<span class="token function">grep</span> -w niww /etc/
 
 <span class="token comment" spellcheck="true"># 使用 -c 选项，报告文件或文本中模式被匹配的次数</span>
-<span class="token function">grep</span> -c blinkfox /etc/passwd
+<span class="token function">grep</span> -c niww /etc/passwd
 
 <span class="token comment" spellcheck="true"># 使用 -n 选项，显示每一个匹配的行的行号</span>
-<span class="token function">grep</span> -n blinkfox /etc/passwd
+<span class="token function">grep</span> -n niww /etc/passwd
 
 <span class="token comment" spellcheck="true"># 使用 -v 选项，可以输出除匹配指定模式的行以外的其他所有行</span>
-<span class="token function">grep</span> -v blinkfox /etc/passwd
+<span class="token function">grep</span> -v niww /etc/passwd
 
 <span class="token comment" spellcheck="true"># 使用 --color 选项，在输出中将匹配的字符串以彩色的形式标出</span>
-<span class="token function">grep</span> --color blinkfox /etc/passwd</code></pre>
+<span class="token function">grep</span> --color niww /etc/passwd</code></pre>
 <h2 id="5-diff-比较两个文件"><a href="#5-diff-比较两个文件" class="headerlink" title="5.diff - 比较两个文件"></a>5.diff - 比较两个文件</h2><p><code>diff</code>命令用于比较两个文件，并找出它们之间的不同。<code>diff</code>命令的语法如下所示：</p>
 <pre class=" language-bash"><code class="language-bash"><span class="token function">diff</span> <span class="token punctuation">[</span>OPTION<span class="token punctuation">]</span><span class="token punctuation">..</span>. from-file to-file</code></pre>
 <p>常用使用方式如下：</p>
@@ -781,7 +781,7 @@ hostname的常用命令如下：
 hostname
 
 # 修改你系统的主机名
-hostname blinkfo
+hostname niww-sy
                         
                     </div>
                     <div class="publish-info">
