@@ -425,7 +425,7 @@
 
 <span class="token comment" spellcheck="true">/**
  * 抽象主题类
- * Created by blinkfox on 2017/1/1.
+ * Created by niww on 2017/1/1.
  */</span>
 <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ISubject</span> <span class="token punctuation">{</span>
 
@@ -435,11 +435,11 @@
     <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token punctuation">}</span></code></pre>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>blinkfox<span class="token punctuation">.</span>patterns<span class="token punctuation">.</span>proxy<span class="token punctuation">;</span>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>niww<span class="token punctuation">.</span>patterns<span class="token punctuation">.</span>proxy<span class="token punctuation">;</span>
 
 <span class="token comment" spellcheck="true">/**
  * 真实主题类
- * Created by blinkfox on 2017/1/1.
+ * Created by niww on 2017/1/1.
  */</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RealSubject</span> <span class="token keyword">implements</span> <span class="token class-name">ISubject</span> <span class="token punctuation">{</span>
 
@@ -453,11 +453,11 @@
 
 <span class="token punctuation">}</span></code></pre>
 <p>然后，是代理类：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>blinkfox<span class="token punctuation">.</span>patterns<span class="token punctuation">.</span>proxy<span class="token punctuation">;</span>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>niww<span class="token punctuation">.</span>patterns<span class="token punctuation">.</span>proxy<span class="token punctuation">;</span>
 
 <span class="token comment" spellcheck="true">/**
  * 代理类
- * Created by blinkfox on 2017/1/1.
+ * Created by niww on 2017/1/1.
  */</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Proxy</span> <span class="token keyword">implements</span> <span class="token class-name">ISubject</span> <span class="token punctuation">{</span>
 
@@ -490,11 +490,11 @@
 
 <span class="token punctuation">}</span></code></pre>
 <p>最后，是客户端场景测试类：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>blinkfox<span class="token punctuation">.</span>patterns<span class="token punctuation">.</span>proxy<span class="token punctuation">;</span>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>niww<span class="token punctuation">.</span>patterns<span class="token punctuation">.</span>proxy<span class="token punctuation">;</span>
 
 <span class="token comment" spellcheck="true">/**
  * 代理模式客户端场景类
- * Created by blinkfox on 2017/1/1.
+ * Created by niww on 2017/1/1.
  */</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ProxyClient</span> <span class="token punctuation">{</span>
 
