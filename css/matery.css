@@ -416,6 +416,7 @@ header .side-nav .social-link {
     animation: scroll-down 1.5s infinite;
 }
 
+/**
 @-moz-keyframes scroll-down {
     0% {
         opacity: 0.4;
@@ -508,6 +509,8 @@ header .side-nav .social-link {
     }
 }
 
+*/
+
 .cover-social-link {
     position: relative;
     top: 23vh;
@@ -558,10 +561,15 @@ header .go-back i {
     height: 40vh !important;
 }
 
+
 .bg-cover:after {
-    -webkit-animation: rainbow 60s infinite;
-    animation: rainbow 60s infinite;
+/**
+-webkit-animation: rainbow 60s infinite;
+animation: rainbow 60s infinite;
+**/
 }
+
+
 
 .bg-cover:before,
 .bg-cover:after {
