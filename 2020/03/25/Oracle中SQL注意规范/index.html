@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Oracle中实现ID自增, Niww&#39;s Blog">
+    <meta name="keywords" content="Oracle中SQL注意规范, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Oracle中实现ID自增 | Niww&#39;s Blog</title>
+    <title>Oracle中SQL注意规范 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -240,12 +240,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Oracle中实现ID自增</h1>
+                    <h1 class="description center-align post-title">Oracle中SQL注意规范</h1>
                 </div>
             </div>
         </div>
@@ -360,25 +360,12 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/Oracle/">
-                                <span class="chip bg-color">Oracle</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/Oracle/" class="post-category">
-                                Oracle
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -387,7 +374,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-03-23
+                    2020-03-25
                 </div>
                 
 
@@ -404,94 +391,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="一、自增列"><a href="#一、自增列" class="headerlink" title="一、自增列"></a>一、自增列</h1><p>自增列是数据库中值随插入的每个行自动增加的一列。它最常用于主键或 ID 字段，这样每次增加一行时，不用指该字段的值，它就会自动增加，而且是唯一的。</p>
-<p>当在 MySQL 中定义列时，我们可以指定一个名为 AUTO_INCREMENT 的参数。然后，每当将新值插入此表中时，放入此列的值比最后一个值加 1。</p>
-<p>但很不幸，Oracle 没有 AUTO_INCREMENT 功能。 那要如何在Oracle中做到这一点呢？</p>
-<h1 id="二、在Oracle11中设置自增字段"><a href="#二、在Oracle11中设置自增字段" class="headerlink" title="二、在Oracle11中设置自增字段"></a>二、在Oracle11中设置自增字段</h1><p>Oracle里的序列（SEQUENCE），可间接实现自增主键的作用。<br>序列（Sequence），又叫序列生成器，用于提供一系列的数字，开发人员使用序列生成唯一键。每次访问序列，序列按照一定的规律增加或者减少。<br>序列的定义存储在SYSTEM表空间中，序列不像表，它不会占用磁盘空间。<br>序列独立于事务，每次事务的提交和回滚都不会影响序列。</p>
-<h2 id="1-创建序列"><a href="#1-创建序列" class="headerlink" title="1.创建序列"></a>1.创建序列</h2><pre class=" language-oraclesqlplus"><code class="language-oraclesqlplus">CREATE SEQUENCE TEST_ID_SEQ
-INCREMENT BY 1
-START WITH 1
-MINVALUE 1 
-MAXVALUE 999999999
-NOCYCLE
-NOCACHE
-ORDER; </code></pre>
-<p>SEQUENCE说明：</p>
-<ol>
-<li>INCREMENT BY: 用于指定序列增量（默认值：1），如果指定的是正整数，则序列号自动递增，如果指定的是负数，则自动递减。</li>
-<li>START WITH  : 用于指定序列生成器生成的第一个序列号，当序列号顺序递增时默认值为序列号的最小值，当序列号顺序递减时默认值为序列号的最大值。</li>
-<li>MINVALUE    : 用于指定序列生成器可以生成的最小序列号（必须小于或等于 START WITH，并且必须小于 MAXVALUE），默认值为 NOMINVALUE。</li>
-<li>MAXVALUE    : 用于指定序列生成器可以生成的组大序列号（必须大于或等于 START WITH，并且必须大于 MINVALUE），默认为 NOMAXVALUE。</li>
-<li>CYCLE or NOCYCLE : 用于指定在达到序列的最大值或最小值之后是否继续生成序列号，默认为 NOCYCLE。</li>
-<li>CACHE or NOCACHE : 用于指定在内存中可以预分配的序列号个数（默认值：20）。</li>
-<li>ORDER or NOORDER : 设置是否按照请求的顺序产生序列<br>如果需要删除序列，可以使用下面的命令：<pre class=" language-oraclesqlplus"><code class="language-oraclesqlplus">DROP SEQUENCE TEST_ID_SEQ;</code></pre>
-到这一步其实就已经可以实现字段自增，只要插入的时候，将 ID 的值设置为序列的下一个值 TEST_ID_SEQ.NEXTVAL 就可以了：<br>先创建测试表：<pre class=" language-oraclesqlplus"><code class="language-oraclesqlplus">CREATE TABLE "TEST" (
- ID NUMBER(11) PRIMARY KEY,
- NAME VARCHAR2(50BYTE) NOT NULL
-);</code></pre>
-插入数据：<pre class=" language-oraclesqlplus"><code class="language-oraclesqlplus">SQL> INSERT INTO "TEST" ("ID", "NAME") VALUES (TEST_ID_SEQ.NEXTVAL, 'name1');
-SQL> INSERT INTO "TEST" ("ID", "NAME") VALUES (TEST_ID_SEQ.NEXTVAL, 'name2');
-SQL> INSERT INTO "TEST" ("ID", "NAME") VALUES (TEST_ID_SEQ.NEXTVAL, 'name3');
-SQL> SELECT * FROM "TEST";
-</code></pre>
-</li>
-</ol>
-<p>ID   NAME</p>
-<hr>
-<p>100 name1<br>101 name2<br>102 name3</p>
-<pre><code>为了简化插入操作，我们还可以创建一个触发器，当将数据插入到 "TEST" 表的时候，自动将最新的 ID 插入进去。
-## 2.创建触发器
-```oraclesqlplus
-CREATE OR REPLACE TRIGGER TEST_ID_SEQ
-BEFORE INSERT ON "TEST"
-FOR EACH ROW
-BEGIN
-  SELECT TEST_ID_SEQ.NEXTVAL
-  INTO :NEW."ID"
-  FROM DUAL;
-END;</code></pre><p>插入数据：</p>
-<pre class=" language-oraclesqlplus"><code class="language-oraclesqlplus">SQL> INSERT INTO "TEST" ("ID", "NAME") VALUES (NULL, 'name4');
-SQL> INSERT INTO "TEST" ("ID", "NAME") VALUES (NULL, 'name5');
-SQL> INSERT INTO "TEST" ("ID", "NAME") VALUES (NULL, 'name6');
-SQL> SELECT * FROM "TEST";
-
-ID   NAME
----  ------
-100 name1
-101 name2
-102 name3
-103 name4
-104 name5
-105 name6</code></pre>
-<h2 id="3-在MyBatis中运用"><a href="#3-在MyBatis中运用" class="headerlink" title="3.在MyBatis中运用"></a>3.在MyBatis中运用</h2><pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">namespace</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>edp.davinci.dao.UserMapper<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>insert<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.test.Test<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-    <span class="token comment" spellcheck="true">&lt;!--如果使用了触发器就不需要这一步--></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>selectKey</span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Long<span class="token punctuation">"</span></span> <span class="token attr-name">order</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>BEFORE<span class="token punctuation">"</span></span> <span class="token attr-name">keyProperty</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-        select TEST_ID_SEQ.NEXTVAL as id from dual 
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>selectKey</span><span class="token punctuation">></span></span>
-    insert "TEST"
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>trim</span> <span class="token attr-name">prefix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>(<span class="token punctuation">"</span></span> <span class="token attr-name">suffix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>)<span class="token punctuation">"</span></span> <span class="token attr-name">suffixOverrides</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>,<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-        ID,
-        NAME
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>trim</span><span class="token punctuation">></span></span>
-    values
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>trim</span> <span class="token attr-name">prefix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span> (<span class="token punctuation">"</span></span> <span class="token attr-name">suffix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>)<span class="token punctuation">"</span></span> <span class="token attr-name">suffixOverrides</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>,<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-        #{ID, jdbcType=BIGINT},
-        #{NAME, jdbcType=VARCHAR}
-
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>trim</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>insert</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span></code></pre>
-<h2 id="4-性能"><a href="#4-性能" class="headerlink" title="4.性能"></a>4.性能</h2><p>在数据库操作中，触发器的使用耗费系统资源相对较大。如果对于表容量相对较小的表格我们可以忽略触发器带来的性能影响。</p>
-<p>考虑到大表操作的性能问题，需要尽可能的减少触发器的使用。对于以上操作，就可以抛弃触发器的使用，直接手动调用序列函数即可，但这样可能在程序维护上稍微带来一些不便。</p>
-<h1 id="三、在Oracle12c中设置自增字段"><a href="#三、在Oracle12c中设置自增字段" class="headerlink" title="三、在Oracle12c中设置自增字段"></a>三、在Oracle12c中设置自增字段</h1><p>在 Oracle 12c 中设置自增字段就简单多了，因为 Oracle 12c 提供了 IDENTITY 属性:</p>
-<pre class=" language-oraclesqlplus"><code class="language-oraclesqlplus">CREATE TABLE "TEST" (
-    ID NUMBER(11) GENERATED BY DEFAULT ON NULL AS IDENTITY,
-    NAME VARCHAR2(50BYTE) NOT NULL
-);</code></pre>
-<p>这样就搞定了！和 MySQL 一样简单！</p>
-<script>
+                <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -534,7 +434,7 @@ ID   NAME
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me/2020/03/23/Oracle%E4%B8%AD%E5%AE%9E%E7%8E%B0ID%E8%87%AA%E5%A2%9E/">http://niww.me/2020/03/23/Oracle%E4%B8%AD%E5%AE%9E%E7%8E%B0ID%E8%87%AA%E5%A2%9E/</a>
+                    <a href="http://niww.me/2020/03/25/Oracle%E4%B8%ADSQL%E6%B3%A8%E6%84%8F%E8%A7%84%E8%8C%83/">http://niww.me/2020/03/25/Oracle%E4%B8%ADSQL%E6%B3%A8%E6%84%8F%E8%A7%84%E8%8C%83/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -571,11 +471,7 @@ ID   NAME
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/Oracle/">
-                                    <span class="chip bg-color">Oracle</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -745,35 +641,45 @@ ID   NAME
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/03/25/Oracle%E4%B8%ADSQL%E6%B3%A8%E6%84%8F%E8%A7%84%E8%8C%83/">
+                <a href="/2020/04/03/SpringCloud%E4%B9%8Bapplication-properties%E5%92%8Cbootstrap-properties%E5%8C%BA%E5%88%AB/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Oracle中SQL注意规范">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="SpringCloud之application.properties和bootstrap.properties区别">
                         
-                        <span class="card-title">Oracle中SQL注意规范</span>
+                        <span class="card-title">SpringCloud之application.properties和bootstrap.properties区别</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            一、执行顺序
+bootstrap.yml（bootstrap.properties）先加载，application.yml（application.properties）后加载bootstrap.yml（bootstrap.properti
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-25
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-03
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            niww
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/SpringCloud/" class="post-category">
+                                    SpringCloud
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/SpringCloud/">
+                        <span class="chip bg-color">SpringCloud</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -785,36 +691,32 @@ ID   NAME
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/03/11/CRLF%E5%AF%BC%E8%87%B4shell%E8%84%9A%E6%9C%AC%E6%8A%A5%E9%94%99/">
+                <a href="/2020/03/23/Oracle%E4%B8%AD%E5%AE%9E%E7%8E%B0ID%E8%87%AA%E5%A2%9E/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="CRLF导致shell脚本报错">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Oracle中实现ID自增">
                         
-                        <span class="card-title">CRLF导致shell脚本报错</span>
+                        <span class="card-title">Oracle中实现ID自增</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            问题出现开发的时候在Windows环境中打包了一个rpm包，放到CentOS去执行的时候，当运行start.sh文件的时候，一直报错 “No such file or directory”。
-问题原因Linux和Windows文本文件的行结
+                            一、自增列自增列是数据库中值随插入的每个行自动增加的一列。它最常用于主键或 ID 字段，这样每次增加一行时，不用指该字段的值，它就会自动增加，而且是唯一的。
+当在 MySQL 中定义列时，我们可以指定一个名为 AUTO_INCREMENT 
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-23
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" class="post-category">
-                                    问题记录
-                                </a>
-                            
-                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/%E8%BF%90%E7%BB%B4/" class="post-category">
-                                    运维
+                            <a href="/categories/Oracle/" class="post-category">
+                                    Oracle
                                 </a>
                             
                             
@@ -824,8 +726,8 @@ ID   NAME
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CentOS/">
-                        <span class="chip bg-color">CentOS</span>
+                    <a href="/tags/Oracle/">
+                        <span class="chip bg-color">Oracle</span>
                     </a>
                     
                 </div>
