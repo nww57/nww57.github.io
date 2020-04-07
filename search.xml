@@ -29,19 +29,6 @@
     
     
     <entry>
-      <title>Oracle中SQL注意规范</title>
-      <link href="/2020/03/25/Oracle%E4%B8%ADSQL%E6%B3%A8%E6%84%8F%E8%A7%84%E8%8C%83/"/>
-      <url>/2020/03/25/Oracle%E4%B8%ADSQL%E6%B3%A8%E6%84%8F%E8%A7%84%E8%8C%83/</url>
-      
-        <content type="html"><![CDATA[<script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Oracle中实现ID自增</title>
       <link href="/2020/03/23/Oracle%E4%B8%AD%E5%AE%9E%E7%8E%B0ID%E8%87%AA%E5%A2%9E/"/>
       <url>/2020/03/23/Oracle%E4%B8%AD%E5%AE%9E%E7%8E%B0ID%E8%87%AA%E5%A2%9E/</url>
@@ -368,9 +355,9 @@
             
             <tag> Java </tag>
             
-            <tag> 面向对象编程 </tag>
-            
             <tag> 设计原则 </tag>
+            
+            <tag> 面向对象编程 </tag>
             
         </tags>
       
