@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SpringCloud之application.properties和bootstrap.properties区别, Niww&#39;s Blog">
+    <meta name="keywords" content="MySQL中sql_mode=only_full_group_by问题解决办法, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>SpringCloud之application.properties和bootstrap.properties区别 | Niww&#39;s Blog</title>
+    <title>MySQL中sql_mode=only_full_group_by问题解决办法 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -240,12 +240,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">SpringCloud之application.properties和bootstrap.properties区别</h1>
+                    <h1 class="description center-align post-title">MySQL中sql_mode=only_full_group_by问题解决办法</h1>
                 </div>
             </div>
         </div>
@@ -362,8 +362,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/SpringCloud/">
-                                <span class="chip bg-color">SpringCloud</span>
+                            <a href="/tags/MySQL/">
+                                <span class="chip bg-color">MySQL</span>
                             </a>
                         
                     </div>
@@ -374,8 +374,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/SpringCloud/" class="post-category">
-                                SpringCloud
+                            <a href="/categories/MySQL/" class="post-category">
+                                MySQL
                             </a>
                         
                     </div>
@@ -387,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-03
+                    2019-04-09
                 </div>
                 
 
@@ -404,20 +404,19 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="一、执行顺序"><a href="#一、执行顺序" class="headerlink" title="一、执行顺序"></a>一、执行顺序</h1><ul>
-<li>bootstrap.yml（bootstrap.properties）先加载，application.yml（application.properties）后加载<br>bootstrap.yml（bootstrap.properties）:用来程序引导时执行，应用于更加早期配置信息读取，如可以使用来配置application.yml中使用到参数等<br>application.yml（application.properties): 应用程序特有配置信息，可以用来配置后续各个模块中需使用的公共参数等。</li>
-</ul>
-<h1 id="二、加载原理"><a href="#二、加载原理" class="headerlink" title="二、加载原理"></a>二、加载原理</h1><p>Spring中有上下文一说的，也叫Application Context。Application Context又是有父子关系的，所以必须要理解ApplicationContext是什么。<br>SpringCloud启动时，会先创建一个BootstrapContext，然后创建一个ApplicationContext，BootstrapContext是ApplicationContext的父上下文，<br>Bootstrap负责从外部源加载配置并解析，这两个上下文共用一个从外部获取的Environment。Bootstrap配置具有较高的优先级，不会被本地配置覆盖。<br>Bootstrap典型的应用场景是使用SpringConfig，这个时候你需要把配置信息配在bootstrap里面。Bootstrap属于引导配置，Application属于应用配置。</p>
-<h1 id="三、应用场景"><a href="#三、应用场景" class="headerlink" title="三、应用场景"></a>三、应用场景</h1><ul>
-<li>当使用外部配置中心服务的时候，你应该在 bootstrap.yml 里面指定 <code>名称</code> 或 <code>服务地址</code>，如使用Nacos配置中心：<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span>
-<span class="token key atrule">application</span><span class="token punctuation">:</span>
-  <span class="token key atrule">name</span><span class="token punctuation">:</span> auth<span class="token punctuation">-</span>service
-<span class="token key atrule">cloud</span><span class="token punctuation">:</span>
-  <span class="token key atrule">nacos</span><span class="token punctuation">:</span>
-    <span class="token key atrule">config</span><span class="token punctuation">:</span>
-      <span class="token key atrule">server-addr</span><span class="token punctuation">:</span> 127.0.0.1<span class="token punctuation">:</span><span class="token number">8848</span></code></pre>
-</li>
-<li>一些加密/解密的信息</li>
+                <h1 id="1-ONLY-FULL-GROUP-BY解析"><a href="#1-ONLY-FULL-GROUP-BY解析" class="headerlink" title="1.ONLY_FULL_GROUP_BY解析"></a>1.ONLY_FULL_GROUP_BY解析</h1><p>对于GROUP BY聚合操作，如果在SELECT中的列，没有在GROUP BY中出现，也没有使用聚合函数，那么这个SQL是不合法的，因为列不在GROUP BY从句中。<br>简而言之，就是SELECT后面接的列必须被GROUP BY后面接的列所包含，或者该列被使用聚合函数（sum等）。如：</p>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token number">a</span><span class="token punctuation">,</span><span class="token number">b</span><span class="token punctuation">,</span><span class="token number">c</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">group</span> <span class="token keyword">by</span> <span class="token number">a</span><span class="token punctuation">,</span><span class="token number">b</span><span class="token punctuation">;</span> <span class="token punctuation">(</span>错误<span class="token punctuation">)</span>
+<span class="token keyword">select</span> <span class="token number">a</span><span class="token punctuation">,</span><span class="token number">b</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">group</span> <span class="token keyword">by</span> <span class="token number">a</span><span class="token punctuation">,</span><span class="token number">b</span><span class="token punctuation">,</span><span class="token number">c</span><span class="token punctuation">;</span> <span class="token punctuation">(</span>正确<span class="token punctuation">)</span>
+<span class="token keyword">select</span> <span class="token number">a</span><span class="token punctuation">,</span><span class="token number">b</span><span class="token punctuation">,</span><span class="token function">sum</span><span class="token punctuation">(</span><span class="token number">c</span><span class="token punctuation">)</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">group</span> <span class="token keyword">by</span> <span class="token number">a</span><span class="token punctuation">,</span><span class="token number">b</span><span class="token punctuation">;</span><span class="token punctuation">(</span>正确<span class="token punctuation">)</span></code></pre>
+<h1 id="2-取消ONLY-FULL-GROUP-BY配置"><a href="#2-取消ONLY-FULL-GROUP-BY配置" class="headerlink" title="2.取消ONLY_FULL_GROUP_BY配置"></a>2.取消ONLY_FULL_GROUP_BY配置</h1><h2 id="1-临时修改，重新设置sql-mode，服务重启后将失效"><a href="#1-临时修改，重新设置sql-mode，服务重启后将失效" class="headerlink" title="1.临时修改，重新设置sql_mode，服务重启后将失效"></a>1.临时修改，重新设置sql_mode，服务重启后将失效</h2><pre class=" language-sql"><code class="language-sql"><span class="token keyword">SET</span> @<span class="token variable">@global.sql_mode</span> <span class="token operator">=</span><span class="token string">'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'</span><span class="token punctuation">;</span></code></pre>
+<p>上面是改变了全局sql_mode，对于新建的数据库有效。对于已存在的数据库，则需要在对应的数据下执行：</p>
+<pre class=" language-sql"><code class="language-sql"><span class="token keyword">SET</span> sql_mode <span class="token operator">=</span><span class="token string">'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'</span><span class="token punctuation">;</span></code></pre>
+<h2 id="2-永久修改-修改mysql配置文件，通过手动添加sql-mode的方式强制指定不需要ONLY-FULL-GROUP-BY属性"><a href="#2-永久修改-修改mysql配置文件，通过手动添加sql-mode的方式强制指定不需要ONLY-FULL-GROUP-BY属性" class="headerlink" title="2.永久修改,修改mysql配置文件，通过手动添加sql_mode的方式强制指定不需要ONLY_FULL_GROUP_BY属性"></a>2.永久修改,修改mysql配置文件，通过手动添加sql_mode的方式强制指定不需要ONLY_FULL_GROUP_BY属性</h2><p>在 [mysqld] 下面添加代码：</p>
+<pre class=" language-text"><code class="language-text">sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'</code></pre>
+<p><em>注</em>：不同的系统mysql的配置文件名及路径不同：</p>
+<ul>
+<li>Mac或Linux文件 /etc/my.cnf</li>
+<li>Windows在数据库安装目录下的 my.ini</li>
 </ul>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -462,7 +461,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me/2020/04/03/SpringCloud%E4%B9%8Bapplication-properties%E5%92%8Cbootstrap-properties%E5%8C%BA%E5%88%AB/">http://niww.me/2020/04/03/SpringCloud%E4%B9%8Bapplication-properties%E5%92%8Cbootstrap-properties%E5%8C%BA%E5%88%AB/</a>
+                    <a href="http://niww.me/2019/04/09/MySQL%E4%B8%ADsql-mode-only-full-group-by%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">http://niww.me/2019/04/09/MySQL%E4%B8%ADsql-mode-only-full-group-by%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -500,8 +499,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/SpringCloud/">
-                                    <span class="chip bg-color">SpringCloud</span>
+                                <a href="/tags/MySQL/">
+                                    <span class="chip bg-color">MySQL</span>
                                 </a>
                             
                         </div>
@@ -673,26 +672,24 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/04/07/MySQL8%E8%BF%9E%E6%8E%A5%E9%85%8D%E7%BD%AE/">
+                <a href="/2019/09/18/%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88---CORS/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="MySQL8连接配置">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="跨域解决方案---CORS">
                         
-                        <span class="card-title">MySQL8连接配置</span>
+                        <span class="card-title">跨域解决方案---CORS</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1.连接驱动类改为”com.mysql.cj.jdbc.Driver”在之前的驱动类(com.mysql.jdbc.Driver.class)下有这样一段：
-static {
-        System.err.println("Load
+                            一、什么是跨域访问说到跨域访问，必须先解释一个名词：同源策略。所谓同源策略就是在浏览器端出于安全考量，向服务端发起请求必须满足：协议相同、Host(ip)相同、端口相同的条件，否则访问将被禁止，该访问也就被称为跨域访问。虽然跨域访问被禁止之
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-09-18
                         </span>
                         <span class="publish-author">
                             
@@ -724,32 +721,36 @@ static {
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/03/23/Oracle%E4%B8%AD%E5%AE%9E%E7%8E%B0ID%E8%87%AA%E5%A2%9E/">
+                <a href="/2019/03/16/Nginx%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Oracle中实现ID自增">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Nginx常用命令">
                         
-                        <span class="card-title">Oracle中实现ID自增</span>
+                        <span class="card-title">Nginx常用命令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一、自增列自增列是数据库中值随插入的每个行自动增加的一列。它最常用于主键或 ID 字段，这样每次增加一行时，不用指该字段的值，它就会自动增加，而且是唯一的。
-当在 MySQL 中定义列时，我们可以指定一个名为 AUTO_INCREMENT 
+                            sudo nginx #打开 nginxnginx -s reload|reopen|stop|quit  #重新加载配置|重启|停止|退出 nginxnginx -t   #测试配置是否有语法错误
+nginx [-?hvVtq] [-s 
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-23
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-03-16
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Oracle/" class="post-category">
-                                    Oracle
+                            <a href="/categories/%E8%BF%90%E7%BB%B4/" class="post-category">
+                                    运维
+                                </a>
+                            
+                            <a href="/categories/%E8%BF%90%E7%BB%B4/Nginx/" class="post-category">
+                                    Nginx
                                 </a>
                             
                             
@@ -759,8 +760,8 @@ static {
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Oracle/">
-                        <span class="chip bg-color">Oracle</span>
+                    <a href="/tags/Nginx/">
+                        <span class="chip bg-color">Nginx</span>
                     </a>
                     
                 </div>
