@@ -422,53 +422,55 @@
 <pre><code>2019-12-24 09:32:58,495 [main] ERROR org.thingsboard.server.dao.subscription.BasicSubscriptionService - License secret is not provided!
 2019-12-24 09:32:58,497 [main] ERROR org.thingsboard.server.dao.subscription.BasicSubscriptionService - Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!
 2019-12-24 09:32:58,504 [Shutdown Thread] INFO  org.thingsboard.server.dao.subscription.BasicSubscriptionService - Terminating application due to critical License Error GENERAL_ERROR(300), exit code [-1]...</code></pre><p>发现<code>org.thingsboard.server.dao.subscription.BasicSubscriptionService</code>这个类是再dao包下，解压<code>lib/thingsboard.jar</code>，找到依赖的<code>dao-2.4.2PE.jar</code>，解压找到<code>BasicSubscriptionService</code><br>最后发现检查license的地方在这里:</p>
-<pre><code>@PostConstruct
-   public void init() {
-       if (StringUtils.isEmpty(this.licenseSecret)) {
-           log.error("License secret is not provided!");
-           log.error("Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!");
-           this.doExit(-1, LicenseErrorCode.GENERAL_ERROR, false);
-       } else {
-           try {
-               this.tbLicenseClient = TbLicenseClient.builder().listener(this).licenseSecret(this.licenseSecret).releaseDate((new SimpleDateFormat("yyyy-MM-dd")).parse("2019-09-13").getTime()).build();
-               this.tbLicenseClient.init();
-           } catch (Exception var3) {
-               log.error("Failed to init license client", var3);
-               LicenseErrorCode licenseErrorCode = var3 instanceof LicenseException ? ((LicenseException)var3).getErrorCode() : LicenseErrorCode.GENERAL_ERROR;
-               this.doExit(-1, licenseErrorCode, false);
-           }
-       }
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@PostConstruct</span>
+   <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+       <span class="token keyword">if</span> <span class="token punctuation">(</span>StringUtils<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>licenseSecret<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+           log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"License secret is not provided!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+           log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+           <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">doExit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> LicenseErrorCode<span class="token punctuation">.</span>GENERAL_ERROR<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+           <span class="token keyword">try</span> <span class="token punctuation">{</span>
+               <span class="token keyword">this</span><span class="token punctuation">.</span>tbLicenseClient <span class="token operator">=</span> TbLicenseClient<span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listener</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">licenseSecret</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>licenseSecret<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">releaseDate</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SimpleDateFormat</span><span class="token punctuation">(</span><span class="token string">"yyyy-MM-dd"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span><span class="token string">"2019-09-13"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token keyword">this</span><span class="token punctuation">.</span>tbLicenseClient<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+           <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> var3<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+               log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"Failed to init license client"</span><span class="token punctuation">,</span> var3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+               LicenseErrorCode licenseErrorCode <span class="token operator">=</span> var3 <span class="token keyword">instanceof</span> <span class="token class-name">LicenseException</span> <span class="token operator">?</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>LicenseException<span class="token punctuation">)</span>var3<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getErrorCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> LicenseErrorCode<span class="token punctuation">.</span>GENERAL_ERROR<span class="token punctuation">;</span>
+               <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">doExit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> licenseErrorCode<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+           <span class="token punctuation">}</span>
+       <span class="token punctuation">}</span>
 
-   }</code></pre></li>
+   <span class="token punctuation">}</span></code></pre>
+</li>
 <li><p>尝试重写该类中方法，将验证license那部分去掉。然后将新的<code>BasicSubscriptionService.class</code>替换掉之前的代码。<br>打开CE版的源码，在<code>dao</code>模块下新建<code>subscription</code>包，对照<code>dao-2.4.2PE.jar</code>中的内容，将<code>SubscriptionService</code>,<code>InstallSubscriptionService</code>,<code>BasicSubscriptionService</code>这3个类中的内容完全复制过来,<br>再重写<code>BasicSubscriptionService</code>中的方法，最后内容如下：</p>
-<pre><code>import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Service;
-import org.thingsboard.server.common.data.id.TenantId;
-import org.thingsboard.server.common.data.subscription.SubscriptionException;
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> org<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span>Logger<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span>LoggerFactory<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Value<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Profile<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>stereotype<span class="token punctuation">.</span>Service<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>thingsboard<span class="token punctuation">.</span>server<span class="token punctuation">.</span>common<span class="token punctuation">.</span>data<span class="token punctuation">.</span>id<span class="token punctuation">.</span>TenantId<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>thingsboard<span class="token punctuation">.</span>server<span class="token punctuation">.</span>common<span class="token punctuation">.</span>data<span class="token punctuation">.</span>subscription<span class="token punctuation">.</span>SubscriptionException<span class="token punctuation">;</span>
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
+<span class="token keyword">import</span> javax<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>PostConstruct<span class="token punctuation">;</span>
+<span class="token keyword">import</span> javax<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>PreDestroy<span class="token punctuation">;</span>
 
-@Service
-@Profile({"!install"})
-public class BasicSubscriptionService implements SubscriptionService {
-    private static final Logger log = LoggerFactory.getLogger(BasicSubscriptionService.class);
-    private static final String MAX_DEVICES_KEY = "maxdevices";
-    private static final String MAX_ASSETS_KEY = "maxassets";
-    private static final String WHITELABELING_KEY = "whitelabeling";
-    @Value("${license.secret}")
-    private String licenseSecret;
+<span class="token annotation punctuation">@Service</span>
+<span class="token annotation punctuation">@Profile</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">"!install"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BasicSubscriptionService</span> <span class="token keyword">implements</span> <span class="token class-name">SubscriptionService</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> Logger log <span class="token operator">=</span> LoggerFactory<span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span>BasicSubscriptionService<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String MAX_DEVICES_KEY <span class="token operator">=</span> <span class="token string">"maxdevices"</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String MAX_ASSETS_KEY <span class="token operator">=</span> <span class="token string">"maxassets"</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String WHITELABELING_KEY <span class="token operator">=</span> <span class="token string">"whitelabeling"</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"${license.secret}"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> String licenseSecret<span class="token punctuation">;</span>
 
-    public BasicSubscriptionService() {
-    }
+    <span class="token keyword">public</span> <span class="token function">BasicSubscriptionService</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
 
-    @PostConstruct
-    public void init() {
+    <span class="token annotation punctuation">@PostConstruct</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
-</code></pre></li>
+</code></pre>
+</li>
 </ol>
 <pre><code>   }
 
@@ -497,13 +499,17 @@ public class BasicSubscriptionService implements SubscriptionService {
    public boolean whiteLabelingEnabled(TenantId tenantId) throws SubscriptionException {
       return true;
    }</code></pre><p>   }</p>
-<pre><code>   (这步过程中`SubscriptionService`类中有个异常类`SubscriptionException`是在`common`模块下的，CE版中也没有这个类，需要按照路径在CE版中生成，然后重新编译`common`模块)
+<pre><code>(这步过程中`SubscriptionService`类中有个异常类`SubscriptionException`是在`common`模块下的，CE版中也没有这个类，需要按照路径在CE版中生成，然后重新编译`common`模块)
+
 6. 编译`dao`模块，拿到`BasicSubscriptionService.class`
+
 7. 重新生成`dao-2.4.2PE.jar`,使用jar命令替换，在`dao-2.4.2PE.jar`同目录下新建目录`org\thingsboard\server\dao\subscription`,将`BasicSubscriptionService.class`放到该目录下，
-   执行`jar uf dao-2.4.2PE.jar org\thingsboard\server\dao\subscription\BasicSubscriptionService.class`此时`dao-2.4.2PE.jar`已经更新完。
+执行`jar uf dao-2.4.2PE.jar org\thingsboard\server\dao\subscription\BasicSubscriptionService.class`此时`dao-2.4.2PE.jar`已经更新完。
+
 8. 重新生成`thingsboard.jar`，解压之间的`thingsboard.jar`,得到3个目录`BOOT-INF`,`META-INF`,`org`,将上一步生成的`dao-2.4.2PE.jar`放入`BOOT-INF\lib`中，
-   执行`jar cf0M thingsboard.jar *`生成新的jar包
-9. 用新的thingsboard.jar重新install或者直接执行都可以。</code></pre><script>
+执行`jar cf0M thingsboard.jar *`生成新的jar包
+
+9. 用新的thingsboard.jar替换掉lib中的jar包重新install或者直接执行都可以（java -jar thingsboard.jar,需要修改jar包中的yml配置文件）。</code></pre><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
