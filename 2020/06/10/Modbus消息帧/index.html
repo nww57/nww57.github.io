@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Modbus介绍, Niww&#39;s Blog">
+    <meta name="keywords" content="Modbus消息帧, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Modbus介绍 | Niww&#39;s Blog</title>
+    <title>Modbus消息帧 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -240,12 +240,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Modbus介绍</h1>
+                    <h1 class="description center-align post-title">Modbus消息帧</h1>
                 </div>
             </div>
         </div>
@@ -387,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-06-09
+                    2020-06-10
                 </div>
                 
 
@@ -404,36 +404,170 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="简介-Modbus是一种通信协议-用于不同厂商之间的设备交换数据"><a href="#简介-Modbus是一种通信协议-用于不同厂商之间的设备交换数据" class="headerlink" title="简介:Modbus是一种通信协议,用于不同厂商之间的设备交换数据"></a>简介:Modbus是一种通信协议,用于不同厂商之间的设备交换数据</h2><p>Modbus是一种串行通信协议，是Modicon公司（现在的施耐德电气 Schneider Electric）于1979年为使用可编程逻辑控制器（PLC）通信而发表。<br>Modbus已经成为工业领域通信协议的业界标准，并且现在是工业电子设备之间常用的连接方式。<br>Modbus在工业环境下很流行，因为它是公开发布而免版税的。它是为工业应用开发的，与其他标准相比，它相对易于部署和维护，除了要传输的数据格式的大小外，几乎没有其他限制。</p>
-<h2 id="Modbus与RS485、RS232、RS422之间的关系"><a href="#Modbus与RS485、RS232、RS422之间的关系" class="headerlink" title="Modbus与RS485、RS232、RS422之间的关系"></a>Modbus与RS485、RS232、RS422之间的关系</h2><p> 上面说了，Modbus其实只是一种通信协议（软件），就像汉语和英语一样，就是一种交流语言，一种机器之间的交流语言。那么交流就要有沟通的桥梁或者说传输的介质（硬件），不同的介质（硬件平台）具有不同的电气特性和连接方式，比如RS232，RS485；<br> 如果把Modbus比作英语，RS232比作印度人，RS485比作美国人，印度人之间讲英语时，理解为基于RS232的modbus通信，美国人之间讲英语时，理解为基于RS485的modbus通信。<br> 总的来说，Modbus需要通过多种类型的物理介质进行通信，例如：</p>
-<ul>
-<li><p>串行RS232</p>
-</li>
-<li><p>串行RS485</p>
-</li>
-<li><p>串行RS422</p>
-</li>
-<li><p>以太网<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Communication-Physical-Media.gif" alt=""></p>
-<p>最初的Modbus接口在RS-232串行通信上运行，但是大多数后来的Modbus实现使用RS-485，因为它允许：距离更长，速度更快，单个多点网络可接多个设备。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/0910022P4-5.jpg" alt=""></p>
-<h2 id="通信协议"><a href="#通信协议" class="headerlink" title="通信协议"></a>通信协议</h2><p>串行端口和以太网存在多种版本的Modbus协议，最常见的是:</p>
-</li>
-<li><p>Modbus RTU</p>
-</li>
-<li><p>Modbus ASCII</p>
-</li>
-<li><p>Modbus TCP</p>
-<p>Modbus RTU,Modbus ASCII所用的物理硬件接口都是串行（Serial）通讯口（RS485，RS232，RS422），而Modbus TCP则是为了顺应当今世界发展潮流，什么都可以<br>用Ethernet网或者Internet来连接，传送数据。所以有了Modbus TCP模式，该模式的硬件接口就是<strong>以太网</strong>（Ethernet）口了，也就是我们电脑上一般用的网络口。<br>Modbu还有一个扩展版本Modbus Plus（Modbus+或者MB+），该协议是Modicon专有的，和Modbus不同。它需要一个专门的协处理器来处理类似HDLC的高速令牌旋转。它使用1Mbit/s的双绞线，并且每个节点都有转换隔离装置，是一种采用转换/边缘触发而不是电压/水平触发的装置。连接Modbus Plus到计算机需要特别的接口，通常是支持ISA（SA85），PCI或者PMCIA总线的板卡。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Different-Types.jpg" alt=""></p>
-<h2 id="通信方式：主站-从站"><a href="#通信方式：主站-从站" class="headerlink" title="通信方式：主站-从站"></a>通信方式：主站-从站</h2><p>Modbus 串行链路协议是一个主-从协议。 在同一时刻，只有一个主节点连接于总线，一个或多个子节点 (最大编号为 247 ) 连接于同一个串行总线。子节点之间从不会互相通信。<br>主节点有两种方式与子节点发出请求：</p>
-<p>（1） 单播模式 ：点对点发送，主节点发送请求，子节点回应。</p>
-<p>（2） 广播模式 ：广播发送，主节点发送，子节点不回应。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Message-Architecture.jpg" alt=""><br>Modbus设备使用Master-Slave（Ethernet称为Client-Server）技术进行通信，其中只有一个设备（Master 或Server）可以请求数据（称为查询）。</p>
-<p>其他设备（Slaves或Clients）通过将请求的数据提供给主服务器或执行查询中请求的操作来进行响应。</p>
-<p>从站是任何外围设备，例如I / O传感器，阀门，网络驱动器或其他测量类型的设备，它们处理信息并使用Modbus将其响应消息发送到主设备。</p>
-<p>主机可以寻址单个从机或向所有从机发起广播消息。从站将分别对所有寻址到它们的消息查询返回响应，但不响应广播消息。</p>
-<p>从站不会自行回复消息，而仅响应从主站发送的消息查询。</p>
-<p>对于使用以太网的协议（例如Modbus TCP），任何设备都可以发出Modbus命令，因此所有设备都可以充当主设备，尽管通常只有一个设备充当主设备。</p>
-<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Master-Query-and-Reply.gif" alt=""></p>
-</li>
-</ul>
+                <h1 id="Modbus消息帧"><a href="#Modbus消息帧" class="headerlink" title="Modbus消息帧"></a>Modbus消息帧</h1><h2 id="串口通信消息帧"><a href="#串口通信消息帧" class="headerlink" title="串口通信消息帧"></a>串口通信消息帧</h2><p>在串口传输模式中（ASCII或RTU），传输设备以将Modbus消息转为有起点和终点的帧，这就允许接收的设备在消息起始处开始工作，读地址分配信息，判断哪一个设备被选中（广播方式则传给所有设备），判知何时信息已完成。部分的消息也能侦测到并且错误能设置为返回结果。</p>
+<h3 id="1-ASCII帧"><a href="#1-ASCII帧" class="headerlink" title="1.ASCII帧"></a>1.ASCII帧</h3><p>使用ASCII模式，消息以冒号（:）字符（ASCII码 3AH）开始，以回车换行符结束（ASCII码 0DH,0AH）。 </p>
+<p>其它域可以使用的传输字符是十六进制的0…9,A…F。网络上的设备不断侦测“:”字符，当有一个冒号接收到时，每个设备都解码下个域（地址域）来判断是否发给自己的。<br>消息中字符间发送的时间间隔最长不能超过1秒，否则接收的设备将认为传输错误。一个典型消息帧如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>起始位</th>
+<th>设备地址</th>
+<th>功能代码</th>
+<th>数据</th>
+<th>LRC校验</th>
+<th>结束符</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1个字符</td>
+<td>2个字符</td>
+<td>2个字符</td>
+<td>n个字符</td>
+<td>2个字符</td>
+<td>2个字符</td>
+</tr>
+</tbody></table>
+<h3 id="2-RTU帧"><a href="#2-RTU帧" class="headerlink" title="2.RTU帧"></a>2.RTU帧</h3><p>使用RTU模式，消息发送至少要以3.5个字符时间的停顿间隔开始。在网络波特率下多样的字符时间，这是最容易实现的(如下图的T1-T2-T3-T4所示)。传输的第一个域是设备地址。可以使用的传输字符是十六进制的0…9,A…F。网络设备不断侦测网络总线，包括停顿间隔时间内。当第一个域（地址域）接收到，每个设备都进行解码以判断是否发往自己的。在最后一个传输字符之后，一个至少3.5个字符时间的停顿标定了消息的结束。一个新的消息可在此停顿后开始。 </p>
+<p>整个消息帧必须作为一连续的流转输。如果在帧完成之前有超过1.5个字符时间的停顿时间，接收设备将刷新不完整的消息并假定下一字节是一个新消息的地址域。同样地，如果一个新消息在小于3.5个字符时间内接着前个消息开始，接收的设备将认为它是前一消息的延续。这将导致一个错误，因为在最后的CRC域的值不可能是正确的。一典型的消息帧如下所示：<br>起始位 | 设备地址 |  功能代码 | 数据 |CRC校验 |结束符<br>-|-|-|-|-|-<br>T1-T2-T3-T4|1个字节|1个字节|0-255个字节| 2个字节 |T1-T2-T3-T4</p>
+<h4 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h4><p>现有一ModbusRTU协议的<a href="https://detail.tmall.com/item.htm?spm=a220m.1000858.1000725.16.3c3b2273XzOQlq&amp;id=608656701016&amp;skuId=4444637882468&amp;areaId=320400&amp;user_id=2431690912&amp;cat_id=2&amp;is_b=1&amp;rn=04e8f81fdd3ceab14b06ca213feb860d" target="_blank" rel="noopener">温湿度传感器</a><br>1.03功能读取数据，06功能写入设置数据<br>2.数据格式：9600，N，8,1（9600bps，无校验，8位数据位，1位停止位）<br>3.协议格式说明（数据都是16进制）:<br>4.读操作</p>
+<table>
+            <tbody><tr>
+                <td></td>
+                <td>设备地址</td>
+                <td>功能码</td>
+                <td>数据地址</td>
+                <td colspan="2">读取数据个数</td>
+                <td>16CRC码（低前高后）</td>
+            </tr>
+            <tr>
+                <td>主机命令</td>
+                <td>设备地址</td>
+                <td>03</td>
+                <td>00 00</td>
+                <td colspan="2">00 02</td>
+                <td>CRC0 CRC1</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>设备地址</td>
+                <td>功能码</td>
+                <td>数据字节</td>
+                <td>温度</td>
+                <td>湿度</td>
+                <td>16CRC码（低前高后）</td>
+            </tr>
+            <tr>
+                <td>丛机返回</td>
+                <td>设备地址</td>
+                <td>03</td>
+                <td>04</td>
+                <td>T_hi T_lo</td>
+                <td>R_hi R_lo</td>
+                <td>CRC0 CRC1</td>
+            </tr>
+</tbody></table>
+现在传感器的通讯设备地址为01，此时CRC0=C4,CRC1=0B,那么此时发送命令如下：
+发送：01 03 00 00 00 02 C4 0B
+返回：01 03 04 00 F8 01 77 3A 74
+00 F8为温度，转化为十进制为248
+01 77为湿度，转化为十进制为375
+5.写操作
+
+<table>
+            <tbody><tr>
+                <td></td>
+                <td>设备地址</td>
+                <td>功能码</td>
+                <td>数据地址</td>
+                <td>新地址</td>
+                <td>16CRC码（低前高后）</td>
+            </tr>
+            <tr>
+                <td>主机命令</td>
+                <td>设备地址</td>
+                <td>06</td>
+                <td>00 0F</td>
+                <td>00 09</td>
+                <td>CRC0 CRC1</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>设备地址</td>
+                <td>功能码</td>
+                <td>数据地址</td>
+                <td>新地址</td>
+                <td>16CRC码（低前高后）</td>
+            </tr>
+            <tr>
+                <td>丛机返回</td>
+                <td>设备地址</td>
+                <td>06</td>
+                <td>00 0F</td>
+                <td>00 09</td>
+                <td>CRC0 CRC1</td>
+            </tr>
+</tbody></table>
+如果将01地址修改为09地址：
+发送： 01 06 00 0F 00 09 79 CF
+返回： 01 06 00 0F 00 09 79 CF
+
+<h2 id="TCP协议消息帧"><a href="#TCP协议消息帧" class="headerlink" title="TCP协议消息帧"></a>TCP协议消息帧</h2><p>Modbus TCP的协议构成可以分为， 报文头， 功能码， 数据码 这几个部分</p>
+<table>
+            <tbody><tr>
+                <td>结构</td>
+                <td width="150px">名称</td>
+                <td width="100px">长度</td>
+                <td>示例</td>
+                <td>备注</td>
+            </tr>
+            <tr>
+                <td rowspan="4">报头文</td>
+                <td>事务处理标识符</td>
+                <td>2个字节</td>
+                <td>97<br>79</td>
+                <td>客户机发起，服务器复制，用于事务处理配对，可以自行设定</td>
+            </tr>
+            <tr>
+                <td>协议标识符</td>
+                <td>2个字节</td>
+                <td>00<br>00</td>
+                <td>客户机发起，服务器复制，表示该协议是TCP协议，是固定值，不可以更改</td>
+            </tr>
+            <tr>
+                <td>长度标识符</td>
+                <td>2个字节</td>
+                <td>00<br>06</td>
+                <td>表示该数据帧中，从本子节到最后一个字节的字节个数，根据当前数据帧的情况设定</td>
+            </tr>    
+            <tr>
+                <td>单元标识符</td>
+                <td>1个字节</td>
+                <td>03</td>
+                <td>客户机发起，服务器复制，这是一个站点号，在多设备通讯时，用来表示该数据的来源于哪个设备或者该数据要去往哪个设备</td>
+            </tr>
+            <tr>
+                <td>功能码</td>
+                <td>功能码</td>
+                <td>1个字节</td>
+                <td>05</td>
+                <td>05表示对线圈进行写操作</td>
+            </tr>
+            <tr>
+                <td rowspan="2">数据码</td>
+                <td>线圈地址</td>
+                <td>2个字节</td>
+                <td>00<br>10</td>
+                <td>表示对地址为17的线圈进行操作</td>
+            </tr>
+            <tr>
+                <td>操作命令</td>
+                <td>2个字节</td>
+                <td>FF<br>00</td>
+                <td>FF 00 表示将该线圈置1，00 00 表示将该线圈置0</td>
+            </tr>
+</tbody></table>
+
+<h2 id="ModbusTCP消息帧与串行链路消息帧的区别"><a href="#ModbusTCP消息帧与串行链路消息帧的区别" class="headerlink" title="ModbusTCP消息帧与串行链路消息帧的区别"></a>ModbusTCP消息帧与串行链路消息帧的区别</h2><p>MODBUS TCP和MODBUS RTU的差别不是很大。二者相同的地方是应用数据单元是一致的。差别是MODBUS TCP是传输在TCP/IP网络上的，多了一个报文头，少了CRC校验，采用TCP的502端口，RTU多了设备地址和CRC校验。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/modbustcp.png" alt=""></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -477,7 +611,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me/2020/06/09/Modbus%E4%BB%8B%E7%BB%8D/">http://niww.me/2020/06/09/Modbus%E4%BB%8B%E7%BB%8D/</a>
+                    <a href="http://niww.me/2020/06/10/Modbus%E6%B6%88%E6%81%AF%E5%B8%A7/">http://niww.me/2020/06/10/Modbus%E6%B6%88%E6%81%AF%E5%B8%A7/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -684,9 +818,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/06/10/Modbus%E6%B6%88%E6%81%AF%E5%B8%A7/">
                     <div class="card-image">
@@ -704,9 +839,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-10
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-10
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -719,6 +854,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -737,33 +873,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/04/23/JS%E4%B8%ADbyte%E8%BD%ACString%E4%B9%B1%E7%A0%81/">
+                <a href="/2020/06/09/Modbus%E4%BB%8B%E7%BB%8D/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="JS中byte转String乱码">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Modbus介绍">
                         
-                        <span class="card-title">JS中byte转String乱码</span>
+                        <span class="card-title">Modbus介绍</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            项目中遇到一个问题，在JS中将byte数组转化为String的时候，有中文的情况下会出现乱码问题：
-function decodeToString(payload) {
-  return String.fromCharCode.apply(
+                            简介:Modbus是一种通信协议,用于不同厂商之间的设备交换数据Modbus是一种串行通信协议，是Modicon公司（现在的施耐德电气 Schneider Electric）于1979年为使用可编程逻辑控制器（PLC）通信而发表。Modbu
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-23
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-09
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" class="post-category">
-                                    问题记录
+                            <a href="/categories/Modbus/" class="post-category">
+                                    Modbus
                                 </a>
                             
                             
@@ -773,8 +907,8 @@ function decodeToString(payload) {
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/JavaScript/">
-                        <span class="chip bg-color">JavaScript</span>
+                    <a href="/tags/Modbus/">
+                        <span class="chip bg-color">Modbus</span>
                     </a>
                     
                 </div>
