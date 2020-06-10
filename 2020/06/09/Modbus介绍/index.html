@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="JS中byte转String乱码, Niww&#39;s Blog">
+    <meta name="keywords" content="Modbus介绍, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>JS中byte转String乱码 | Niww&#39;s Blog</title>
+    <title>Modbus介绍 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -240,12 +240,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">JS中byte转String乱码</h1>
+                    <h1 class="description center-align post-title">Modbus介绍</h1>
                 </div>
             </div>
         </div>
@@ -362,8 +362,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/JavaScript/">
-                                <span class="chip bg-color">JavaScript</span>
+                            <a href="/tags/Modbus/">
+                                <span class="chip bg-color">Modbus</span>
                             </a>
                         
                     </div>
@@ -374,8 +374,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" class="post-category">
-                                问题记录
+                            <a href="/categories/Modbus/" class="post-category">
+                                Modbus
                             </a>
                         
                     </div>
@@ -387,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-23
+                    2020-06-09
                 </div>
                 
 
@@ -404,67 +404,33 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>项目中遇到一个问题，在JS中将byte数组转化为String的时候，有中文的情况下会出现乱码问题：</p>
-<pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">decodeToString</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">return</span> String<span class="token punctuation">.</span>fromCharCode<span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>String<span class="token punctuation">,</span> payload<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
-<p>上面这个方法，在没有中文的情况下是没有问题的，如果有中文则会出现乱码。<br>更换方法：</p>
-<pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">utf8ByteToUnicodeStr</span><span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token keyword">var</span> unicodeStr <span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> pos <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> pos <span class="token operator">&lt;</span> utf8Bytes<span class="token punctuation">.</span>length<span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">var</span> flag<span class="token operator">=</span> utf8Bytes<span class="token punctuation">[</span>pos<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">var</span> unicode <span class="token operator">=</span> <span class="token number">0</span> <span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>flag <span class="token operator">></span><span class="token operator">></span><span class="token operator">></span><span class="token number">7</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token number">0</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            unicodeStr<span class="token operator">+</span><span class="token operator">=</span> String<span class="token punctuation">.</span><span class="token function">fromCharCode</span><span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            pos <span class="token operator">+</span><span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>flag <span class="token operator">&amp;</span><span class="token number">0xFC</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token number">0xFC</span> <span class="token punctuation">)</span><span class="token punctuation">{</span>
-            unicode <span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">30</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">24</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">18</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">12</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">6</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            unicodeStr<span class="token operator">+</span><span class="token operator">=</span> String<span class="token punctuation">.</span><span class="token function">fromCharCode</span><span class="token punctuation">(</span>unicode<span class="token punctuation">)</span> <span class="token punctuation">;</span>
-            pos <span class="token operator">+</span><span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span>
-
-        <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>flag <span class="token operator">&amp;</span><span class="token number">0xF8</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token number">0xF8</span> <span class="token punctuation">)</span><span class="token punctuation">{</span>
-            unicode <span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x7</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">24</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">18</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">12</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">6</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            unicodeStr<span class="token operator">+</span><span class="token operator">=</span> String<span class="token punctuation">.</span><span class="token function">fromCharCode</span><span class="token punctuation">(</span>unicode<span class="token punctuation">)</span> <span class="token punctuation">;</span>
-            pos <span class="token operator">+</span><span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
-
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>flag <span class="token operator">&amp;</span><span class="token number">0xF0</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token number">0xF0</span> <span class="token punctuation">)</span><span class="token punctuation">{</span>
-            unicode <span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0xF</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">18</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">12</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">6</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            unicodeStr<span class="token operator">+</span><span class="token operator">=</span> String<span class="token punctuation">.</span><span class="token function">fromCharCode</span><span class="token punctuation">(</span>unicode<span class="token punctuation">)</span> <span class="token punctuation">;</span>
-            pos <span class="token operator">+</span><span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
-
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>flag <span class="token operator">&amp;</span><span class="token number">0xE0</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token number">0xE0</span> <span class="token punctuation">)</span><span class="token punctuation">{</span>
-            unicode <span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x1F</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">12</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">6</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            unicodeStr<span class="token operator">+</span><span class="token operator">=</span> String<span class="token punctuation">.</span><span class="token function">fromCharCode</span><span class="token punctuation">(</span>unicode<span class="token punctuation">)</span> <span class="token punctuation">;</span>
-            pos <span class="token operator">+</span><span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
-
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>flag <span class="token operator">&amp;</span><span class="token number">0xC0</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token number">0xC0</span> <span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//110</span>
-            unicode <span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span><span class="token operator">&lt;</span> <span class="token number">6</span><span class="token punctuation">;</span>
-            unicode <span class="token operator">|</span><span class="token operator">=</span> <span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span> <span class="token number">0x3F</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            unicodeStr<span class="token operator">+</span><span class="token operator">=</span> String<span class="token punctuation">.</span><span class="token function">fromCharCode</span><span class="token punctuation">(</span>unicode<span class="token punctuation">)</span> <span class="token punctuation">;</span>
-            pos <span class="token operator">+</span><span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-
-        <span class="token punctuation">}</span> <span class="token keyword">else</span><span class="token punctuation">{</span>
-            unicodeStr<span class="token operator">+</span><span class="token operator">=</span> String<span class="token punctuation">.</span><span class="token function">fromCharCode</span><span class="token punctuation">(</span>utf8Bytes<span class="token punctuation">[</span>pos<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            pos <span class="token operator">+</span><span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> unicodeStr<span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
+                <h2 id="简介-Modbus是一种通信协议-用于不同厂商之间的设备交换数据"><a href="#简介-Modbus是一种通信协议-用于不同厂商之间的设备交换数据" class="headerlink" title="简介:Modbus是一种通信协议,用于不同厂商之间的设备交换数据"></a>简介:Modbus是一种通信协议,用于不同厂商之间的设备交换数据</h2><p>Modbus是一种串行通信协议，是Modicon公司（现在的施耐德电气 Schneider Electric）于1979年为使用可编程逻辑控制器（PLC）通信而发表。<br>Modbus已经成为工业领域通信协议的业界标准，并且现在是工业电子设备之间常用的连接方式。<br>Modbus在工业环境下很流行，因为它是公开发布而免版税的。它是为工业应用开发的，与其他标准相比，它相对易于部署和维护，除了要传输的数据格式的大小外，几乎没有其他限制。</p>
+<h2 id="Modbus与RS485、RS232、RS422之间的关系"><a href="#Modbus与RS485、RS232、RS422之间的关系" class="headerlink" title="Modbus与RS485、RS232、RS422之间的关系"></a>Modbus与RS485、RS232、RS422之间的关系</h2><p> 上面说了，Modbus其实只是一种通信协议（软件），就像汉语和英语一样，就是一种交流语言，一种机器之间的交流语言。那么交流就要有沟通的桥梁或者说传输的介质（硬件），不同的介质（硬件平台）具有不同的电气特性和连接方式，比如RS232，RS485；<br> 如果把Modbus比作英语，RS232比作印度人，RS485比作美国人，印度人之间讲英语时，理解为基于RS232的modbus通信，美国人之间讲英语时，理解为基于RS485的modbus通信。<br> 总的来说，Modbus需要通过多种类型的物理介质进行通信，例如：</p>
+<ul>
+<li><p>串行RS232</p>
+</li>
+<li><p>串行RS485</p>
+</li>
+<li><p>串行RS422</p>
+</li>
+<li><p>以太网<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Communication-Physical-Media.gif" alt=""><br>最初的Modbus接口在RS-232串行通信上运行，但是大多数后来的Modbus实现使用RS-485，因为它允许：距离更长，速度更快，单个多点网络可接多个设备。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/0910022P4-5.jpg" alt=""></p>
+<h2 id="Modbus通信协议类型"><a href="#Modbus通信协议类型" class="headerlink" title="Modbus通信协议类型"></a>Modbus通信协议类型</h2><p>串行端口和以太网存在多种版本的Modbus协议，最常见的是:</p>
+</li>
+<li><p>Modbus RTU</p>
+</li>
+<li><p>Modbus ASCII</p>
+</li>
+<li><p>Modbus TCP</p>
+<p>Modbus RTU,Modbus ASCII所用的物理硬件接口都是串行（Serial）通讯口（RS485，RS232，RS422），而Modbus TCP则是为了顺应当今世界发展潮流，什么都可以<br>用Ethernet网或者Internet来连接，传送数据。所以有了Modbus TCP模式，该模式的硬件接口就是<strong>以太网</strong>（Ethernet）口了，也就是我们电脑上一般用的网络口。<br>Modbu还有一个扩展版本Modbus Plus（Modbus+或者MB+），该协议是Modicon专有的，和Modbus不同。它需要一个专门的协处理器来处理类似HDLC的高速令牌旋转。它使用1Mbit/s的双绞线，并且每个节点都有转换隔离装置，是一种采用转换/边缘触发而不是电压/水平触发的装置。连接Modbus Plus到计算机需要特别的接口，通常是支持ISA（SA85），PCI或者PMCIA总线的板卡。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Different-Types.jpg" alt=""></p>
+<h2 id="Modbus消息结构简介"><a href="#Modbus消息结构简介" class="headerlink" title="Modbus消息结构简介"></a>Modbus消息结构简介</h2><p>Modbus的主要消息结构是点对点。Modbus能够在点对点和多点网络上运行。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Message-Architecture.jpg" alt=""><br>Modbus设备使用Master-Slave（Ethernet称为Client-Server）技术进行通信，其中只有一个设备（Master 或Server）可以请求数据（称为查询）。</p>
+<p>其他设备（Slaves或Clients）通过将请求的数据提供给主服务器或执行查询中请求的操作来进行响应。</p>
+<p>从站是任何外围设备，例如I / O传感器，阀门，网络驱动器或其他测量类型的设备，它们处理信息并使用Modbus将其响应消息发送到主设备。</p>
+<p>主机可以寻址单个从机或向所有从机发起广播消息。从站将分别对所有寻址到它们的消息查询返回响应，但不响应广播消息。</p>
+<p>从站不会自行回复消息，而仅响应从主站发送的消息查询。</p>
+<p>对于使用以太网的协议（例如Modbus TCP），任何设备都可以发出Modbus命令，因此所有设备都可以充当主设备，尽管通常只有一个设备充当主设备。</p>
+<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Master-Query-and-Reply.gif" alt=""></p>
+</li>
+</ul>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -508,7 +474,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me/2020/04/23/JS%E4%B8%ADbyte%E8%BD%ACString%E4%B9%B1%E7%A0%81/">http://niww.me/2020/04/23/JS%E4%B8%ADbyte%E8%BD%ACString%E4%B9%B1%E7%A0%81/</a>
+                    <a href="http://niww.me/2020/06/09/Modbus%E4%BB%8B%E7%BB%8D/">http://niww.me/2020/06/09/Modbus%E4%BB%8B%E7%BB%8D/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -546,8 +512,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/JavaScript/">
-                                    <span class="chip bg-color">JavaScript</span>
+                                <a href="/tags/Modbus/">
+                                    <span class="chip bg-color">Modbus</span>
                                 </a>
                             
                         </div>
@@ -715,9 +681,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/06/09/Modbus%E4%BB%8B%E7%BB%8D/">
                     <div class="card-image">
@@ -735,9 +702,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-09
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -750,6 +717,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -768,33 +736,33 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/04/07/MySQL8%E8%BF%9E%E6%8E%A5%E9%85%8D%E7%BD%AE/">
+                <a href="/2020/04/23/JS%E4%B8%ADbyte%E8%BD%ACString%E4%B9%B1%E7%A0%81/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="MySQL8连接配置">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="JS中byte转String乱码">
                         
-                        <span class="card-title">MySQL8连接配置</span>
+                        <span class="card-title">JS中byte转String乱码</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1.连接驱动类改为”com.mysql.cj.jdbc.Driver”在之前的驱动类(com.mysql.jdbc.Driver.class)下有这样一段：
-static {
-        System.err.println("Load
+                            项目中遇到一个问题，在JS中将byte数组转化为String的时候，有中文的情况下会出现乱码问题：
+function decodeToString(payload) {
+  return String.fromCharCode.apply(
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-23
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/SpringBoot/" class="post-category">
-                                    SpringBoot
+                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" class="post-category">
+                                    问题记录
                                 </a>
                             
                             
@@ -804,8 +772,8 @@ static {
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/SpringBoot/">
-                        <span class="chip bg-color">SpringBoot</span>
+                    <a href="/tags/JavaScript/">
+                        <span class="chip bg-color">JavaScript</span>
                     </a>
                     
                 </div>

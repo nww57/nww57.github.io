@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Modbus介绍</title>
+      <link href="/2020/06/09/Modbus%E4%BB%8B%E7%BB%8D/"/>
+      <url>/2020/06/09/Modbus%E4%BB%8B%E7%BB%8D/</url>
+      
+        <content type="html"><![CDATA[<h2 id="简介-Modbus是一种通信协议-用于不同厂商之间的设备交换数据"><a href="#简介-Modbus是一种通信协议-用于不同厂商之间的设备交换数据" class="headerlink" title="简介:Modbus是一种通信协议,用于不同厂商之间的设备交换数据"></a>简介:Modbus是一种通信协议,用于不同厂商之间的设备交换数据</h2><p>Modbus是一种串行通信协议，是Modicon公司（现在的施耐德电气 Schneider Electric）于1979年为使用可编程逻辑控制器（PLC）通信而发表。<br>Modbus已经成为工业领域通信协议的业界标准，并且现在是工业电子设备之间常用的连接方式。<br>Modbus在工业环境下很流行，因为它是公开发布而免版税的。它是为工业应用开发的，与其他标准相比，它相对易于部署和维护，除了要传输的数据格式的大小外，几乎没有其他限制。</p><h2 id="Modbus与RS485、RS232、RS422之间的关系"><a href="#Modbus与RS485、RS232、RS422之间的关系" class="headerlink" title="Modbus与RS485、RS232、RS422之间的关系"></a>Modbus与RS485、RS232、RS422之间的关系</h2><p> 上面说了，Modbus其实只是一种通信协议（软件），就像汉语和英语一样，就是一种交流语言，一种机器之间的交流语言。那么交流就要有沟通的桥梁或者说传输的介质（硬件），不同的介质（硬件平台）具有不同的电气特性和连接方式，比如RS232，RS485；<br> 如果把Modbus比作英语，RS232比作印度人，RS485比作美国人，印度人之间讲英语时，理解为基于RS232的modbus通信，美国人之间讲英语时，理解为基于RS485的modbus通信。<br> 总的来说，Modbus需要通过多种类型的物理介质进行通信，例如：</p><ul><li><p>串行RS232</p></li><li><p>串行RS485</p></li><li><p>串行RS422</p></li><li><p>以太网<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Communication-Physical-Media.gif" alt=""><br>最初的Modbus接口在RS-232串行通信上运行，但是大多数后来的Modbus实现使用RS-485，因为它允许：距离更长，速度更快，单个多点网络可接多个设备。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/0910022P4-5.jpg" alt=""></p><h2 id="Modbus通信协议类型"><a href="#Modbus通信协议类型" class="headerlink" title="Modbus通信协议类型"></a>Modbus通信协议类型</h2><p>串行端口和以太网存在多种版本的Modbus协议，最常见的是:</p></li><li><p>Modbus RTU</p></li><li><p>Modbus ASCII</p></li><li><p>Modbus TCP</p><p>Modbus RTU,Modbus ASCII所用的物理硬件接口都是串行（Serial）通讯口（RS485，RS232，RS422），而Modbus TCP则是为了顺应当今世界发展潮流，什么都可以<br>用Ethernet网或者Internet来连接，传送数据。所以有了Modbus TCP模式，该模式的硬件接口就是<strong>以太网</strong>（Ethernet）口了，也就是我们电脑上一般用的网络口。<br>Modbu还有一个扩展版本Modbus Plus（Modbus+或者MB+），该协议是Modicon专有的，和Modbus不同。它需要一个专门的协处理器来处理类似HDLC的高速令牌旋转。它使用1Mbit/s的双绞线，并且每个节点都有转换隔离装置，是一种采用转换/边缘触发而不是电压/水平触发的装置。连接Modbus Plus到计算机需要特别的接口，通常是支持ISA（SA85），PCI或者PMCIA总线的板卡。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Different-Types.jpg" alt=""></p><h2 id="Modbus消息结构简介"><a href="#Modbus消息结构简介" class="headerlink" title="Modbus消息结构简介"></a>Modbus消息结构简介</h2><p>Modbus的主要消息结构是点对点。Modbus能够在点对点和多点网络上运行。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Message-Architecture.jpg" alt=""><br>Modbus设备使用Master-Slave（Ethernet称为Client-Server）技术进行通信，其中只有一个设备（Master 或Server）可以请求数据（称为查询）。</p><p>其他设备（Slaves或Clients）通过将请求的数据提供给主服务器或执行查询中请求的操作来进行响应。</p><p>从站是任何外围设备，例如I / O传感器，阀门，网络驱动器或其他测量类型的设备，它们处理信息并使用Modbus将其响应消息发送到主设备。</p><p>主机可以寻址单个从机或向所有从机发起广播消息。从站将分别对所有寻址到它们的消息查询返回响应，但不响应广播消息。</p><p>从站不会自行回复消息，而仅响应从主站发送的消息查询。</p><p>对于使用以太网的协议（例如Modbus TCP），任何设备都可以发出Modbus命令，因此所有设备都可以充当主设备，尽管通常只有一个设备充当主设备。</p><p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Master-Query-and-Reply.gif" alt=""></p></li></ul><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> Modbus </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Modbus </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>JS中byte转String乱码</title>
       <link href="/2020/04/23/JS%E4%B8%ADbyte%E8%BD%ACString%E4%B9%B1%E7%A0%81/"/>
       <url>/2020/04/23/JS%E4%B8%ADbyte%E8%BD%ACString%E4%B9%B1%E7%A0%81/</url>
@@ -430,9 +455,9 @@
             
             <tag> Java </tag>
             
-            <tag> 面向对象编程 </tag>
-            
             <tag> 设计原则 </tag>
+            
+            <tag> 面向对象编程 </tag>
             
         </tags>
       
