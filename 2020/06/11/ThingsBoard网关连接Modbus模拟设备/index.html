@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ThingsBoard Gateway在树莓派上的使用-ModBus协议, Niww&#39;s Blog">
+    <meta name="keywords" content="ThingsBoard网关连接Modbus模拟设备, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>ThingsBoard Gateway在树莓派上的使用-ModBus协议 | Niww&#39;s Blog</title>
+    <title>ThingsBoard网关连接Modbus模拟设备 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -240,12 +240,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ThingsBoard Gateway在树莓派上的使用-ModBus协议</h1>
+                    <h1 class="description center-align post-title">ThingsBoard网关连接Modbus模拟设备</h1>
                 </div>
             </div>
         </div>
@@ -387,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-11-21
+                    2020-06-11
                 </div>
                 
 
@@ -404,117 +404,155 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>ThingsBoard GateWay 是在ThingsBoard下的一款高度集成遗留系统和第三方系统上联接设备的开源解决方案。<br>具有以下几个特点：</p>
-<ul>
-<li>MQTT扩展 - 于控制、配置和收集使用现有协议连接到外部MQTT代理的IoT设备数据。</li>
-<li>OPC-UA扩展 - 收集连接到OPC-UA服务端的IoT设备数据。</li>
-<li>Sigfox扩展 - 收集连接到Sigfox后端的IoT设备数据。</li>
-<li>数据持久 - 网络和硬件异常时保证数据正常传输。</li>
-<li>自动重新连接到UlyncThings集群。</li>
-<li>将传入的数据和消息映射到统一格式。<br>本篇将介绍在树莓派上安装ThingsBoard GateWay使用Modbus协议遥测数据。<a id="more"></a>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1></li>
-</ul>
-<ol>
-<li>启动ThingsBoard服务</li>
-<li><a href="https://thingsboard.io/docs/iot-gateway/install/rpi/" target="_blank" rel="noopener">在树莓派上安装ThingsBoard GateWay</a></li>
-<li><a href="https://thingsboard.io/docs/iot-gateway/getting-started/" target="_blank" rel="noopener">启动ThingsBoard GateWay服务</a></li>
-<li><a href="http://etrd.org/2017/01/29/%E6%A0%91%E8%8E%93%E6%B4%BE3%E7%A1%AC%E4%BB%B6%E4%B8%B2%E5%8F%A3%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E7%BC%96%E7%A8%8B/" target="_blank" rel="noopener">树莓派串口配置</a></li>
-<li><a href="http://www.waveshare.net/wiki/RS485_CAN_HAT" target="_blank" rel="noopener">树莓派RS485扩展板</a>一块,将扩展板插入树莓派，并与自己的传感设备连接好</li>
-<li><a href="https://harttle.land/2017/01/14/raspberrypi-uart.html" target="_blank" rel="noopener">将树莓派ttyAMA0串口权限开放</a><h1 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h1><h2 id="配置网关扩展"><a href="#配置网关扩展" class="headerlink" title="配置网关扩展"></a>配置网关扩展</h2><pre class=" language-$xslt"><code class="language-$xslt">[{
- "id": "modbus-water",
- "type": "MODBUS",
- "configuration": {
-     "servers": [{
-         "transport": {
-             "type": "rtu",
-             "portName": "ttyAMA0",
-             "encoding": "rtu",
-             "timeout": 5000,
-             "baudRate": 9600,
-             "dataBits": 8,
-             "stopBits": 1,
-             "parity": "none"
-         },
-         "devices": [{
-             "unitId": 1,
-             "deviceName": "水压-设备1",
-             "attributesPollPeriod": 1000,
-             "timeseriesPollPeriod": 1000,
-             "attributes": [],
-             "timeseries": [{
-                 "tag": "pressure",
-                 "type": "long",
-                 "pollPeriod": 1000,
-                 "functionCode": 3,
-                 "address": 4,
-                 "registerCount": 1,
-                 "bit": 0,
-                 "byteOrder": "BIG"
-             }]
-         }]
-     }]
- }
-}]
-</code></pre>
-</li>
-</ol>
-<pre><code>## 配置网关服务文件tb-gateway.yml
-```$xslt
-server:
-  # Server bind address
-  address: "0.0.0.0"
-  # Server bind port
-  port: "9090"
-
-# Check new version updates parameters
-updates:
-  # Enable/disable updates checking.
-  enabled: "${UPDATES_ENABLED:true}"
-
-gateways:
-  tenants:
-    -
-      label: "Tenant"
-      reporting:
-        interval: 60000
-      persistence:
-        type: file
-        path: storage
-        bufferSize: 1000
-      connection:
-        host: #ThingsBoard服务地址#
-        port: 1883
-        retryInterval: 3000
-        maxInFlight: 1000
-        security:
-          accessToken: #网关设备的令牌#
-      remoteConfiguration: true
-      extensions:
-        -
-          id: "http"
-          type: "HTTP"
-          extensionConfiguration: http-config.json</code></pre><h2 id="重启GateWay服务"><a href="#重启GateWay服务" class="headerlink" title="重启GateWay服务"></a>重启GateWay服务</h2><p>#问题<br>整个安装配置过程中出现了一个问题花了好久，在配置并重启GateWay服务后，发现网关设备始终没有同步，查看日志后发现</p>
-<pre class=" language-$xslt"><code class="language-$xslt">2019-11-19 18:36:13,160 [pool-1-thread-1] ERROR o.t.g.extensions.modbus.ModbusClient - MBS[ttyAMA0] connection failed!
-java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid ports are: [ttyAMA0]
-    at com.ghgande.j2mod.modbus.net.SerialConnection.open(SerialConnection.java:127)
-    at com.ghgande.j2mod.modbus.facade.ModbusSerialMaster.connect(ModbusSerialMaster.java:96)
-    at org.thingsboard.gateway.extensions.modbus.ModbusClient.connect(ModbusClient.java:121)
-    at java.util.ArrayList.forEach(ArrayList.java:1257)
-    at org.thingsboard.gateway.extensions.modbus.DefaultModbusService.init(DefaultModbusService.java:64)
-    at org.thingsboard.gateway.service.TenantServiceRegistry.updateExtensionConfiguration(TenantServiceRegistry.java:83)
-    at org.thingsboard.gateway.service.DefaultTenantManagerService.lambda$init$0(DefaultTenantManagerService.java:64)
-    at org.thingsboard.gateway.service.gateway.MqttGatewayService.updateConfiguration(MqttGatewayService.java:515)
-    at org.thingsboard.gateway.service.gateway.MqttGatewayService.onGatewayAttributesGet(MqttGatewayService.java:496)
-    at org.thingsboard.gateway.service.gateway.MqttGatewayService.lambda$onMessage$17(MqttGatewayService.java:426)
-    at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
-    at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-    at java.lang.Thread.run(Thread.java:748)
-2019-11-19 18:36:13,165 [pool-1-thread-1] ERROR o.t.g.e.modbus.DefaultModbusService - [Tenant] Modbus service initialization failed
-</code></pre>
-<p>日志显示ttyAMA0口不能打开或不存在。dose not exist肯定是不可能的，那就是串口打不开。<br>最后在<a href="https://harttle.land/2017/01/14/raspberrypi-uart.html" target="_blank" rel="noopener">这里</a>找到了解决办法。将ttyAMA0口的权限设置为任何人可以读，写。<br>在<code>/etc/udev/rules.d</code>中添加100-ttyAMA0.rules,内容为：</p>
-<pre class=" language-$xslt"><code class="language-$xslt">KERNEL=="ttyAMA0", MODE="666"</code></pre>
+                <p>本篇介绍下如何使用ModbusSlave/ModbusPoll模拟ModbusRTU与ModbusTCP协议并与TB的Python网关对接。</p>
+<h1 id="1-准备工具"><a href="#1-准备工具" class="headerlink" title="1.准备工具"></a>1.准备工具</h1><p>1.ModbusPoll(链接: <a href="https://pan.baidu.com/s/1cX_jow-G8cmQNaYpAZ42fg" target="_blank" rel="noopener">https://pan.baidu.com/s/1cX_jow-G8cmQNaYpAZ42fg</a> 提取码: p2gk)</p>
+<p>2.ModbusSlave（链接: <a href="https://pan.baidu.com/s/1Fq5O5a-EuWhUBlaNUa98OQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1Fq5O5a-EuWhUBlaNUa98OQ</a> 提取码: 95x7）</p>
+<p>3.虚拟com端口工具VSPD（链接: <a href="https://pan.baidu.com/s/14nN79wXnh8tVYhhn6N3iNQ" target="_blank" rel="noopener">https://pan.baidu.com/s/14nN79wXnh8tVYhhn6N3iNQ</a> 提取码: f6p5）</p>
+<h1 id="2-ModbusRTU协议模拟"><a href="#2-ModbusRTU协议模拟" class="headerlink" title="2.ModbusRTU协议模拟"></a>2.ModbusRTU协议模拟</h1><h2 id="2-1本地ModbusRTU模拟"><a href="#2-1本地ModbusRTU模拟" class="headerlink" title="2.1本地ModbusRTU模拟"></a>2.1本地ModbusRTU模拟</h2><p>1.虚拟两个com端口,COM7,COM8<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/vspd1.png" alt=""><br>2.打开ModbusSlave,点击setup-&gt;slave(从机)definition配置从端，如图：<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/201807231339436.png" alt=""><br>3.打开ModbusPoll,点击read/write(主机)definition配置主端，如图：<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20180723133942973.png" alt=""><br>以上配置的是10个寄存器从机设备ID为1但只读取前4个寄存器的数据，可根据自己的需要设置。后面为了简便，只配置了一个寄存器。<br>4.接下来分别点击”connection”进行连接，注意修改连接界面的端口，因为我只用到了RTU模式，所以其他选项如波特率9600,比特位8，校验位1，无等价位等可以保持不变，然后点击确定进行连接，未连接成功窗口第二行会给出提示信息。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/modbusrtuconnection.png" alt=""><br>5.通讯开始，主机端显示：TX=发送命令次数，Err=错误次数，ID=从机ID，F=功能号，SR=轮询间隔时间。使用ModbusSlave工具栏的”Display-&gt;Communication Traffic按钮，可以显示出当前发送命令和接受的数据。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/modbusrtuconnection2.png" alt=""></p>
+<h2 id="2-2-连接thingsBoard-gateway"><a href="#2-2-连接thingsBoard-gateway" class="headerlink" title="2.2.连接thingsBoard-gateway"></a>2.2.连接thingsBoard-gateway</h2><p>1.我的网关是装在树莓派中的，所以需要用到其他转换器，整体的连接是：</p>
+<p>电脑COM3端口–&gt;USB转485转换器–&gt;485转TTL转换器–&gt;树莓派串口<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/lijie.jpg" alt=""></p>
+<p>2.将ModbusSlave的端口指向COM3</p>
+<p>3.配置tb_gateway.yaml与modbus_serial.json;在tb_gateway.yaml中将连接配置指向modbus_serial.json</p>
+<p>tb_gateway.yaml中内容如下：</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">thingsboard</span><span class="token punctuation">:</span>
+  <span class="token key atrule">host</span><span class="token punctuation">:</span> <span class="token string">"ip"</span>
+  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">1883</span>
+  <span class="token key atrule">remoteConfiguration</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+  <span class="token key atrule">security</span><span class="token punctuation">:</span>
+    <span class="token key atrule">accessToken</span><span class="token punctuation">:</span> <span class="token string">"token"</span>
+<span class="token key atrule">storage</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> memory
+  <span class="token key atrule">read_records_count</span><span class="token punctuation">:</span> <span class="token number">100</span>
+  <span class="token key atrule">max_records_count</span><span class="token punctuation">:</span> <span class="token number">100000</span>
+<span class="token comment" spellcheck="true">#  type: file</span>
+<span class="token comment" spellcheck="true">#  data_folder_path: ./data/</span>
+<span class="token comment" spellcheck="true">#  max_file_count: 10</span>
+<span class="token comment" spellcheck="true">#  max_read_records_count: 10</span>
+<span class="token comment" spellcheck="true">#  max_records_per_file: 10000</span>
+<span class="token key atrule">connectors</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> Modbus Connector
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> modbus
+    <span class="token key atrule">configuration</span><span class="token punctuation">:</span> modbus_serial.json</code></pre>
+<p>modbus_serial.json中内容如下：</p>
+<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"server"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Modbus Default Server"</span><span class="token punctuation">,</span>
+    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"serial"</span><span class="token punctuation">,</span>
+    <span class="token property">"method"</span><span class="token operator">:</span> <span class="token string">"rtu"</span><span class="token punctuation">,</span>
+    <span class="token property">"port"</span><span class="token operator">:</span> <span class="token string">"/dev/ttyAMA0"</span><span class="token punctuation">,</span>
+    <span class="token property">"baudrate"</span><span class="token operator">:</span> <span class="token number">9600</span><span class="token punctuation">,</span>
+    <span class="token property">"timeout"</span><span class="token operator">:</span> <span class="token number">35</span><span class="token punctuation">,</span>
+    <span class="token property">"devices"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"unitId"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        <span class="token property">"deviceName"</span><span class="token operator">:</span> <span class="token string">"VuritalDevice"</span><span class="token punctuation">,</span>
+        <span class="token property">"attributesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
+        <span class="token property">"timeseriesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
+        <span class="token property">"sendDataOnlyOnChange"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        <span class="token property">"attributes"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"count"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"16int"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+            <span class="token property">"registerCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">0</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>最后在TB平台上可以看到遥测值在更新</p>
+<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/viratuldevice.png" alt=""></p>
+<h1 id="3-ModbusTCP协议模拟"><a href="#3-ModbusTCP协议模拟" class="headerlink" title="3.ModbusTCP协议模拟"></a>3.ModbusTCP协议模拟</h1><h2 id="3-1本地ModbusTCP模拟"><a href="#3-1本地ModbusTCP模拟" class="headerlink" title="3.1本地ModbusTCP模拟"></a>3.1本地ModbusTCP模拟</h2><p>修改上面Poll/Slave的连接信息，将Connection选择Modbus TCP/IP，点击连接后可看到传输的数据</p>
+<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200611141355.png" alt=""></p>
+<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200611142128.png" alt=""></p>
+<h2 id="3-2连接thingsBoard-gateway"><a href="#3-2连接thingsBoard-gateway" class="headerlink" title="3.2连接thingsBoard-gateway"></a>3.2连接thingsBoard-gateway</h2><p>配置tb_gateway.yaml与modbus_serial.json;在tb_gateway.yaml中将连接配置指向modbus.json。</p>
+<p>tb_gateway.yaml中内容如下：</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">thingsboard</span><span class="token punctuation">:</span>
+  <span class="token key atrule">host</span><span class="token punctuation">:</span> <span class="token string">"ip"</span>
+  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">1883</span>
+  <span class="token key atrule">remoteConfiguration</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+  <span class="token key atrule">security</span><span class="token punctuation">:</span>
+    <span class="token key atrule">accessToken</span><span class="token punctuation">:</span> <span class="token string">"token"</span>
+<span class="token key atrule">storage</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> memory
+  <span class="token key atrule">read_records_count</span><span class="token punctuation">:</span> <span class="token number">100</span>
+  <span class="token key atrule">max_records_count</span><span class="token punctuation">:</span> <span class="token number">100000</span>
+<span class="token comment" spellcheck="true">#  type: file</span>
+<span class="token comment" spellcheck="true">#  data_folder_path: ./data/</span>
+<span class="token comment" spellcheck="true">#  max_file_count: 10</span>
+<span class="token comment" spellcheck="true">#  max_read_records_count: 10</span>
+<span class="token comment" spellcheck="true">#  max_records_per_file: 10000</span>
+<span class="token key atrule">connectors</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> Modbus Connector
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> modbus
+    <span class="token key atrule">configuration</span><span class="token punctuation">:</span> modbus.json</code></pre>
+<p>modbus.json内容如下：</p>
+<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"server"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"tcp"</span><span class="token punctuation">,</span>
+    <span class="token property">"host"</span><span class="token operator">:</span> <span class="token string">"10.49.0.66"</span><span class="token punctuation">,</span>
+    <span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">502</span><span class="token punctuation">,</span>
+    <span class="token property">"timeout"</span><span class="token operator">:</span> <span class="token number">35</span><span class="token punctuation">,</span>
+    <span class="token property">"method"</span><span class="token operator">:</span> <span class="token string">"socket"</span><span class="token punctuation">,</span>
+    <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
+    <span class="token property">"devices"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"unitId"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        <span class="token property">"deviceName"</span><span class="token operator">:</span> <span class="token string">"TCPDevice"</span><span class="token punctuation">,</span>
+        <span class="token property">"attributesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
+        <span class="token property">"timeseriesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
+        <span class="token property">"sendDataOnlyOnChange"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        <span class="token property">"timeseries"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"count"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"16int"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">0</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"rpc"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"setValue"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"bits"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">31</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"getValue"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"bits"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">31</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"setCPUFanSpeed"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"32int"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">16</span><span class="token punctuation">,</span>
+            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">33</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span><span class="token string">"getCPULoad"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"32int"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">35</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>最后在TB平台上能看到设备的遥测值：</p>
+<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200611142757.png" alt=""></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -548,7 +586,7 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me" rel="external nofollow noreferrer">Niww</a>
+                    <a href="http://niww.me" rel="external nofollow noreferrer">niww</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -558,7 +596,7 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me/2019/11/21/ThingsBoard%E7%BD%91%E5%85%B3%E9%85%8D%E7%BD%AE-Modbus/">http://niww.me/2019/11/21/ThingsBoard%E7%BD%91%E5%85%B3%E9%85%8D%E7%BD%AE-Modbus/</a>
+                    <a href="http://niww.me/2020/06/11/ThingsBoard%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5Modbus%E6%A8%A1%E6%8B%9F%E8%AE%BE%E5%A4%87/">http://niww.me/2020/06/11/ThingsBoard%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5Modbus%E6%A8%A1%E6%8B%9F%E8%AE%BE%E5%A4%87/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -571,7 +609,7 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="http://niww.me" target="_blank">Niww</a>
+                    <a href="http://niww.me" target="_blank">niww</a>
                     !
                 </span>
             </div>
@@ -765,34 +803,31 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2019/12/23/ThingsBoard-PE%E7%89%88%E7%A0%B4%E8%A7%A3/">
+                <a href="/2020/06/11/ThingsBoard%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5Modbus%E6%A8%A1%E6%8B%9F%E8%AE%BE%E5%A4%87/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="ThingsBoard PE版破解">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ThingsBoard网关连接Modbus模拟设备">
                         
-                        <span class="card-title">ThingsBoard PE版破解</span>
+                        <span class="card-title">ThingsBoard网关连接Modbus模拟设备</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ThingsBoard是一款开源的IOT平台，有CE,PE两个版本，PE版需要付费，功能也更加丰富。为了体验下PE版的功能，尝试着对PE版进行破解。
-
-
-按照官方文档进行安装，跳过步骤中的填写license部分
-
-启动服务，当然此时是无法访
+                            本篇介绍下如何使用ModbusSlave/ModbusPoll模拟ModbusRTU与ModbusTCP协议并与TB的Python网关对接。
+1.准备工具1.ModbusPoll(链接: https://pan.baidu.com/s/1c
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-23
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-11
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -805,6 +840,7 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -823,31 +859,31 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/18/%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88---CORS/">
+                <a href="/2020/06/10/Modbus%E6%B6%88%E6%81%AF%E5%B8%A7/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="跨域解决方案---CORS">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Modbus消息帧">
                         
-                        <span class="card-title">跨域解决方案---CORS</span>
+                        <span class="card-title">Modbus消息帧</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一、什么是跨域访问说到跨域访问，必须先解释一个名词：同源策略。所谓同源策略就是在浏览器端出于安全考量，向服务端发起请求必须满足：协议相同、Host(ip)相同、端口相同的条件，否则访问将被禁止，该访问也就被称为跨域访问。虽然跨域访问被禁止之
+                            Modbus消息帧串口通信消息帧在串口传输模式中（ASCII或RTU），传输设备以将Modbus消息转为有起点和终点的帧，这就允许接收的设备在消息起始处开始工作，读地址分配信息，判断哪一个设备被选中（广播方式则传给所有设备），判知何时信息已
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-09-18
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/SpringBoot/" class="post-category">
-                                    SpringBoot
+                            <a href="/categories/Modbus/" class="post-category">
+                                    Modbus
                                 </a>
                             
                             
@@ -857,8 +893,8 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/SpringBoot/">
-                        <span class="chip bg-color">SpringBoot</span>
+                    <a href="/tags/Modbus/">
+                        <span class="chip bg-color">Modbus</span>
                     </a>
                     
                 </div>

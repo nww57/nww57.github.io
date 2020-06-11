@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ThingsBoard PE版破解, Niww&#39;s Blog">
+    <meta name="keywords" content="ThingsBoard-Gateway（Java版）在树莓派上的使用-ModBus协议, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>ThingsBoard PE版破解 | Niww&#39;s Blog</title>
+    <title>ThingsBoard-Gateway（Java版）在树莓派上的使用-ModBus协议 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -240,12 +240,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ThingsBoard PE版破解</h1>
+                    <h1 class="description center-align post-title">ThingsBoard-Gateway（Java版）在树莓派上的使用-ModBus协议</h1>
                 </div>
             </div>
         </div>
@@ -387,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-12-23
+                    2019-11-21
                 </div>
                 
 
@@ -404,112 +404,118 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><a href="https://thingsboard.io/" target="_blank" rel="noopener">ThingsBoard是一款开源的IOT平台</a>，有CE,PE两个版本，PE版需要付费，功能也更加丰富。为了体验下PE版的功能，尝试着对<br>PE版进行破解。</p>
-<a id="more"></a>
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>ThingsBoard GateWay 是在ThingsBoard下的一款高度集成遗留系统和第三方系统上联接设备的开源解决方案。<br>具有以下几个特点：</p>
+<ul>
+<li>MQTT扩展 - 于控制、配置和收集使用现有协议连接到外部MQTT代理的IoT设备数据。</li>
+<li>OPC-UA扩展 - 收集连接到OPC-UA服务端的IoT设备数据。</li>
+<li>Sigfox扩展 - 收集连接到Sigfox后端的IoT设备数据。</li>
+<li>数据持久 - 网络和硬件异常时保证数据正常传输。</li>
+<li>自动重新连接到UlyncThings集群。</li>
+<li>将传入的数据和消息映射到统一格式。<br>本篇将介绍在树莓派上安装ThingsBoard GateWay使用Modbus协议遥测数据。<a id="more"></a>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1></li>
+</ul>
 <ol>
-<li><p>按照<a href="https://thingsboard.io/docs/user-guide/install/pe/windows/" target="_blank" rel="noopener">官方文档</a>进行安装，跳过步骤中的填写license部分</p>
-</li>
-<li><p>启动服务，当然此时是无法访问的。查看日志thingsboard.log发现最后有如下提示</p>
-<pre><code> 2019-12-24 09:14:50,056 [main] ERROR o.t.s.d.s.BasicSubscriptionService - License secret is not provided!
- 2019-12-24 09:14:50,057 [main] ERROR o.t.s.d.s.BasicSubscriptionService - Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!
- 2019-12-24 09:14:50,156 [Shutdown Thread] INFO  o.t.s.d.s.BasicSubscriptionService - Terminating application due to critical License Error GENERAL_ERROR(300), exit code [-1]...</code></pre><p>这里提示<code>BasicSubscriptionService</code>这个类中进行了license的检验，但是上面没有显示改类包路径，无法精确定位到改类的位置。</p>
-</li>
-<li><p>为了精确定位<code>BasicSubscriptionService</code>这个类的位置，对<code>conf/logback.xml</code>进行修改，将日志长度改大一点</p>
-<pre><code>&lt;encoder&gt;
-   &lt;pattern&gt;%d{ISO8601} [%thread] %-5level %logger{255} - %msg%n&lt;/pattern&gt;
-&lt;/encoder&gt;</code></pre></li>
-<li><p>再次重启服务，查看日志</p>
-<pre><code>2019-12-24 09:32:58,495 [main] ERROR org.thingsboard.server.dao.subscription.BasicSubscriptionService - License secret is not provided!
-2019-12-24 09:32:58,497 [main] ERROR org.thingsboard.server.dao.subscription.BasicSubscriptionService - Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!
-2019-12-24 09:32:58,504 [Shutdown Thread] INFO  org.thingsboard.server.dao.subscription.BasicSubscriptionService - Terminating application due to critical License Error GENERAL_ERROR(300), exit code [-1]...</code></pre><p>发现<code>org.thingsboard.server.dao.subscription.BasicSubscriptionService</code>这个类是再dao包下，解压<code>lib/thingsboard.jar</code>，找到依赖的<code>dao-2.4.2PE.jar</code>，解压找到<code>BasicSubscriptionService</code><br>最后发现检查license的地方在这里:</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@PostConstruct</span>
-   <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-       <span class="token keyword">if</span> <span class="token punctuation">(</span>StringUtils<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>licenseSecret<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-           log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"License secret is not provided!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-           log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-           <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">doExit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> LicenseErrorCode<span class="token punctuation">.</span>GENERAL_ERROR<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-       <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-           <span class="token keyword">try</span> <span class="token punctuation">{</span>
-               <span class="token keyword">this</span><span class="token punctuation">.</span>tbLicenseClient <span class="token operator">=</span> TbLicenseClient<span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listener</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">licenseSecret</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>licenseSecret<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">releaseDate</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SimpleDateFormat</span><span class="token punctuation">(</span><span class="token string">"yyyy-MM-dd"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span><span class="token string">"2019-09-13"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-               <span class="token keyword">this</span><span class="token punctuation">.</span>tbLicenseClient<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-           <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> var3<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-               log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"Failed to init license client"</span><span class="token punctuation">,</span> var3<span class="token punctuation">)</span><span class="token punctuation">;</span>
-               LicenseErrorCode licenseErrorCode <span class="token operator">=</span> var3 <span class="token keyword">instanceof</span> <span class="token class-name">LicenseException</span> <span class="token operator">?</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>LicenseException<span class="token punctuation">)</span>var3<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getErrorCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> LicenseErrorCode<span class="token punctuation">.</span>GENERAL_ERROR<span class="token punctuation">;</span>
-               <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">doExit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> licenseErrorCode<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-           <span class="token punctuation">}</span>
-       <span class="token punctuation">}</span>
-
-   <span class="token punctuation">}</span></code></pre>
-</li>
-<li><p>尝试重写该类中方法，将验证license那部分去掉。然后将新的<code>BasicSubscriptionService.class</code>替换掉之前的代码。<br>打开CE版的源码，在<code>dao</code>模块下新建<code>subscription</code>包，对照<code>dao-2.4.2PE.jar</code>中的内容，将<code>SubscriptionService</code>,<code>InstallSubscriptionService</code>,<code>BasicSubscriptionService</code>这3个类中的内容完全复制过来,<br>再重写<code>BasicSubscriptionService</code>中的方法，最后内容如下：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> org<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span>Logger<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span>LoggerFactory<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Value<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Profile<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>stereotype<span class="token punctuation">.</span>Service<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>thingsboard<span class="token punctuation">.</span>server<span class="token punctuation">.</span>common<span class="token punctuation">.</span>data<span class="token punctuation">.</span>id<span class="token punctuation">.</span>TenantId<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>thingsboard<span class="token punctuation">.</span>server<span class="token punctuation">.</span>common<span class="token punctuation">.</span>data<span class="token punctuation">.</span>subscription<span class="token punctuation">.</span>SubscriptionException<span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> javax<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>PostConstruct<span class="token punctuation">;</span>
-<span class="token keyword">import</span> javax<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>PreDestroy<span class="token punctuation">;</span>
-
-<span class="token annotation punctuation">@Service</span>
-<span class="token annotation punctuation">@Profile</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">"!install"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BasicSubscriptionService</span> <span class="token keyword">implements</span> <span class="token class-name">SubscriptionService</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> Logger log <span class="token operator">=</span> LoggerFactory<span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span>BasicSubscriptionService<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String MAX_DEVICES_KEY <span class="token operator">=</span> <span class="token string">"maxdevices"</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String MAX_ASSETS_KEY <span class="token operator">=</span> <span class="token string">"maxassets"</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String WHITELABELING_KEY <span class="token operator">=</span> <span class="token string">"whitelabeling"</span><span class="token punctuation">;</span>
-    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"${license.secret}"</span><span class="token punctuation">)</span>
-    <span class="token keyword">private</span> String licenseSecret<span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token function">BasicSubscriptionService</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@PostConstruct</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
+<li>启动ThingsBoard服务</li>
+<li><a href="https://thingsboard.io/docs/iot-gateway/install/rpi/" target="_blank" rel="noopener">在树莓派上安装ThingsBoard GateWay</a></li>
+<li><a href="https://thingsboard.io/docs/iot-gateway/getting-started/" target="_blank" rel="noopener">启动ThingsBoard GateWay服务</a></li>
+<li><a href="http://etrd.org/2017/01/29/%E6%A0%91%E8%8E%93%E6%B4%BE3%E7%A1%AC%E4%BB%B6%E4%B8%B2%E5%8F%A3%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E7%BC%96%E7%A8%8B/" target="_blank" rel="noopener">树莓派串口配置</a></li>
+<li><a href="http://www.waveshare.net/wiki/RS485_CAN_HAT" target="_blank" rel="noopener">树莓派RS485扩展板</a>一块,将扩展板插入树莓派，并与自己的传感设备连接好</li>
+<li><a href="https://harttle.land/2017/01/14/raspberrypi-uart.html" target="_blank" rel="noopener">将树莓派ttyAMA0串口权限开放</a><h1 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h1><h2 id="配置网关扩展"><a href="#配置网关扩展" class="headerlink" title="配置网关扩展"></a>配置网关扩展</h2><pre class=" language-$xslt"><code class="language-$xslt">[{
+ "id": "modbus-water",
+ "type": "MODBUS",
+ "configuration": {
+     "servers": [{
+         "transport": {
+             "type": "rtu",
+             "portName": "ttyAMA0",
+             "encoding": "rtu",
+             "timeout": 5000,
+             "baudRate": 9600,
+             "dataBits": 8,
+             "stopBits": 1,
+             "parity": "none"
+         },
+         "devices": [{
+             "unitId": 1,
+             "deviceName": "水压-设备1",
+             "attributesPollPeriod": 1000,
+             "timeseriesPollPeriod": 1000,
+             "attributes": [],
+             "timeseries": [{
+                 "tag": "pressure",
+                 "type": "long",
+                 "pollPeriod": 1000,
+                 "functionCode": 3,
+                 "address": 4,
+                 "registerCount": 1,
+                 "bit": 0,
+                 "byteOrder": "BIG"
+             }]
+         }]
+     }]
+ }
+}]
 </code></pre>
 </li>
 </ol>
-<pre><code>   }
+<pre><code>## 配置网关服务文件tb-gateway.yml
+```$xslt
+server:
+  # Server bind address
+  address: "0.0.0.0"
+  # Server bind port
+  port: "9090"
 
-   @PreDestroy
-   public void stop() {
+# Check new version updates parameters
+updates:
+  # Enable/disable updates checking.
+  enabled: "${UPDATES_ENABLED:true}"
 
-   }
-
-
-   @Override
-   public void createDeviceAllowed(TenantId tenantId) throws SubscriptionException {
-
-   }
-
-   @Override
-   public void createAssetAllowed(TenantId tenantId) throws SubscriptionException {
-
-   }
-
-   @Override
-   public void whiteLabelingAllowed(TenantId tenantId) throws SubscriptionException {
-
-   }
-
-   @Override
-   public boolean whiteLabelingEnabled(TenantId tenantId) throws SubscriptionException {
-      return true;
-   }</code></pre><p>   }</p>
-<pre><code>(这步过程中`SubscriptionService`类中有个异常类`SubscriptionException`是在`common`模块下的，CE版中也没有这个类，需要按照路径在CE版中生成，然后重新编译`common`模块)
-
-6. 编译`dao`模块，拿到`BasicSubscriptionService.class`
-
-7. 重新生成`dao-2.4.2PE.jar`,使用jar命令替换，在`dao-2.4.2PE.jar`同目录下新建目录`org\thingsboard\server\dao\subscription`,将`BasicSubscriptionService.class`放到该目录下，
-执行`jar uf dao-2.4.2PE.jar org\thingsboard\server\dao\subscription\BasicSubscriptionService.class`此时`dao-2.4.2PE.jar`已经更新完。
-
-8. 重新生成`thingsboard.jar`，解压之间的`thingsboard.jar`,得到3个目录`BOOT-INF`,`META-INF`,`org`,将上一步生成的`dao-2.4.2PE.jar`放入`BOOT-INF\lib`中，
-执行`jar cf0M thingsboard.jar *`生成新的jar包
-
-9. 用新的thingsboard.jar替换掉lib中的jar包重新install或者直接执行都可以（java -jar thingsboard.jar,需要修改jar包中的yml配置文件）。</code></pre><script>
+gateways:
+  tenants:
+    -
+      label: "Tenant"
+      reporting:
+        interval: 60000
+      persistence:
+        type: file
+        path: storage
+        bufferSize: 1000
+      connection:
+        host: #ThingsBoard服务地址#
+        port: 1883
+        retryInterval: 3000
+        maxInFlight: 1000
+        security:
+          accessToken: #网关设备的令牌#
+      remoteConfiguration: true
+      extensions:
+        -
+          id: "http"
+          type: "HTTP"
+          extensionConfiguration: http-config.json</code></pre><h2 id="重启GateWay服务"><a href="#重启GateWay服务" class="headerlink" title="重启GateWay服务"></a>重启GateWay服务</h2><p>#问题<br>整个安装配置过程中出现了一个问题花了好久，在配置并重启GateWay服务后，发现网关设备始终没有同步，查看日志后发现</p>
+<pre class=" language-$xslt"><code class="language-$xslt">2019-11-19 18:36:13,160 [pool-1-thread-1] ERROR o.t.g.extensions.modbus.ModbusClient - MBS[ttyAMA0] connection failed!
+java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid ports are: [ttyAMA0]
+    at com.ghgande.j2mod.modbus.net.SerialConnection.open(SerialConnection.java:127)
+    at com.ghgande.j2mod.modbus.facade.ModbusSerialMaster.connect(ModbusSerialMaster.java:96)
+    at org.thingsboard.gateway.extensions.modbus.ModbusClient.connect(ModbusClient.java:121)
+    at java.util.ArrayList.forEach(ArrayList.java:1257)
+    at org.thingsboard.gateway.extensions.modbus.DefaultModbusService.init(DefaultModbusService.java:64)
+    at org.thingsboard.gateway.service.TenantServiceRegistry.updateExtensionConfiguration(TenantServiceRegistry.java:83)
+    at org.thingsboard.gateway.service.DefaultTenantManagerService.lambda$init$0(DefaultTenantManagerService.java:64)
+    at org.thingsboard.gateway.service.gateway.MqttGatewayService.updateConfiguration(MqttGatewayService.java:515)
+    at org.thingsboard.gateway.service.gateway.MqttGatewayService.onGatewayAttributesGet(MqttGatewayService.java:496)
+    at org.thingsboard.gateway.service.gateway.MqttGatewayService.lambda$onMessage$17(MqttGatewayService.java:426)
+    at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+    at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+    at java.lang.Thread.run(Thread.java:748)
+2019-11-19 18:36:13,165 [pool-1-thread-1] ERROR o.t.g.e.modbus.DefaultModbusService - [Tenant] Modbus service initialization failed
+</code></pre>
+<p>日志显示ttyAMA0口不能打开或不存在。dose not exist肯定是不可能的，那就是串口打不开。<br>最后在<a href="https://harttle.land/2017/01/14/raspberrypi-uart.html" target="_blank" rel="noopener">这里</a>找到了解决办法。将ttyAMA0口的权限设置为任何人可以读，写。<br>在<code>/etc/udev/rules.d</code>中添加100-ttyAMA0.rules,内容为：</p>
+<pre class=" language-$xslt"><code class="language-$xslt">KERNEL=="ttyAMA0", MODE="666"</code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -552,7 +558,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me/2019/12/23/ThingsBoard-PE%E7%89%88%E7%A0%B4%E8%A7%A3/">http://niww.me/2019/12/23/ThingsBoard-PE%E7%89%88%E7%A0%B4%E8%A7%A3/</a>
+                    <a href="http://niww.me/2019/11/21/ThingsBoard%E7%BD%91%E5%85%B3%E9%85%8D%E7%BD%AE(Java%E7%89%88)-Modbus/">http://niww.me/2019/11/21/ThingsBoard%E7%BD%91%E5%85%B3%E9%85%8D%E7%BD%AE(Java%E7%89%88)-Modbus/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -763,82 +769,30 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/12/28/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/Git/%E9%AB%98%E9%A2%91%E4%BD%BF%E7%94%A8%E7%9A%84Git%E5%91%BD%E4%BB%A4%E9%9B%86%E5%90%88/">
+                <a href="/2019/12/23/ThingsBoard-PE%E7%89%88%E7%A0%B4%E8%A7%A3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="高频使用的Git命令集合">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="ThingsBoard PE版破解">
                         
-                        <span class="card-title">高频使用的Git命令集合</span>
+                        <span class="card-title">ThingsBoard PE版破解</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            前言汇总下我在项目中高频使用的git命令及姿势
+                            ThingsBoard是一款开源的IOT平台，有CE,PE两个版本，PE版需要付费，功能也更加丰富。为了体验下PE版的功能，尝试着对PE版进行破解。
 
 
-不是入门文档，官方文档肯定比我全面，这里是结合实际业务场景输出
-使用的 Git版本：git version 2.24.0
-git log查看日志，常规操作，必备
-# 输出概要日志,这条命令
+按照官方文档进行安装，跳过步骤中的填写license部分
+
+启动服务，当然此时是无法访
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-28
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-23
                         </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" class="post-category">
-                                    开发工具
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Git/">
-                        <span class="chip bg-color">Git</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2019/11/21/ThingsBoard%E7%BD%91%E5%85%B3%E9%85%8D%E7%BD%AE(Java%E7%89%88)-Modbus/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="ThingsBoard-Gateway（Java版）在树莓派上的使用-ModBus协议">
-                        
-                        <span class="card-title">ThingsBoard-Gateway（Java版）在树莓派上的使用-ModBus协议</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            前言ThingsBoard GateWay 是在ThingsBoard下的一款高度集成遗留系统和第三方系统上联接设备的开源解决方案。具有以下几个特点：
-
-MQTT扩展 - 于控制、配置和收集使用现有协议连接到外部MQTT代理的IoT设备数据
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-11-21
-                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -856,6 +810,55 @@ MQTT扩展 - 于控制、配置和收集使用现有协议连接到外部MQTT代
                     
                     <a href="/tags/ThingsBoard/">
                         <span class="chip bg-color">ThingsBoard</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/09/18/%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88---CORS/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="跨域解决方案---CORS">
+                        
+                        <span class="card-title">跨域解决方案---CORS</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一、什么是跨域访问说到跨域访问，必须先解释一个名词：同源策略。所谓同源策略就是在浏览器端出于安全考量，向服务端发起请求必须满足：协议相同、Host(ip)相同、端口相同的条件，否则访问将被禁止，该访问也就被称为跨域访问。虽然跨域访问被禁止之
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-09-18
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/SpringBoot/" class="post-category">
+                                    SpringBoot
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/SpringBoot/">
+                        <span class="chip bg-color">SpringBoot</span>
                     </a>
                     
                 </div>
