@@ -439,15 +439,15 @@ SQL> SELECT * FROM "TEST";
 <p>ID   NAME</p>
 <hr>
 <p>100 name1<br>101 name2<br>102 name3</p>
-<pre><code>为了简化插入操作，我们还可以创建一个触发器，当将数据插入到 "TEST" 表的时候，自动将最新的 ID 插入进去。
+<pre><code>为了简化插入操作，我们还可以创建一个触发器，当将数据插入到 &quot;TEST&quot; 表的时候，自动将最新的 ID 插入进去。
 ## 2.创建触发器
 ```oraclesqlplus
 CREATE OR REPLACE TRIGGER TEST_ID_SEQ
-BEFORE INSERT ON "TEST"
+BEFORE INSERT ON &quot;TEST&quot;
 FOR EACH ROW
 BEGIN
   SELECT TEST_ID_SEQ.NEXTVAL
-  INTO :NEW."ID"
+  INTO :NEW.&quot;ID&quot;
   FROM DUAL;
 END;</code></pre><p>插入数据：</p>
 <pre class=" language-oraclesqlplus"><code class="language-oraclesqlplus">SQL> INSERT INTO "TEST" ("ID", "NAME") VALUES (NULL, 'name4');
@@ -491,25 +491,7 @@ ID   NAME
     NAME VARCHAR2(50BYTE) NOT NULL
 );</code></pre>
 <p>这样就搞定了！和 MySQL 一样简单！</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 

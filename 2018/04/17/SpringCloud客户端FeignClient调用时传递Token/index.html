@@ -413,7 +413,7 @@
 <h2 id="实现接口RequestInterceptor"><a href="#实现接口RequestInterceptor" class="headerlink" title="实现接口RequestInterceptor"></a>实现接口RequestInterceptor</h2><p>假设我们在验证权限的时候放在请求头里面的就叫token，我们先获取当前请求中的token，然后放到Feign的请求头上，当然具体还是要根据自己的业务来,这里就简单实现一下</p>
 <pre><code>public class FeignConfigInterceptor implements RequestInterceptor{
 
-    @Value("${jwt.header}")
+    @Value(&quot;${jwt.header}&quot;)
     private String tokenHeader;
     @Override
     public void apply(RequestTemplate requestTemplate) {
@@ -439,31 +439,13 @@
         return map;
     }
 }</code></pre><h2 id="使用创建的FeignConfigInterceptor"><a href="#使用创建的FeignConfigInterceptor" class="headerlink" title="使用创建的FeignConfigInterceptor"></a>使用创建的FeignConfigInterceptor</h2><p>在@FeignClient注解里面的属性加上configuration = FeignConfigInterceptor.class</p>
-<pre><code>@FeignClient(name = "user",url = "localhost:8081",configuration = FeignConfigInterceptor.class)
+<pre><code>@FeignClient(name = &quot;user&quot;,url = &quot;localhost:8081&quot;,configuration = FeignConfigInterceptor.class)
 public interface UserServiceClient {
 
 }</code></pre><p>这时候再调用就会发现已经携带token了。</p>
 <h2 id="插曲"><a href="#插曲" class="headerlink" title="插曲"></a>插曲</h2><p>在获取request所有的头信息的时候，使用 <code>request.getHeaderNames()</code>遍历后(即上文的<code>private Map&lt;String String&gt; getHeaders(HttpServletRequest request)</code>方法)，其中的key全部为小写。而我定义的<code>tokenHeader</code>是有大小写的，因此任然匹配不上。最后发现，直接使用<code>request.getHeader(String var1)</code>这个方法就可以获取到值。</p>
 <h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>其实实现了RequestInterceptor后，直接使用@Configuration注解，不在FeignClient里面加属性也是可以的。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 

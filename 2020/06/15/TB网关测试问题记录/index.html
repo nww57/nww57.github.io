@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="修改.gitignore文件没有生效, Niww&#39;s Blog">
+    <meta name="keywords" content="TB网关测试问题记录, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>修改.gitignore文件没有生效 | Niww&#39;s Blog</title>
+    <title>TB网关测试问题记录 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -245,7 +245,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">修改.gitignore文件没有生效</h1>
+                    <h1 class="description center-align post-title">TB网关测试问题记录</h1>
                 </div>
             </div>
         </div>
@@ -362,8 +362,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Git/">
-                                <span class="chip bg-color">Git</span>
+                            <a href="/tags/ThingsBoard/">
+                                <span class="chip bg-color">ThingsBoard</span>
                             </a>
                         
                     </div>
@@ -374,8 +374,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" class="post-category">
-                                问题记录
+                            <a href="/categories/ThingsBoard/" class="post-category">
+                                ThingsBoard
                             </a>
                         
                     </div>
@@ -387,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2018-03-09
+                    2020-06-15
                 </div>
                 
 
@@ -404,12 +404,14 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>在使用git的时候我们有时候需要忽略一些文件或者文件夹。我们一般在仓库的根目录创建.gitignore文件<br>在提交之前，修改.gitignore文件，添加需要忽略的文件。然后再做add/commit/push等。<br>但是有时在使用过称中，需要对.gitignore文件进行再次的修改。这时我们需要清除一下缓存cache，才能是.gitignore 生效。</p>
-<a id="more"></a>
-<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><pre><code>git rm -r --cached .  #清除缓存
-git add . #重新trace file
-git commit -m &quot;update .gitignore&quot; #提交和注释
-git push origin master #可选，如果需要同步到remote上的话</code></pre>
+                <h1 id="一、Modbus网关配置"><a href="#一、Modbus网关配置" class="headerlink" title="一、Modbus网关配置"></a>一、Modbus网关配置</h1><p>1.attributes/timeseries下面的参数需要加上”byteOrder”: “BIG”</p>
+<p>2.同时采集多个设备，要修改设备地址，值对应devices配置下的unitId</p>
+<p>3.Modbus多主机多从机是否可行？<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200615164134.png" alt=""></p>
+<ul>
+<li><a href="https://www.konnad.com/product/serial-to-serial-converter/" target="_blank" rel="noopener">康耐德串口转换器</a></li>
+<li><a href="http://bbs.gongkong.com/d/201407/570336_1.shtml" target="_blank" rel="noopener">modbus代理</a>,<a href="https://item.taobao.com/item.htm?spm=a230r.1.14.16.52932ade35mdEM&id=40352800001&ns=1&abbucket=9#detail" target="_blank" rel="noopener">代理设备</a><br><a href="https://v.youku.com/v_show/id_XMTQxNjI3NjkxMg==.html?spm=a2h0c.8166622.PhoneSokuUgc_1.dtitle" target="_blank" rel="noopener">视频</a></li>
+</ul>
+
             </div>
             <hr/>
 
@@ -424,7 +426,7 @@ git push origin master #可选，如果需要同步到remote上的话</code></pr
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me" rel="external nofollow noreferrer">Niww</a>
+                    <a href="http://niww.me" rel="external nofollow noreferrer">niww</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -434,7 +436,7 @@ git push origin master #可选，如果需要同步到remote上的话</code></pr
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me/2018/03/09/%E4%BF%AE%E6%94%B9.gitignore%E6%96%87%E4%BB%B6%E6%B2%A1%E6%9C%89%E7%94%9F%E6%95%88/">http://niww.me/2018/03/09/%E4%BF%AE%E6%94%B9.gitignore%E6%96%87%E4%BB%B6%E6%B2%A1%E6%9C%89%E7%94%9F%E6%95%88/</a>
+                    <a href="http://niww.me/2020/06/15/TB%E7%BD%91%E5%85%B3%E6%B5%8B%E8%AF%95%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">http://niww.me/2020/06/15/TB%E7%BD%91%E5%85%B3%E6%B5%8B%E8%AF%95%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -447,7 +449,7 @@ git push origin master #可选，如果需要同步到remote上的话</code></pr
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="http://niww.me" target="_blank">Niww</a>
+                    <a href="http://niww.me" target="_blank">niww</a>
                     !
                 </span>
             </div>
@@ -472,8 +474,8 @@ git push origin master #可选，如果需要同步到remote上的话</code></pr
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Git/">
-                                    <span class="chip bg-color">Git</span>
+                                <a href="/tags/ThingsBoard/">
+                                    <span class="chip bg-color">ThingsBoard</span>
                                 </a>
                             
                         </div>
@@ -641,49 +643,50 @@ git push origin master #可选，如果需要同步到remote上的话</code></pr
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2018/03/12/npm%E5%AE%89%E8%A3%85express%20npm%20ERR!/">
+                <a href="/2020/06/15/TB%E7%BD%91%E5%85%B3%E6%B5%8B%E8%AF%95%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="npm 安装express npm ERR!">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="TB网关测试问题记录">
                         
-                        <span class="card-title">npm 安装express npm ERR!</span>
+                        <span class="card-title">TB网关测试问题记录</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            换了台电脑，想把博客环境在本机搭建起来，在执行npm时报错了。
-npm  安装 express  出现
-npm ERR! code UNABLE_TO_VERIFY_LEAF_SIGNATURE
-npm ERR! errno UNABLE_
+                            一、Modbus网关配置1.attributes/timeseries下面的参数需要加上”byteOrder”: “BIG”
+2.同时采集多个设备，要修改设备地址，值对应devices配置下的unitId
+3.Modbus多主机多从机是否可
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2018-03-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" class="post-category">
-                                    问题记录
+                            <a href="/categories/ThingsBoard/" class="post-category">
+                                    ThingsBoard
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Error/">
-                        <span class="chip bg-color">Error</span>
+                    <a href="/tags/ThingsBoard/">
+                        <span class="chip bg-color">ThingsBoard</span>
                     </a>
                     
                 </div>
@@ -697,31 +700,32 @@ npm ERR! errno UNABLE_
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/03/05/Hexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0Gitalk%E8%AF%84%E8%AE%BA/">
+                <a href="/2020/06/11/ThingsBoard%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5Modbus%E6%A8%A1%E6%8B%9F%E8%AE%BE%E5%A4%87/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Hexo博客添加Gitalk评论">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ThingsBoard网关连接Modbus模拟设备">
                         
-                        <span class="card-title">Hexo博客添加Gitalk评论</span>
+                        <span class="card-title">ThingsBoard网关连接Modbus模拟设备</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Hexo支持本身多款评论插件，但是多说，网易云跟贴都已经下线。Disqus也被挡在墙外，友言貌似也不行。Gitalk:一个基于 Github Issue 和 Preact 开发的评论插件，类似Gitment详情Demo可见：https://
+                            本篇介绍下如何使用ModbusSlave/ModbusPoll模拟ModbusRTU与ModbusTCP协议并与TB的Python网关对接。
+1.准备工具1.ModbusPoll(链接: https://pan.baidu.com/s/1c
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-03-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-11
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Hexo%E5%8D%9A%E5%AE%A2/" class="post-category">
-                                    Hexo博客
+                            <a href="/categories/ThingsBoard/" class="post-category">
+                                    ThingsBoard
                                 </a>
                             
                             
@@ -731,8 +735,8 @@ npm ERR! errno UNABLE_
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Hexo/">
-                        <span class="chip bg-color">Hexo</span>
+                    <a href="/tags/ThingsBoard/">
+                        <span class="chip bg-color">ThingsBoard</span>
                     </a>
                     
                 </div>

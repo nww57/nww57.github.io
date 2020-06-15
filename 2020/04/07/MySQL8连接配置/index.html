@@ -411,25 +411,7 @@
 <p>意思就是要更换驱动类</p>
 <h2 id="2-连接url参数配置"><a href="#2-连接url参数配置" class="headerlink" title="2.连接url参数配置"></a>2.连接url参数配置</h2><p>需要再url中指明编码格式，SSL，时区等信息<br>完整配置：</p>
 <pre class=" language-yaml"><code class="language-yaml"> <span class="token key atrule">url</span><span class="token punctuation">:</span> jdbc<span class="token punctuation">:</span>mysql<span class="token punctuation">:</span>//localhost<span class="token punctuation">:</span>3306/test<span class="token punctuation">?</span>useUnicode=true<span class="token important">&amp;characterEncoding</span>=utf<span class="token punctuation">-</span>8<span class="token important">&amp;useSSL</span>=false<span class="token important">&amp;serverTimezone</span>=GMT%2B8</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 

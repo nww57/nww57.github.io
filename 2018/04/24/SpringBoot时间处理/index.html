@@ -409,13 +409,13 @@
 </blockquote>
 <a id="more"></a>
 <h1 id="Controller接收参数"><a href="#Controller接收参数" class="headerlink" title="Controller接收参数"></a>Controller接收参数</h1><p>在Spring中，接收LocalDateTime日期时间数据时，只需要使用@DateTimeFormat注解即可。@DateTimeFormat可以注解在字段、参数以及方法上，如果接收的为DTO，则需要将@DateTimeFormat注解在DTO中的字段上。(注意：前台传的参数格式必须与<code>pattern</code>定义格式一致)</p>
-<pre><code>@GetMapping("date")
-public Object date(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime date) {
+<pre><code>@GetMapping(&quot;date&quot;)
+public Object date(@RequestParam @DateTimeFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;) LocalDateTime date) {
     return date;
 }
 
-@GetMapping("date2")
-public Object date(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+@GetMapping(&quot;date2&quot;)
+public Object date(@RequestParam @DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;) LocalDate date) {
     return date;
 }</code></pre><h1 id="ResponseBody格式化LocalDateTime"><a href="#ResponseBody格式化LocalDateTime" class="headerlink" title="ResponseBody格式化LocalDateTime"></a>ResponseBody格式化LocalDateTime</h1><p>Spring默认使用使用jackson来进行json格式转换。这里需要加入<code>jackson</code>的<code>jsr310</code>扩展包。</p>
 <pre><code>&lt;dependency&gt;
@@ -427,27 +427,27 @@ public Object date(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDa
     /**
      * 创建时间
      */
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern=&quot;yyyy-MM-dd HH:mm:ss&quot;)
+    @DateTimeFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)
     private LocalDateTime createDate;
 
     //get/set方法省略
 
 }</code></pre><h2 id="使用ObjectMapper"><a href="#使用ObjectMapper" class="headerlink" title="使用ObjectMapper"></a>使用ObjectMapper</h2><p>使用<code>@Bean</code>注解创建一个ObjectMapperBean，并将<code>JavaTimeModule</code>注册到ObjectMapper中即可，<code>spring</code>会使用该bean创建<code>MappingJackson2HttpMessageConverter</code>进行<code>json</code>格式转换。</p>
-<pre><code>@Bean(name = "mapperObject")
+<pre><code>@Bean(name = &quot;mapperObject&quot;)
 @Primary
 public ObjectMapper getObjectMapper() {
     ObjectMapper om = new ObjectMapper();
     JavaTimeModule javaTimeModule = new JavaTimeModule();
-    javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-    javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-    javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
+    javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss&quot;)));
+    javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;)));
+    javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(&quot;HH:mm:ss&quot;)));
     om.registerModule(javaTimeModule);
     return om;
 }</code></pre><h1 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h1><p>在使用 <code>@DateFormat</code>进行参数转换的时候，只能接收url参数，或者表单提交参数。如果参数对象是以JSON传递过来的，这时使用该注解就无法进行转化。</p>
 <pre><code>@RestController
 public class Controller {
-    @PostMapping("/")
+    @PostMapping(&quot;/&quot;)
     public void post(@RequestBody InfoDTO infoDTO) {}
 }</code></pre><pre><code>public class InfoDTO {
 
@@ -455,30 +455,12 @@ public class Controller {
      * 创建时间
      */
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonFormat(pattern = "yyyyMMdd")
+    @JsonFormat(pattern = &quot;yyyyMMdd&quot;)
     private LocalDateTime createDate;
 
     //get/set方法省略
 
-}</code></pre><script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+}</code></pre>
             </div>
             <hr/>
 

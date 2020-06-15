@@ -404,8 +404,16 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="简介-Modbus是一种通信协议-用于不同厂商之间的设备交换数据"><a href="#简介-Modbus是一种通信协议-用于不同厂商之间的设备交换数据" class="headerlink" title="简介:Modbus是一种通信协议,用于不同厂商之间的设备交换数据"></a>简介:Modbus是一种通信协议,用于不同厂商之间的设备交换数据</h2><p>Modbus是一种串行通信协议，是Modicon公司（现在的施耐德电气 Schneider Electric）于1979年为使用可编程逻辑控制器（PLC）通信而发表。<br>Modbus已经成为工业领域通信协议的业界标准，并且现在是工业电子设备之间常用的连接方式。<br>Modbus在工业环境下很流行，因为它是公开发布而免版税的。它是为工业应用开发的，与其他标准相比，它相对易于部署和维护，除了要传输的数据格式的大小外，几乎没有其他限制。</p>
-<h2 id="Modbus与RS485、RS232、RS422之间的关系"><a href="#Modbus与RS485、RS232、RS422之间的关系" class="headerlink" title="Modbus与RS485、RS232、RS422之间的关系"></a>Modbus与RS485、RS232、RS422之间的关系</h2><p> 上面说了，Modbus其实只是一种通信协议（软件），就像汉语和英语一样，就是一种交流语言，一种机器之间的交流语言。那么交流就要有沟通的桥梁或者说传输的介质（硬件），不同的介质（硬件平台）具有不同的电气特性和连接方式，比如RS232，RS485；<br> 如果把Modbus比作英语，RS232比作印度人，RS485比作美国人，印度人之间讲英语时，理解为基于RS232的modbus通信，美国人之间讲英语时，理解为基于RS485的modbus通信。<br> 总的来说，Modbus需要通过多种类型的物理介质进行通信，例如：</p>
+                <h2 id="1-简介-Modbus是一种通信协议-用于不同厂商之间的设备交换数据"><a href="#1-简介-Modbus是一种通信协议-用于不同厂商之间的设备交换数据" class="headerlink" title="1.简介:Modbus是一种通信协议,用于不同厂商之间的设备交换数据"></a>1.简介:Modbus是一种通信协议,用于不同厂商之间的设备交换数据</h2><p>Modbus是一种串行通信协议，是Modicon公司（现在的施耐德电气 Schneider Electric）于1979年为使用可编程逻辑控制器（PLC）通信而发表。<br>Modbus已经成为工业领域通信协议的业界标准，并且现在是工业电子设备之间常用的连接方式。<br>Modbus在工业环境下很流行，因为它是公开发布而免版税的。它是为工业应用开发的，与其他标准相比，它相对易于部署和维护，除了要传输的数据格式的大小外，几乎没有其他限制。</p>
+<h2 id="2-Modbus与RS485、RS232、RS422之间的关系"><a href="#2-Modbus与RS485、RS232、RS422之间的关系" class="headerlink" title="2.Modbus与RS485、RS232、RS422之间的关系"></a>2.Modbus与RS485、RS232、RS422之间的关系</h2><h3 id="2-1-1-什么是RS485"><a href="#2-1-1-什么是RS485" class="headerlink" title="2.1.1.什么是RS485"></a>2.1.1.什么是RS485</h3><p>通讯协议主要是实现两个设备之间的数据交换功能，通讯协议分硬件层协议和软件层协议。硬件层协议决定数据如何传输问题，比如要在设备1向设备2发送0x63，0x63的二进制数为0110 0011，这8个二进制数从设备1传输到设备2，涉及到1怎么传，0怎么传的问题，这就是硬件层要解决的问题。<br>RS485就是硬件层协议，同类的还有RS232，SPI，IIC等。</p>
+<h3 id="2-1-2-RS485电气特性"><a href="#2-1-2-RS485电气特性" class="headerlink" title="2.1.2.RS485电气特性"></a>2.1.2.RS485电气特性</h3><p>RS485的电气特性：</p>
+<ul>
+<li>逻辑“1”以两线之间电压差+（2-6）V表示；</li>
+<li>逻辑“0”以两线之间电压差-（2-6）V表示；<br>接口信号电平比RS232（3-15V）降低了，就不容易损坏接口电路的芯片，且该电平与TTL电平兼容，可方便与TTL电路连接。</li>
+</ul>
+<p>RS485标准只对接口的电气特性做出决定，而不涉及接插件、电缆、协议；因此用户需要再RS485应用的网络基础上建立自己的应用层通信协议。<br>而Modbus就是应用层协议的一种，还有其他协议，如电表的645协议，也可用自己制定简单的通讯协议。</p>
+<h3 id="2-2-Modbus与RS485"><a href="#2-2-Modbus与RS485" class="headerlink" title="2.2.Modbus与RS485"></a>2.2.Modbus与RS485</h3><p>Modbus与RS485在OSI模型中的位置：<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200615155318.png" alt=""></p>
+<p>上面说了，Modbus其实只是一种通信协议（软件），就像汉语和英语一样，就是一种交流语言，一种机器之间的交流语言。那么交流就要有沟通的桥梁或者说传输的介质（硬件），不同的介质（硬件平台）具有不同的电气特性和连接方式，比如RS232，RS485；<br>如果把Modbus比作英语，RS232比作印度人，RS485比作美国人，印度人之间讲英语时，理解为基于RS232的modbus通信，美国人之间讲英语时，理解为基于RS485的modbus通信。<br>总的来说，Modbus需要通过多种类型的物理介质进行通信，例如：</p>
 <ul>
 <li><p>串行RS232</p>
 </li>
@@ -415,7 +423,7 @@
 </li>
 <li><p>以太网<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Communication-Physical-Media.gif" alt=""></p>
 <p>最初的Modbus接口在RS-232串行通信上运行，但是大多数后来的Modbus实现使用RS-485，因为它允许：距离更长，速度更快，单个多点网络可接多个设备。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/0910022P4-5.jpg" alt=""></p>
-<h2 id="通信协议"><a href="#通信协议" class="headerlink" title="通信协议"></a>通信协议</h2><p>串行端口和以太网存在多种版本的Modbus协议，最常见的是:</p>
+<h2 id="3-Modbus通信协议"><a href="#3-Modbus通信协议" class="headerlink" title="3.Modbus通信协议"></a>3.Modbus通信协议</h2><p>串行端口和以太网存在多种版本的Modbus协议，最常见的是:</p>
 </li>
 <li><p>Modbus RTU</p>
 </li>
@@ -423,9 +431,15 @@
 </li>
 <li><p>Modbus TCP</p>
 <p>Modbus RTU,Modbus ASCII所用的物理硬件接口都是串行（Serial）通讯口（RS485，RS232，RS422），而Modbus TCP则是为了顺应当今世界发展潮流，什么都可以<br>用Ethernet网或者Internet来连接，传送数据。所以有了Modbus TCP模式，该模式的硬件接口就是<strong>以太网</strong>（Ethernet）口了，也就是我们电脑上一般用的网络口。<br>Modbu还有一个扩展版本Modbus Plus（Modbus+或者MB+），该协议是Modicon专有的，和Modbus不同。它需要一个专门的协处理器来处理类似HDLC的高速令牌旋转。它使用1Mbit/s的双绞线，并且每个节点都有转换隔离装置，是一种采用转换/边缘触发而不是电压/水平触发的装置。连接Modbus Plus到计算机需要特别的接口，通常是支持ISA（SA85），PCI或者PMCIA总线的板卡。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Different-Types.jpg" alt=""></p>
-<h2 id="通信方式：主站-从站"><a href="#通信方式：主站-从站" class="headerlink" title="通信方式：主站-从站"></a>通信方式：主站-从站</h2><p>Modbus 串行链路协议是一个主-从协议。 在同一时刻，只有一个主节点连接于总线，一个或多个子节点 (最大编号为 247 ) 连接于同一个串行总线。子节点之间从不会互相通信。<br>主节点有两种方式与子节点发出请求：</p>
-<p>（1） 单播模式 ：点对点发送，主节点发送请求，子节点回应。</p>
-<p>（2） 广播模式 ：广播发送，主节点发送，子节点不回应。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Message-Architecture.jpg" alt=""><br>Modbus设备使用Master-Slave（Ethernet称为Client-Server）技术进行通信，其中只有一个设备（Master 或Server）可以请求数据（称为查询）。</p>
+<h2 id="4-Modbus通信方式：主-从模式"><a href="#4-Modbus通信方式：主-从模式" class="headerlink" title="4.Modbus通信方式：主-从模式"></a>4.Modbus通信方式：主-从模式</h2><p>Modbus串行链路协议是一个主-从协议。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20170510133926081.png" alt=""></p>
+<ul>
+<li>至少且只有1个主机，其他都是从机</li>
+<li>不管任何时候，从机都不能主动向主机发送数据</li>
+<li>主机具有访问从机的权限，从机不可主动访问从机，任何一次数据交换，都要由主机发起</li>
+</ul>
+<p>在同一时刻，只有一个主节点连接于总线，一个或多个子节点 (最大编号为 247 ) 连接于同一个串行总线。子节点之间从不会互相通信。<br>主节点有两种方式与子节点发出请求：</p>
+<p>（1） 单播模式：点对点发送，主节点发送请求，子节点回应。</p>
+<p>（2） 广播模式：广播发送，主节点发送，子节点不回应。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Message-Architecture.jpg" alt=""><br>Modbus设备使用Master-Slave（Ethernet称为Client-Server）技术进行通信，其中只有一个设备（Master 或Server）可以请求数据（称为查询）。</p>
 <p>其他设备（Slaves或Clients）通过将请求的数据提供给主服务器或执行查询中请求的操作来进行响应。</p>
 <p>从站是任何外围设备，例如I / O传感器，阀门，网络驱动器或其他测量类型的设备，它们处理信息并使用Modbus将其响应消息发送到主设备。</p>
 <p>主机可以寻址单个从机或向所有从机发起广播消息。从站将分别对所有寻址到它们的消息查询返回响应，但不响应广播消息。</p>
@@ -434,25 +448,7 @@
 <p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Master-Query-and-Reply.gif" alt=""></p>
 </li>
 </ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 

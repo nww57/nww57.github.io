@@ -462,19 +462,19 @@
 ```$xslt
 server:
   # Server bind address
-  address: "0.0.0.0"
+  address: &quot;0.0.0.0&quot;
   # Server bind port
-  port: "9090"
+  port: &quot;9090&quot;
 
 # Check new version updates parameters
 updates:
   # Enable/disable updates checking.
-  enabled: "${UPDATES_ENABLED:true}"
+  enabled: &quot;${UPDATES_ENABLED:true}&quot;
 
 gateways:
   tenants:
     -
-      label: "Tenant"
+      label: &quot;Tenant&quot;
       reporting:
         interval: 60000
       persistence:
@@ -491,8 +491,8 @@ gateways:
       remoteConfiguration: true
       extensions:
         -
-          id: "http"
-          type: "HTTP"
+          id: &quot;http&quot;
+          type: &quot;HTTP&quot;
           extensionConfiguration: http-config.json</code></pre><h2 id="重启GateWay服务"><a href="#重启GateWay服务" class="headerlink" title="重启GateWay服务"></a>重启GateWay服务</h2><p>#问题<br>整个安装配置过程中出现了一个问题花了好久，在配置并重启GateWay服务后，发现网关设备始终没有同步，查看日志后发现</p>
 <pre class=" language-$xslt"><code class="language-$xslt">2019-11-19 18:36:13,160 [pool-1-thread-1] ERROR o.t.g.extensions.modbus.ModbusClient - MBS[ttyAMA0] connection failed!
 java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid ports are: [ttyAMA0]
@@ -515,25 +515,7 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
 </code></pre>
 <p>日志显示ttyAMA0口不能打开或不存在。dose not exist肯定是不可能的，那就是串口打不开。<br>最后在<a href="https://harttle.land/2017/01/14/raspberrypi-uart.html" target="_blank" rel="noopener">这里</a>找到了解决办法。将ttyAMA0口的权限设置为任何人可以读，写。<br>在<code>/etc/udev/rules.d</code>中添加100-ttyAMA0.rules,内容为：</p>
 <pre class=" language-$xslt"><code class="language-$xslt">KERNEL=="ttyAMA0", MODE="666"</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 

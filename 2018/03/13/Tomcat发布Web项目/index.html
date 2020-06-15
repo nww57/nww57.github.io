@@ -415,29 +415,11 @@
 <p>reloadable：表示可以在运行时在classes与lib文件夹下自动加载类包。其中reloadable=”false”表示当应用程序 中的内容发生更改之后服务器不会自动加载，这个属性在开发阶段通常都设为true，方便开发，在发布阶段应该设置为false，提高应用程序的访问速度。</p>
 <p>docbase：表示应用程序的路径，注意斜杠的方向“/”。 docBase可以使用绝对路径，也可以使用相对路径，相对路径相对于webapps。</p>
 <p><strong>注：</strong> 这种方式不需要打war包，只需将编译好的文件拷贝到docBase指定的目录中</p>
-<h1 id="三、增加自定义web部署文件"><a href="#三、增加自定义web部署文件" class="headerlink" title="三、增加自定义web部署文件"></a>三、增加自定义web部署文件</h1><p>这种方式和方法2差不多，但不是在Server.xml文件中添加Context标签，而是在$CATALINA_HOME/conf /Catalina/localhost中添加一个xml文件，如Pet.xml.在Tomcat安装目录conf/Catalina/localhost下，里面有Tomcat自带的三个应用，随意复制其中的一个XML文件，然后修改docbase指向你自己的应用程序，并把文件名改名，<br>各参数参见方法2中的<context>标签的参数，或者你也可以自己新建一个XML文件。(注意此文件名将作为Context中的path属性值,不管文件里的path属性值如何设置也是无效的 )，将以下内容复制过去，修改相应路径即可。</context></p>
+<h1 id="三、增加自定义web部署文件"><a href="#三、增加自定义web部署文件" class="headerlink" title="三、增加自定义web部署文件"></a>三、增加自定义web部署文件</h1><p>这种方式和方法2差不多，但不是在Server.xml文件中添加Context标签，而是在$CATALINA_HOME/conf /Catalina/localhost中添加一个xml文件，如Pet.xml.在Tomcat安装目录conf/Catalina/localhost下，里面有Tomcat自带的三个应用，随意复制其中的一个XML文件，然后修改docbase指向你自己的应用程序，并把文件名改名，<br>各参数参见方法2中的<Context>标签的参数，或者你也可以自己新建一个XML文件。(注意此文件名将作为Context中的path属性值,不管文件里的path属性值如何设置也是无效的 )，将以下内容复制过去，修改相应路径即可。</p>
 <pre class=" language-xml"><code class="language-xml">&lt;Context  path ="/test"  docBase ="/home/test"  
         debug ="0"  privileged ="true"  reloadable ="false"  />  </code></pre>
 <p><strong>注：</strong>  此时访问地址如下：<a href="http://localhost:8080/test/" target="_blank" rel="noopener">http://localhost:8080/test/</a>  </p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 

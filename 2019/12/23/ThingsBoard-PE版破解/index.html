@@ -509,25 +509,7 @@
 8. 重新生成`thingsboard.jar`，解压之间的`thingsboard.jar`,得到3个目录`BOOT-INF`,`META-INF`,`org`,将上一步生成的`dao-2.4.2PE.jar`放入`BOOT-INF\lib`中，
 执行`jar cf0M thingsboard.jar *`生成新的jar包
 
-9. 用新的thingsboard.jar替换掉lib中的jar包重新install或者直接执行都可以（java -jar thingsboard.jar,需要修改jar包中的yml配置文件）。</code></pre><script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+9. 用新的thingsboard.jar替换掉lib中的jar包重新install或者直接执行都可以（java -jar thingsboard.jar,需要修改jar包中的yml配置文件）。</code></pre>
             </div>
             <hr/>
 

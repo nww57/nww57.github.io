@@ -579,7 +579,7 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
 </ul>
 <h3 id="3-使用反射获取泛型信息"><a href="#3-使用反射获取泛型信息" class="headerlink" title="3. 使用反射获取泛型信息"></a>3. 使用反射获取泛型信息</h3><p>为了通过反射操作泛型以迎合实际开发的需要, Java新增了<code>java.lang.reflect.ParameterizedType</code>、<code>java.lang.reflect.GenericArrayType</code>、<code>java.lang.reflect.TypeVariable</code>、<code>java.lang.reflect.WildcardType</code>几种类型来代表不能归一到Class类型但是又和原始类型同样重要的类型。</p>
 <ul>
-<li><code>ParameterizedType</code>: 一种参数化类型, 比如Collection<string></string></li>
+<li><code>ParameterizedType</code>: 一种参数化类型, 比如Collection<String></li>
 <li><code>GenericArrayType</code>: 一种元素类型是参数化类型或者类型变量的数组类型</li>
 <li><code>TypeVariable</code>: 各种类型变量的公共接口</li>
 <li><code>WildcardType</code>: 一种通配符类型表达式, 如<code>?</code>、<code>? extends Number</code>、<code>? super Integer</code></li>
@@ -659,25 +659,7 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
 <span class="token punctuation">}</span></code></pre>
 <hr>
 <p>参考文档：<a href="http://www.sczyh30.com/posts/Java/java-reflection-1/" target="_blank" rel="noopener">Java反射基础</a></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             </div>
             <hr/>
 
