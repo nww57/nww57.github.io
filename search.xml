@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title>ThingsBoard网关之ModbusRPC</title>
+      <title>ThingsBoard网关之ModbusRPC请求</title>
       <link href="/2020/06/19/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbusRPC/"/>
       <url>/2020/06/19/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbusRPC/</url>
       
@@ -33,7 +33,7 @@
       <link href="/2020/06/15/TB%E7%BD%91%E5%85%B3%E6%B5%8B%E8%AF%95%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/"/>
       <url>/2020/06/15/TB%E7%BD%91%E5%85%B3%E6%B5%8B%E8%AF%95%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</url>
       
-        <content type="html"><![CDATA[<h1 id="一、Modbus网关配置"><a href="#一、Modbus网关配置" class="headerlink" title="一、Modbus网关配置"></a>一、Modbus网关配置</h1><p>1.attributes/timeseries下面的参数需要加上”byteOrder”: “BIG”</p><p>2.同时采集多个设备，要修改设备地址，值对应devices配置下的unitId</p><p>3.Modbus多主机多从机是否可行？<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200615164134.png" alt=""></p><ul><li><a href="https://www.konnad.com/product/serial-to-serial-converter/" target="_blank" rel="noopener">康耐德串口转换器</a></li><li><a href="http://bbs.gongkong.com/d/201407/570336_1.shtml" target="_blank" rel="noopener">modbus代理</a>,<a href="https://item.taobao.com/item.htm?spm=a230r.1.14.16.52932ade35mdEM&id=40352800001&ns=1&abbucket=9#detail" target="_blank" rel="noopener">代理设备</a><br><a href="https://v.youku.com/v_show/id_XMTQxNjI3NjkxMg==.html?spm=a2h0c.8166622.PhoneSokuUgc_1.dtitle" target="_blank" rel="noopener">视频</a></li></ul><p>4.使用knob控制控件时，发送rpc请求是，请求json中数值带””（）,导致网关解析时无法解析</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="一、Modbus网关配置"><a href="#一、Modbus网关配置" class="headerlink" title="一、Modbus网关配置"></a>一、Modbus网关配置</h1><p>1.attributes/timeseries下面的参数需要加上”byteOrder”: “BIG”</p><p>2.同时采集多个设备，要修改设备地址，值对应devices配置下的unitId</p><p>3.Modbus多主机多从机是否可行？<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200615164134.png" alt=""></p><ul><li><a href="https://www.konnad.com/product/serial-to-serial-converter/" target="_blank" rel="noopener">康耐德串口转换器</a></li><li><a href="http://bbs.gongkong.com/d/201407/570336_1.shtml" target="_blank" rel="noopener">modbus代理</a>,<a href="https://item.taobao.com/item.htm?spm=a230r.1.14.16.52932ade35mdEM&id=40352800001&ns=1&abbucket=9#detail" target="_blank" rel="noopener">代理设备</a><br><a href="https://v.youku.com/v_show/id_XMTQxNjI3NjkxMg==.html?spm=a2h0c.8166622.PhoneSokuUgc_1.dtitle" target="_blank" rel="noopener">视频</a></li></ul><p>4.使用knob控制控件时，发送rpc请求时，请求json中数值带””（）,导致网关解析时无法解析</p>]]></content>
       
       
       <categories>
@@ -54,7 +54,7 @@
     
     
     <entry>
-      <title>ThingsBoard网关------Modbus设备模拟采集</title>
+      <title>ThingsBoard网关之Modbus设备模拟采集</title>
       <link href="/2020/06/11/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbus%E6%A8%A1%E6%8B%9F%E8%AE%BE%E5%A4%87/"/>
       <url>/2020/06/11/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbus%E6%A8%A1%E6%8B%9F%E8%AE%BE%E5%A4%87/</url>
       
