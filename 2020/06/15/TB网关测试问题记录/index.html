@@ -411,7 +411,17 @@
 <li><a href="https://www.konnad.com/product/serial-to-serial-converter/" target="_blank" rel="noopener">康耐德串口转换器</a></li>
 <li><a href="http://bbs.gongkong.com/d/201407/570336_1.shtml" target="_blank" rel="noopener">modbus代理</a>,<a href="https://item.taobao.com/item.htm?spm=a230r.1.14.16.52932ade35mdEM&id=40352800001&ns=1&abbucket=9#detail" target="_blank" rel="noopener">代理设备</a><br><a href="https://v.youku.com/v_show/id_XMTQxNjI3NjkxMg==.html?spm=a2h0c.8166622.PhoneSokuUgc_1.dtitle" target="_blank" rel="noopener">视频</a></li>
 </ul>
-<p>4.使用knob控制控件时，发送rpc请求时，请求json中数值带””（）,导致网关解析时无法解析</p>
+<p>4.使用knob控制控件时，发送rpc请求时，请求参数是string,导致网关解析时无法解析,转换成所需要的数值类型即可</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">turn</span><span class="token punctuation">(</span>ratio<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> value <span class="token operator">=</span> <span class="token punctuation">(</span>vm<span class="token punctuation">.</span>minValue <span class="token operator">+</span> <span class="token punctuation">(</span>vm<span class="token punctuation">.</span>maxValue <span class="token operator">-</span> vm<span class="token punctuation">.</span>minValue<span class="token punctuation">)</span><span class="token operator">*</span>ratio<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toFixed</span><span class="token punctuation">(</span>vm<span class="token punctuation">.</span>ctx<span class="token punctuation">.</span>decimals<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>canvasBar<span class="token punctuation">.</span>value <span class="token operator">!=</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            canvasBar<span class="token punctuation">.</span>value <span class="token operator">=</span> value<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">updateColor</span><span class="token punctuation">(</span>canvasBar<span class="token punctuation">.</span><span class="token function">getValueColor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        value <span class="token operator">=</span> <span class="token function">parseFloat</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">onValue</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
 
             </div>
             <hr/>
@@ -648,7 +658,7 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/06/19/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbusRPC/">
+                <a href="/2020/06/19/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbusRPC%E8%AF%B7%E6%B1%82/">
                     <div class="card-image">
                         
                         
