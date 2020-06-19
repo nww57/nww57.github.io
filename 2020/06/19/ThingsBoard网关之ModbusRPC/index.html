@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ThingsBoard网关连接Modbus模拟设备, Niww&#39;s Blog">
+    <meta name="keywords" content="ThingsBoard网关之ModbusRPC, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>ThingsBoard网关连接Modbus模拟设备 | Niww&#39;s Blog</title>
+    <title>ThingsBoard网关之ModbusRPC | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -240,12 +240,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ThingsBoard网关连接Modbus模拟设备</h1>
+                    <h1 class="description center-align post-title">ThingsBoard网关之ModbusRPC</h1>
                 </div>
             </div>
         </div>
@@ -387,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-06-11
+                    2020-06-19
                 </div>
                 
 
@@ -404,94 +404,14 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>本篇介绍下如何使用ModbusSlave/ModbusPoll模拟ModbusRTU与ModbusTCP协议并与TB的Python网关对接。</p>
-<h1 id="1-准备工具"><a href="#1-准备工具" class="headerlink" title="1.准备工具"></a>1.准备工具</h1><p>1.ModbusPoll(链接: <a href="https://pan.baidu.com/s/1cX_jow-G8cmQNaYpAZ42fg" target="_blank" rel="noopener">https://pan.baidu.com/s/1cX_jow-G8cmQNaYpAZ42fg</a> 提取码: p2gk)</p>
-<p>2.ModbusSlave（链接: <a href="https://pan.baidu.com/s/1Fq5O5a-EuWhUBlaNUa98OQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1Fq5O5a-EuWhUBlaNUa98OQ</a> 提取码: 95x7）</p>
-<p>3.虚拟com端口工具VSPD（链接: <a href="https://pan.baidu.com/s/14nN79wXnh8tVYhhn6N3iNQ" target="_blank" rel="noopener">https://pan.baidu.com/s/14nN79wXnh8tVYhhn6N3iNQ</a> 提取码: f6p5）</p>
-<h1 id="2-ModbusRTU协议模拟"><a href="#2-ModbusRTU协议模拟" class="headerlink" title="2.ModbusRTU协议模拟"></a>2.ModbusRTU协议模拟</h1><h2 id="2-1本地ModbusRTU模拟"><a href="#2-1本地ModbusRTU模拟" class="headerlink" title="2.1本地ModbusRTU模拟"></a>2.1本地ModbusRTU模拟</h2><p>1.虚拟两个com端口,COM7,COM8<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/vspd1.png" alt=""><br>2.打开ModbusSlave,点击setup-&gt;slave(从机)definition配置从端，如图：<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/201807231339436.png" alt=""><br>3.打开ModbusPoll,点击read/write(主机)definition配置主端，如图：<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20180723133942973.png" alt=""><br>以上配置的是10个寄存器从机设备ID为1但只读取前4个寄存器的数据，可根据自己的需要设置。后面为了简便，只配置了一个寄存器。<br>4.接下来分别点击”connection”进行连接，注意修改连接界面的端口，因为我只用到了RTU模式，所以其他选项如波特率9600,比特位8，校验位1，无等价位等可以保持不变，然后点击确定进行连接，未连接成功窗口第二行会给出提示信息。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/modbusrtuconnection.png" alt=""><br>5.通讯开始，主机端显示：TX=发送命令次数，Err=错误次数，ID=从机ID，F=功能号，SR=轮询间隔时间。使用ModbusSlave工具栏的”Display-&gt;Communication Traffic按钮，可以显示出当前发送命令和接受的数据。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/modbusrtuconnection2.png" alt=""></p>
-<h2 id="2-2-连接thingsBoard-gateway"><a href="#2-2-连接thingsBoard-gateway" class="headerlink" title="2.2.连接thingsBoard-gateway"></a>2.2.连接thingsBoard-gateway</h2><p>1.我的网关是装在树莓派中的，所以需要用到其他转换器，整体的连接是：</p>
-<p>电脑COM3端口–&gt;USB转485转换器–&gt;485转TTL转换器–&gt;树莓派串口<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/lijie.jpg" alt=""></p>
-<p>2.将ModbusSlave的端口指向COM3</p>
-<p>3.配置tb_gateway.yaml与modbus_serial.json;在tb_gateway.yaml中将连接配置指向modbus_serial.json</p>
-<p>tb_gateway.yaml中内容如下：</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">thingsboard</span><span class="token punctuation">:</span>
-  <span class="token key atrule">host</span><span class="token punctuation">:</span> <span class="token string">"ip"</span>
-  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">1883</span>
-  <span class="token key atrule">remoteConfiguration</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
-  <span class="token key atrule">security</span><span class="token punctuation">:</span>
-    <span class="token key atrule">accessToken</span><span class="token punctuation">:</span> <span class="token string">"token"</span>
-<span class="token key atrule">storage</span><span class="token punctuation">:</span>
-  <span class="token key atrule">type</span><span class="token punctuation">:</span> memory
-  <span class="token key atrule">read_records_count</span><span class="token punctuation">:</span> <span class="token number">100</span>
-  <span class="token key atrule">max_records_count</span><span class="token punctuation">:</span> <span class="token number">100000</span>
-<span class="token comment" spellcheck="true">#  type: file</span>
-<span class="token comment" spellcheck="true">#  data_folder_path: ./data/</span>
-<span class="token comment" spellcheck="true">#  max_file_count: 10</span>
-<span class="token comment" spellcheck="true">#  max_read_records_count: 10</span>
-<span class="token comment" spellcheck="true">#  max_records_per_file: 10000</span>
-<span class="token key atrule">connectors</span><span class="token punctuation">:</span>
-  <span class="token punctuation">-</span>
-    <span class="token key atrule">name</span><span class="token punctuation">:</span> Modbus Connector
-    <span class="token key atrule">type</span><span class="token punctuation">:</span> modbus
-    <span class="token key atrule">configuration</span><span class="token punctuation">:</span> modbus_serial.json</code></pre>
-<p>modbus_serial.json中内容如下：</p>
-<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"server"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Modbus Default Server"</span><span class="token punctuation">,</span>
-    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"serial"</span><span class="token punctuation">,</span>
-    <span class="token property">"method"</span><span class="token operator">:</span> <span class="token string">"rtu"</span><span class="token punctuation">,</span>
-    <span class="token property">"port"</span><span class="token operator">:</span> <span class="token string">"/dev/ttyAMA0"</span><span class="token punctuation">,</span>
-    <span class="token property">"baudrate"</span><span class="token operator">:</span> <span class="token number">9600</span><span class="token punctuation">,</span>
-    <span class="token property">"timeout"</span><span class="token operator">:</span> <span class="token number">35</span><span class="token punctuation">,</span>
-    <span class="token property">"devices"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-      <span class="token punctuation">{</span>
-        <span class="token property">"unitId"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-        <span class="token property">"deviceName"</span><span class="token operator">:</span> <span class="token string">"VuritalDevice"</span><span class="token punctuation">,</span>
-        <span class="token property">"attributesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
-        <span class="token property">"timeseriesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
-        <span class="token property">"sendDataOnlyOnChange"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
-        <span class="token property">"timeseries"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-          <span class="token punctuation">{</span>
-            <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
-            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"count"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"16int"</span><span class="token punctuation">,</span>
-            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
-            <span class="token property">"registerCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">0</span>
-          <span class="token punctuation">}</span>
-        <span class="token punctuation">]</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">]</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<p>最后在TB平台上可以看到遥测值在更新</p>
-<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/viratuldevice.png" alt=""></p>
-<h1 id="3-ModbusTCP协议模拟"><a href="#3-ModbusTCP协议模拟" class="headerlink" title="3.ModbusTCP协议模拟"></a>3.ModbusTCP协议模拟</h1><h2 id="3-1本地ModbusTCP模拟"><a href="#3-1本地ModbusTCP模拟" class="headerlink" title="3.1本地ModbusTCP模拟"></a>3.1本地ModbusTCP模拟</h2><p>修改上面Poll/Slave的连接信息，将Connection选择Modbus TCP/IP，点击连接后可看到传输的数据</p>
-<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200611141355.png" alt=""></p>
-<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200611142128.png" alt=""></p>
-<h2 id="3-2连接thingsBoard-gateway"><a href="#3-2连接thingsBoard-gateway" class="headerlink" title="3.2连接thingsBoard-gateway"></a>3.2连接thingsBoard-gateway</h2><p>配置tb_gateway.yaml与modbus_serial.json;在tb_gateway.yaml中将连接配置指向modbus.json。</p>
-<p>tb_gateway.yaml中内容如下：</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">thingsboard</span><span class="token punctuation">:</span>
-  <span class="token key atrule">host</span><span class="token punctuation">:</span> <span class="token string">"ip"</span>
-  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">1883</span>
-  <span class="token key atrule">remoteConfiguration</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
-  <span class="token key atrule">security</span><span class="token punctuation">:</span>
-    <span class="token key atrule">accessToken</span><span class="token punctuation">:</span> <span class="token string">"token"</span>
-<span class="token key atrule">storage</span><span class="token punctuation">:</span>
-  <span class="token key atrule">type</span><span class="token punctuation">:</span> memory
-  <span class="token key atrule">read_records_count</span><span class="token punctuation">:</span> <span class="token number">100</span>
-  <span class="token key atrule">max_records_count</span><span class="token punctuation">:</span> <span class="token number">100000</span>
-<span class="token comment" spellcheck="true">#  type: file</span>
-<span class="token comment" spellcheck="true">#  data_folder_path: ./data/</span>
-<span class="token comment" spellcheck="true">#  max_file_count: 10</span>
-<span class="token comment" spellcheck="true">#  max_read_records_count: 10</span>
-<span class="token comment" spellcheck="true">#  max_records_per_file: 10000</span>
-<span class="token key atrule">connectors</span><span class="token punctuation">:</span>
-  <span class="token punctuation">-</span>
-    <span class="token key atrule">name</span><span class="token punctuation">:</span> Modbus Connector
-    <span class="token key atrule">type</span><span class="token punctuation">:</span> modbus
-    <span class="token key atrule">configuration</span><span class="token punctuation">:</span> modbus.json</code></pre>
-<p>modbus.json内容如下：</p>
+                <p>之前模拟了Modbus设备的数据采集，这次来模拟下Modbus下的RPC请求。</p>
+<h2 id="1-模拟一个空调设备，采用ModbusTCP"><a href="#1-模拟一个空调设备，采用ModbusTCP" class="headerlink" title="1.模拟一个空调设备，采用ModbusTCP"></a>1.模拟一个空调设备，采用ModbusTCP</h2><p>使用ModbusSlave模拟设备，设备地址1，分配4个寄存器：</p>
+<ul>
+<li>寄存器1:模式</li>
+<li>寄存器2:开关状态</li>
+<li>寄存器3,4:温度（这里用2个寄存器存浮点型数据）<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200619093414.png" alt=""></li>
+</ul>
+<p>网关配置文件：</p>
 <pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"server"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"tcp"</span><span class="token punctuation">,</span>
@@ -501,22 +421,12 @@
     <span class="token property">"method"</span><span class="token operator">:</span> <span class="token string">"socket"</span><span class="token punctuation">,</span>
     <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
     <span class="token property">"devices"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-      <span class="token punctuation">{</span>
+     <span class="token punctuation">{</span>
         <span class="token property">"unitId"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-        <span class="token property">"deviceName"</span><span class="token operator">:</span> <span class="token string">"TCPDevice"</span><span class="token punctuation">,</span>
+        <span class="token property">"deviceName"</span><span class="token operator">:</span> <span class="token string">"CountSensor"</span><span class="token punctuation">,</span>
         <span class="token property">"attributesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
         <span class="token property">"timeseriesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
-        <span class="token property">"sendDataOnlyOnChange"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
-        <span class="token property">"attributes"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-          <span class="token punctuation">{</span>
-            <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
-            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"count"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"16int"</span><span class="token punctuation">,</span>
-            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
-            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">0</span>
-          <span class="token punctuation">}</span>
-        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"sendDataOnlyOnChange"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
         <span class="token property">"timeseries"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
           <span class="token punctuation">{</span>
             <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
@@ -525,44 +435,96 @@
             <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
             <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
             <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">0</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"status"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"16int"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">1</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"temperature"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"32float"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">2</span>
           <span class="token punctuation">}</span>
         <span class="token punctuation">]</span><span class="token punctuation">,</span>
         <span class="token property">"rpc"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
           <span class="token punctuation">{</span>
             <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"setValue"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"bits"</span><span class="token punctuation">,</span>
-            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"16int"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">6</span><span class="token punctuation">,</span>
             <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">31</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">1</span>
           <span class="token punctuation">}</span><span class="token punctuation">,</span>
           <span class="token punctuation">{</span>
             <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"getValue"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"bits"</span><span class="token punctuation">,</span>
-            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"16int"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
             <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">31</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">1</span>
           <span class="token punctuation">}</span><span class="token punctuation">,</span>
           <span class="token punctuation">{</span>
-            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"setCPUFanSpeed"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"32int"</span><span class="token punctuation">,</span>
-            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">16</span><span class="token punctuation">,</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"setTemperature"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"32float"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">6</span><span class="token punctuation">,</span>
             <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
-            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">33</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">2</span>
           <span class="token punctuation">}</span><span class="token punctuation">,</span>
           <span class="token punctuation">{</span>
-            <span class="token property">"tag"</span><span class="token operator">:</span><span class="token string">"getCPULoad"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"32int"</span><span class="token punctuation">,</span>
-            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"getTemperature"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"32float"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
             <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
-            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">35</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">2</span>
           <span class="token punctuation">}</span>
         <span class="token punctuation">]</span>
       <span class="token punctuation">}</span>
     <span class="token punctuation">]</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p>最后在TB平台上能看到设备的遥测值：</p>
-<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200611142757.png" alt=""></p>
+<h2 id="2-打开ModbusSlave的Connection，启动网关"><a href="#2-打开ModbusSlave的Connection，启动网关" class="headerlink" title="2.打开ModbusSlave的Connection，启动网关"></a>2.打开ModbusSlave的Connection，启动网关</h2><p>可以看到设备数据已经上来：<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200619094731.png" alt=""></p>
+<h2 id="3-创建仪表盘"><a href="#3-创建仪表盘" class="headerlink" title="3.创建仪表盘"></a>3.创建仪表盘</h2><p>先新建一个实体设备，指向CountSensor。添加开关控件及数值控件。<br>注意控件中的高级设置，Rpc get value method，Rpc set value method的值要与网关中rpc配置方法名一致。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200619095856.png" alt=""></p>
+<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200619095919.png" alt=""></p>
+<p>整个仪表盘如下图：<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200619100510.png" alt=""></p>
+<h2 id="4-控制模拟"><a href="#4-控制模拟" class="headerlink" title="4.控制模拟"></a>4.控制模拟</h2><ol>
+<li><p>点击开关控制Round Switch，可看到仪表盘状态值的改变<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200619100642.png" alt=""></p>
+</li>
+<li><p>控制温度，发现没有效果，查看网关日志，发现如下错误：</p>
+<pre class=" language-text"><code class="language-text">""2020-06-19 10:15:09" - ERROR - [modbus_connector.py] - modbus_connector - 290 - required argument is not a float"
+Traceback (most recent call last):
+File "D:\ProgramFilesData\Motrix\thingsboard-gateway-2.3.1.1\thingsboard_gateway\connectors\modbus\modbus_connector.py", line 278, in server_side_rpc_handler
+ self.__process_rpc_request(content, rpc_command_config)
+File "D:\ProgramFilesData\Motrix\thingsboard-gateway-2.3.1.1\thingsboard_gateway\connectors\modbus\modbus_connector.py", line 298, in __process_rpc_request
+ rpc_command_config["payload"] = self.__devices[content["device"]]["downlink_converter"].convert(
+File "D:\ProgramFilesData\Motrix\thingsboard-gateway-2.3.1.1\thingsboard_gateway\connectors\modbus\bytes_modbus_downlink_converter.py", line 75, in convert
+ builder_functions[lower_type](value)
+File "D:\ProgramFiles\Python\Python38\lib\site-packages\pymodbus\payload.py", line 251, in add_32bit_float
+ p_string = self._pack_words(fstring, value)
+File "D:\ProgramFiles\Python\Python38\lib\site-packages\pymodbus\payload.py", line 79, in _pack_words
+ value = pack("!{}".format(fstring), value)
+struct.error: required argument is not a float</code></pre>
+</li>
+</ol>
+<p>报错说传入的参数不是一个float值，于是我重新控制，在网关中断点看到了传入的参数是一个str：<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200619101500.png" alt=""></p>
+<p>应该是上层的问题,于是查看下控制请求的参数，发现传参时就是个str：<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200619103212.png" alt=""></p>
+<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200619101145.png" alt=""><br>找到问题那就好改了，在knob.directive.js中将控件值转成float:</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">turn</span><span class="token punctuation">(</span>ratio<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> value <span class="token operator">=</span> <span class="token punctuation">(</span>vm<span class="token punctuation">.</span>minValue <span class="token operator">+</span> <span class="token punctuation">(</span>vm<span class="token punctuation">.</span>maxValue <span class="token operator">-</span> vm<span class="token punctuation">.</span>minValue<span class="token punctuation">)</span><span class="token operator">*</span>ratio<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toFixed</span><span class="token punctuation">(</span>vm<span class="token punctuation">.</span>ctx<span class="token punctuation">.</span>decimals<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>canvasBar<span class="token punctuation">.</span>value <span class="token operator">!=</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            canvasBar<span class="token punctuation">.</span>value <span class="token operator">=</span> value<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">updateColor</span><span class="token punctuation">(</span>canvasBar<span class="token punctuation">.</span><span class="token function">getValueColor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        value <span class="token operator">=</span> <span class="token function">parseFloat</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">onValue</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
+<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200619110310.png" alt=""></p>
+<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200619110322.png" alt=""></p>
 
             </div>
             <hr/>
@@ -588,7 +550,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me/2020/06/11/ThingsBoard%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5Modbus%E6%A8%A1%E6%8B%9F%E8%AE%BE%E5%A4%87/">http://niww.me/2020/06/11/ThingsBoard%E7%BD%91%E5%85%B3%E8%BF%9E%E6%8E%A5Modbus%E6%A8%A1%E6%8B%9F%E8%AE%BE%E5%A4%87/</a>
+                    <a href="http://niww.me/2020/06/19/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbusRPC/">http://niww.me/2020/06/19/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbusRPC/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -795,9 +757,65 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/06/19/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbusRPC/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="ThingsBoard网关之ModbusRPC">
+                        
+                        <span class="card-title">ThingsBoard网关之ModbusRPC</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            之前模拟了Modbus设备的数据采集，这次来模拟下Modbus下的RPC请求。
+1.模拟一个空调设备，采用ModbusTCP使用ModbusSlave模拟设备，设备地址1，分配4个寄存器：
+
+寄存器1:模式
+寄存器2:开关状态
+寄存器3,4
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/ThingsBoard/" class="post-category">
+                                    ThingsBoard
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/ThingsBoard/">
+                        <span class="chip bg-color">ThingsBoard</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2020/06/15/TB%E7%BD%91%E5%85%B3%E6%B5%8B%E8%AF%95%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">
                     <div class="card-image">
@@ -817,9 +835,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-15
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -837,55 +855,6 @@
                     
                     <a href="/tags/ThingsBoard/">
                         <span class="chip bg-color">ThingsBoard</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/06/10/Modbus%E6%B6%88%E6%81%AF%E5%B8%A7/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Modbus消息帧">
-                        
-                        <span class="card-title">Modbus消息帧</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Modbus消息帧串口通信消息帧在串口传输模式中（ASCII或RTU），传输设备以将Modbus消息转为有起点和终点的帧，这就允许接收的设备在消息起始处开始工作，读地址分配信息，判断哪一个设备被选中（广播方式则传给所有设备），判知何时信息已
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-10
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Modbus/" class="post-category">
-                                    Modbus
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Modbus/">
-                        <span class="chip bg-color">Modbus</span>
                     </a>
                     
                 </div>

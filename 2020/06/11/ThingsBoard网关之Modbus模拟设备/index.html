@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Java面向对象设计之适配器模式, Niww&#39;s Blog">
+    <meta name="keywords" content="ThingsBoard网关------Modbus设备模拟采集, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Java面向对象设计之适配器模式 | Niww&#39;s Blog</title>
+    <title>ThingsBoard网关------Modbus设备模拟采集 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -240,12 +240,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Java面向对象设计之适配器模式</h1>
+                    <h1 class="description center-align post-title">ThingsBoard网关------Modbus设备模拟采集</h1>
                 </div>
             </div>
         </div>
@@ -362,12 +362,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Java/">
-                                <span class="chip bg-color">Java</span>
-                            </a>
-                        
-                            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                                <span class="chip bg-color">设计模式</span>
+                            <a href="/tags/ThingsBoard/">
+                                <span class="chip bg-color">ThingsBoard</span>
                             </a>
                         
                     </div>
@@ -378,8 +374,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/" class="post-category">
-                                软件设计
+                            <a href="/categories/ThingsBoard/" class="post-category">
+                                ThingsBoard
                             </a>
                         
                     </div>
@@ -391,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2018-12-12
+                    2020-06-11
                 </div>
                 
 
@@ -408,133 +404,165 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="模式动机"><a href="#模式动机" class="headerlink" title="模式动机"></a>模式动机</h2><ul>
-<li>在软件开发中采用类似于电源适配器的设计和编码技巧被称为适配器模式。</li>
-<li>通常情况下，客户端可以通过目标类的接口访问它所提供的服务。有时，现有的类可以满足客户类的功能需要，但是它所提供的接口不一定是客户类所期望的，这可能是因为现有类中方法名与目标类中定义的方法名不一致等原因所导致的。</li>
-<li>在这种情况下，现有的接口需要转化为客户类期望的接口，这样保证了对现有类的重用。如果不进行这样的转化，客户类就不能利用现有类所提供的功能，适配器模式可以完成这样的转化。</li>
-<li>在适配器模式中可以定义一个包装类，包装不兼容接口的对象，这个包装类指的就是适配器(<code>Adapter</code>)，它所包装的对象就是适配者(<code>Adaptee</code>)，即被适配的类。</li>
-<li>适配器提供客户类需要的接口，适配器的实现就是把客户类的请求转化为对适配者的相应接口的调用。也就是说：当客户类调用适配器的方法时，在适配器类的内部将调用适配者类的方法，而这个过程对客户类是透明的，客户类并不直接访问适配者类。因此，适配器可以使由于接口不兼容而不能交互的类可以一起工作。这就是适配器模式的模式动机。</li>
-</ul>
-<h2 id="模式定义"><a href="#模式定义" class="headerlink" title="模式定义"></a>模式定义</h2><blockquote>
-<p><strong>适配器模式</strong>(<code>Adapter Pattern</code>) ：将一个接口转换成客户希望的另一个接口，使接口不兼容的那些类可以一起工作，其别名为包装器(<code>Wrapper</code>)。适配器模式既可以作为类结构型模式，也可以作为对象结构型模式。适配器模式是一种<strong>结构型模式</strong>。</p>
-</blockquote>
-<h2 id="模式结构"><a href="#模式结构" class="headerlink" title="模式结构"></a>模式结构</h2><h3 id="参与角色"><a href="#参与角色" class="headerlink" title="参与角色"></a>参与角色</h3><p>适配器模式包含如下角色：</p>
-<ul>
-<li><code>Target</code>：目标抽象类</li>
-<li><code>Adapter</code>：适配器类</li>
-<li><code>Adaptee</code>：适配者类</li>
-<li><code>Client</code>：客户类</li>
-</ul>
-<h3 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h3><p><img src="http://static.blinkfox.com/java-design-adapter.jpg" alt="适配器模式UML"></p>
-<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><p>首先，是目标角色接口和具体目标实现类：</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
- * Target 目标角色类.
- *
- * @author niww on 2018-12-11.
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Target</span> <span class="token punctuation">{</span>
-
-    <span class="token comment" spellcheck="true">/**
-     * 目标角色自己的方法.
-     */</span>
-    <span class="token keyword">void</span> <span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
+                <p>本篇介绍下如何使用ModbusSlave/ModbusPoll模拟ModbusRTU与ModbusTCP协议并与TB的Python网关对接。</p>
+<h1 id="1-准备工具"><a href="#1-准备工具" class="headerlink" title="1.准备工具"></a>1.准备工具</h1><p>1.ModbusPoll(链接: <a href="https://pan.baidu.com/s/1cX_jow-G8cmQNaYpAZ42fg" target="_blank" rel="noopener">https://pan.baidu.com/s/1cX_jow-G8cmQNaYpAZ42fg</a> 提取码: p2gk)</p>
+<p>2.ModbusSlave（链接: <a href="https://pan.baidu.com/s/1Fq5O5a-EuWhUBlaNUa98OQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1Fq5O5a-EuWhUBlaNUa98OQ</a> 提取码: 95x7）</p>
+<p>3.虚拟com端口工具VSPD（链接: <a href="https://pan.baidu.com/s/14nN79wXnh8tVYhhn6N3iNQ" target="_blank" rel="noopener">https://pan.baidu.com/s/14nN79wXnh8tVYhhn6N3iNQ</a> 提取码: f6p5）</p>
+<h1 id="2-ModbusRTU协议模拟"><a href="#2-ModbusRTU协议模拟" class="headerlink" title="2.ModbusRTU协议模拟"></a>2.ModbusRTU协议模拟</h1><h2 id="2-1本地ModbusRTU模拟"><a href="#2-1本地ModbusRTU模拟" class="headerlink" title="2.1本地ModbusRTU模拟"></a>2.1本地ModbusRTU模拟</h2><p>1.虚拟两个com端口,COM7,COM8<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/vspd1.png" alt=""><br>2.打开ModbusSlave,点击setup-&gt;slave(从机)definition配置从端，如图：<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/201807231339436.png" alt=""><br>3.打开ModbusPoll,点击read/write(主机)definition配置主端，如图：<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20180723133942973.png" alt=""><br>以上配置的是10个寄存器从机设备ID为1但只读取前4个寄存器的数据，可根据自己的需要设置。后面为了简便，只配置了一个寄存器。<br>4.接下来分别点击”connection”进行连接，注意修改连接界面的端口，因为我只用到了RTU模式，所以其他选项如波特率9600,比特位8，校验位1，无等价位等可以保持不变，然后点击确定进行连接，未连接成功窗口第二行会给出提示信息。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/modbusrtuconnection.png" alt=""><br>5.通讯开始，主机端显示：TX=发送命令次数，Err=错误次数，ID=从机ID，F=功能号，SR=轮询间隔时间。使用ModbusSlave工具栏的”Display-&gt;Communication Traffic按钮，可以显示出当前发送命令和接受的数据。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/modbusrtuconnection2.png" alt=""></p>
+<h2 id="2-2-连接thingsBoard-gateway"><a href="#2-2-连接thingsBoard-gateway" class="headerlink" title="2.2.连接thingsBoard-gateway"></a>2.2.连接thingsBoard-gateway</h2><p>1.我的网关是装在树莓派中的，所以需要用到其他转换器，整体的连接是：</p>
+<p>电脑COM3端口–&gt;USB转485转换器–&gt;485转TTL转换器–&gt;树莓派串口<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/lijie.jpg" alt=""></p>
+<p>2.将ModbusSlave的端口指向COM3</p>
+<p>3.配置tb_gateway.yaml与modbus_serial.json;在tb_gateway.yaml中将连接配置指向modbus_serial.json</p>
+<p>tb_gateway.yaml中内容如下：</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">thingsboard</span><span class="token punctuation">:</span>
+  <span class="token key atrule">host</span><span class="token punctuation">:</span> <span class="token string">"ip"</span>
+  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">1883</span>
+  <span class="token key atrule">remoteConfiguration</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+  <span class="token key atrule">security</span><span class="token punctuation">:</span>
+    <span class="token key atrule">accessToken</span><span class="token punctuation">:</span> <span class="token string">"token"</span>
+<span class="token key atrule">storage</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> memory
+  <span class="token key atrule">read_records_count</span><span class="token punctuation">:</span> <span class="token number">100</span>
+  <span class="token key atrule">max_records_count</span><span class="token punctuation">:</span> <span class="token number">100000</span>
+<span class="token comment" spellcheck="true">#  type: file</span>
+<span class="token comment" spellcheck="true">#  data_folder_path: ./data/</span>
+<span class="token comment" spellcheck="true">#  max_file_count: 10</span>
+<span class="token comment" spellcheck="true">#  max_read_records_count: 10</span>
+<span class="token comment" spellcheck="true">#  max_records_per_file: 10000</span>
+<span class="token key atrule">connectors</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> Modbus Connector
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> modbus
+    <span class="token key atrule">configuration</span><span class="token punctuation">:</span> modbus_serial.json</code></pre>
+<p>modbus_serial.json中内容如下：</p>
+<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"server"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Modbus Default Server"</span><span class="token punctuation">,</span>
+    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"serial"</span><span class="token punctuation">,</span>
+    <span class="token property">"method"</span><span class="token operator">:</span> <span class="token string">"rtu"</span><span class="token punctuation">,</span>
+    <span class="token property">"port"</span><span class="token operator">:</span> <span class="token string">"/dev/ttyAMA0"</span><span class="token punctuation">,</span>
+    <span class="token property">"baudrate"</span><span class="token operator">:</span> <span class="token number">9600</span><span class="token punctuation">,</span>
+    <span class="token property">"timeout"</span><span class="token operator">:</span> <span class="token number">35</span><span class="token punctuation">,</span>
+    <span class="token property">"devices"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"unitId"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        <span class="token property">"deviceName"</span><span class="token operator">:</span> <span class="token string">"VuritalDevice"</span><span class="token punctuation">,</span>
+        <span class="token property">"attributesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
+        <span class="token property">"timeseriesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
+        <span class="token property">"sendDataOnlyOnChange"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        <span class="token property">"timeseries"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"count"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"16int"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+            <span class="token property">"registerCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">0</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
- * 具体的目标角色实现类.
- *
- * @author niww on 2018-12-11.
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConcreteTarget</span> <span class="token keyword">implements</span> <span class="token class-name">Target</span> <span class="token punctuation">{</span>
-
-    <span class="token comment" spellcheck="true">/**
-     * 目标角色自己的方法.
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello, I'm concrete target method."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
+<p>最后在TB平台上可以看到遥测值在更新</p>
+<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/viratuldevice.png" alt=""></p>
+<h1 id="3-ModbusTCP协议模拟"><a href="#3-ModbusTCP协议模拟" class="headerlink" title="3.ModbusTCP协议模拟"></a>3.ModbusTCP协议模拟</h1><h2 id="3-1本地ModbusTCP模拟"><a href="#3-1本地ModbusTCP模拟" class="headerlink" title="3.1本地ModbusTCP模拟"></a>3.1本地ModbusTCP模拟</h2><p>修改上面Poll/Slave的连接信息，将Connection选择Modbus TCP/IP，点击连接后可看到传输的数据</p>
+<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200611141355.png" alt=""></p>
+<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200611142128.png" alt=""></p>
+<h2 id="3-2连接thingsBoard-gateway"><a href="#3-2连接thingsBoard-gateway" class="headerlink" title="3.2连接thingsBoard-gateway"></a>3.2连接thingsBoard-gateway</h2><p>配置tb_gateway.yaml与modbus_serial.json;在tb_gateway.yaml中将连接配置指向modbus.json。</p>
+<p>tb_gateway.yaml中内容如下：</p>
+<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">thingsboard</span><span class="token punctuation">:</span>
+  <span class="token key atrule">host</span><span class="token punctuation">:</span> <span class="token string">"ip"</span>
+  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">1883</span>
+  <span class="token key atrule">remoteConfiguration</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+  <span class="token key atrule">security</span><span class="token punctuation">:</span>
+    <span class="token key atrule">accessToken</span><span class="token punctuation">:</span> <span class="token string">"token"</span>
+<span class="token key atrule">storage</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> memory
+  <span class="token key atrule">read_records_count</span><span class="token punctuation">:</span> <span class="token number">100</span>
+  <span class="token key atrule">max_records_count</span><span class="token punctuation">:</span> <span class="token number">100000</span>
+<span class="token comment" spellcheck="true">#  type: file</span>
+<span class="token comment" spellcheck="true">#  data_folder_path: ./data/</span>
+<span class="token comment" spellcheck="true">#  max_file_count: 10</span>
+<span class="token comment" spellcheck="true">#  max_read_records_count: 10</span>
+<span class="token comment" spellcheck="true">#  max_records_per_file: 10000</span>
+<span class="token key atrule">connectors</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> Modbus Connector
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> modbus
+    <span class="token key atrule">configuration</span><span class="token punctuation">:</span> modbus.json</code></pre>
+<p>modbus.json内容如下：</p>
+<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"server"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"tcp"</span><span class="token punctuation">,</span>
+    <span class="token property">"host"</span><span class="token operator">:</span> <span class="token string">"10.49.0.66"</span><span class="token punctuation">,</span>
+    <span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">502</span><span class="token punctuation">,</span>
+    <span class="token property">"timeout"</span><span class="token operator">:</span> <span class="token number">35</span><span class="token punctuation">,</span>
+    <span class="token property">"method"</span><span class="token operator">:</span> <span class="token string">"socket"</span><span class="token punctuation">,</span>
+    <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
+    <span class="token property">"devices"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token property">"unitId"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        <span class="token property">"deviceName"</span><span class="token operator">:</span> <span class="token string">"TCPDevice"</span><span class="token punctuation">,</span>
+        <span class="token property">"attributesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
+        <span class="token property">"timeseriesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
+        <span class="token property">"sendDataOnlyOnChange"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        <span class="token property">"attributes"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"count"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"16int"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">0</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"timeseries"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"count"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"16int"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">0</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token property">"rpc"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"setValue"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"bits"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">31</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"getValue"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"bits"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">31</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"setCPUFanSpeed"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"32int"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">16</span><span class="token punctuation">,</span>
+            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">33</span>
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span><span class="token string">"getCPULoad"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"32int"</span><span class="token punctuation">,</span>
+            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">35</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p>其次，是适配者类：</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
- * 适配者类.
- *
- * @author niww on 2018-12-11.
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Adaptee</span> <span class="token punctuation">{</span>
-
-    <span class="token comment" spellcheck="true">/**
-     * 这是原有的业务逻辑方法.
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello, I'm Adaptee method."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span></code></pre>
-<p>然后，是适配器角色类：</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
- * 适配器类.
- *
- * @author niww on 2018-12-11.
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Adapter</span> <span class="token keyword">extends</span> <span class="token class-name">Adaptee</span> <span class="token keyword">implements</span> <span class="token class-name">Target</span> <span class="token punctuation">{</span>
-
-    <span class="token comment" spellcheck="true">/**
-     * 适配了目标角色自己的方法.
-     */</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"适配器适配了目标角色方法."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span></code></pre>
-<p>最后，是客户端场景类：</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
- * 客户端场景类.
- *
- * @author niww on 2018-12-11.
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>
-
-    <span class="token comment" spellcheck="true">/**
-     * main方法.
-     *
-     * @param args 数组参数
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 原有业务逻辑.</span>
-        Target target <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcreteTarget</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        target<span class="token punctuation">.</span><span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">// 增加了适配器角色后的业务逻辑.</span>
-        Target adaptTarget <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Adapter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        adaptTarget<span class="token punctuation">.</span><span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span></code></pre>
-<h2 id="模式分析"><a href="#模式分析" class="headerlink" title="模式分析"></a>模式分析</h2><h3 id="适用环境"><a href="#适用环境" class="headerlink" title="适用环境"></a>适用环境</h3><p>在以下情况下可以使用适配器模式：</p>
-<ul>
-<li>系统需要使用现有的类，而这些类的接口不符合系统的需要。</li>
-<li>想要建立一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作。</li>
-</ul>
-<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
-<li>将目标类和适配者类解耦，通过引入一个适配器类来重用现有的适配者类，而无须修改原有代码。</li>
-<li>增加了类的透明性和复用性，将具体的实现封装在适配者类中，对于客户端类来说是透明的，而且提高了适配者的复用性。</li>
-<li>灵活性和扩展性都非常好，通过使用配置文件，可以很方便地更换适配器，也可以在不修改原有代码的基础上增加新的适配器类，完全符合“开闭原则”。</li>
-</ul>
-<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>如果一定要置换掉适配者类的一个或多个方法，就只好先做一个适配者类的子类，将适配者类的方法置换掉，然后再把适配者类的子类当做真正的适配者进行适配，实现过程较为复杂。</p>
-<h3 id="模式应用"><a href="#模式应用" class="headerlink" title="模式应用"></a>模式应用</h3><p>Sun公司在1996年公开了Java语言的数据库连接工具JDBC，JDBC使得Java语言程序能够与数据库连接，并使用SQL语言来查询和操作数据。JDBC给出一个客户端通用的抽象接口，每一个具体数据库引擎（如SQL Server、Oracle、MySQL等）的JDBC驱动软件都是一个介于JDBC接口和数据库引擎接口之间的适配器软件。抽象的JDBC接口和各个数据库引擎API之间都需要相应的适配器软件，这就是为各个不同数据库引擎准备的驱动程序。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>结构型模式描述如何将类或者对象结合在一起形成更大的结构。</li>
-<li>适配器模式用于将一个接口转换成客户希望的另一个接口，适配器模式使接口不兼容的那些类可以一起工作，其别名为包装器。适配器模式既可以作为类结构型模式，也可以作为对象结构型模式。</li>
-<li>适配器模式包含四个角色：目标抽象类定义客户要用的特定领域的接口；适配器类可以调用另一个接口，作为一个转换器，对适配者和抽象目标类进行适配，它是适配器模式的核心；适配者类是被适配的角色，它定义了一个已经存在的接口，这个接口需要适配；在客户类中针对目标抽象类进行编程，调用在目标抽象类中定义的业务方法。</li>
-<li>在类适配器模式中，适配器类实现了目标抽象类接口并继承了适配者类，并在目标抽象类的实现方法中调用所继承的适配者类的方法；在对象适配器模式中，适配器类继承了目标抽象类并定义了一个适配者类的对象实例，在所继承的目标抽象类方法中调用适配者类的相应业务方法。</li>
-<li>适配器模式的主要优点是将目标类和适配者类解耦，增加了类的透明性和复用性，同时系统的灵活性和扩展性都非常好，更换适配器或者增加新的适配器都非常方便，符合“开闭原则”；类适配器模式的缺点是适配器类在很多编程语言中不能同时适配多个适配者类，对象适配器模式的缺点是很难置换适配者类的方法。</li>
-<li>适配器模式适用情况包括：系统需要使用现有的类，而这些类的接口不符合系统的需要；想要建立一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类一起工作。</li>
-</ul>
-<p>参考自：<a href="https://design-patterns.readthedocs.io/zh_CN/latest/structural_patterns/adapter.html" target="_blank" rel="noopener">适配器模式</a></p>
+<p>最后在TB平台上能看到设备的遥测值：</p>
+<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200611142757.png" alt=""></p>
 
             </div>
             <hr/>
@@ -560,7 +588,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me/2018/12/12/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E4%B9%8B%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/">http://niww.me/2018/12/12/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E4%B9%8B%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/</a>
+                    <a href="http://niww.me/2020/06/11/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbus%E6%A8%A1%E6%8B%9F%E8%AE%BE%E5%A4%87/">http://niww.me/2020/06/11/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbus%E6%A8%A1%E6%8B%9F%E8%AE%BE%E5%A4%87/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -598,12 +626,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Java/">
-                                    <span class="chip bg-color">Java</span>
-                                </a>
-                            
-                                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                                    <span class="chip bg-color">设计模式</span>
+                                <a href="/tags/ThingsBoard/">
+                                    <span class="chip bg-color">ThingsBoard</span>
                                 </a>
                             
                         </div>
@@ -775,34 +799,33 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2018/12/19/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E4%B9%8B%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/">
+                <a href="/2020/06/15/TB%E7%BD%91%E5%85%B3%E6%B5%8B%E8%AF%95%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Java面向对象设计之桥接模式">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="TB网关测试问题记录">
                         
-                        <span class="card-title">Java面向对象设计之桥接模式</span>
+                        <span class="card-title">TB网关测试问题记录</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            模式动机设想如果要绘制矩形、圆形、椭圆、正方形，我们至少需要4个形状类，但是如果绘制的图形需要具有不同的颜色，如红色、绿色、蓝色等，此时至少有如下两种设计方案：
-
-第一种设计方案是为每一种形状都提供一套各种颜色的版本。
-第二种设计方案是根据
+                            一、Modbus网关配置1.attributes/timeseries下面的参数需要加上”byteOrder”: “BIG”
+2.同时采集多个设备，要修改设备地址，值对应devices配置下的unitId
+3.Modbus多主机多从机是否可
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2018-12-19
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-15
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/" class="post-category">
-                                    软件设计
+                            <a href="/categories/ThingsBoard/" class="post-category">
+                                    ThingsBoard
                                 </a>
                             
                             
@@ -812,12 +835,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
-                    </a>
-                    
-                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                        <span class="chip bg-color">设计模式</span>
+                    <a href="/tags/ThingsBoard/">
+                        <span class="chip bg-color">ThingsBoard</span>
                     </a>
                     
                 </div>
@@ -831,32 +850,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/11/24/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/%E8%BD%AF%E4%BB%B6%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/">
+                <a href="/2020/06/10/Modbus%E6%B6%88%E6%81%AF%E5%B8%A7/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="软件程序设计原则">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Modbus消息帧">
                         
-                        <span class="card-title">软件程序设计原则</span>
+                        <span class="card-title">Modbus消息帧</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一、前言软件也像人一样，具有生命力，从出生到死亡，会经历多种变化。软件架构设计也不是一蹴而就的，是不断地演进发展。每个程序员都可以从理解编程原则和模式中受益。
-软件设计原则是一组帮助我们避开不良设计的指导方针。根据Robert Martin
+                            Modbus消息帧串口通信消息帧在串口传输模式中（ASCII或RTU），传输设备以将Modbus消息转为有起点和终点的帧，这就允许接收的设备在消息起始处开始工作，读地址分配信息，判断哪一个设备被选中（广播方式则传给所有设备），判知何时信息已
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-11-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/" class="post-category">
-                                    软件设计
+                            <a href="/categories/Modbus/" class="post-category">
+                                    Modbus
                                 </a>
                             
                             
@@ -866,16 +884,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
-                    </a>
-                    
-                    <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/">
-                        <span class="chip bg-color">面向对象编程</span>
-                    </a>
-                    
-                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/">
-                        <span class="chip bg-color">设计原则</span>
+                    <a href="/tags/Modbus/">
+                        <span class="chip bg-color">Modbus</span>
                     </a>
                     
                 </div>
