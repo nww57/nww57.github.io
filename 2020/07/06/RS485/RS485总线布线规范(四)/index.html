@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Modbus介绍, Niww&#39;s Blog">
+    <meta name="keywords" content="485总线布线规范(四), Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Modbus介绍 | Niww&#39;s Blog</title>
+    <title>485总线布线规范(四) | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -240,12 +240,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Modbus介绍</h1>
+                    <h1 class="description center-align post-title">485总线布线规范(四)</h1>
                 </div>
             </div>
         </div>
@@ -362,8 +362,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Modbus/">
-                                <span class="chip bg-color">Modbus</span>
+                            <a href="/tags/RS485/">
+                                <span class="chip bg-color">RS485</span>
                             </a>
                         
                     </div>
@@ -374,8 +374,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Modbus/" class="post-category">
-                                Modbus
+                            <a href="/categories/RS485/" class="post-category">
+                                RS485
                             </a>
                         
                     </div>
@@ -387,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-06-09
+                    2020-07-06
                 </div>
                 
 
@@ -404,50 +404,13 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-简介-Modbus是一种通信协议-用于不同厂商之间的设备交换数据"><a href="#1-简介-Modbus是一种通信协议-用于不同厂商之间的设备交换数据" class="headerlink" title="1.简介:Modbus是一种通信协议,用于不同厂商之间的设备交换数据"></a>1.简介:Modbus是一种通信协议,用于不同厂商之间的设备交换数据</h2><p>Modbus是一种串行通信协议，是Modicon公司（现在的施耐德电气 Schneider Electric）于1979年为使用可编程逻辑控制器（PLC）通信而发表。<br>Modbus已经成为工业领域通信协议的业界标准，并且现在是工业电子设备之间常用的连接方式。<br>Modbus在工业环境下很流行，因为它是公开发布而免版税的。它是为工业应用开发的，与其他标准相比，它相对易于部署和维护，除了要传输的数据格式的大小外，几乎没有其他限制。</p>
-<h2 id="2-Modbus与RS485、RS232、RS422之间的关系"><a href="#2-Modbus与RS485、RS232、RS422之间的关系" class="headerlink" title="2.Modbus与RS485、RS232、RS422之间的关系"></a>2.Modbus与RS485、RS232、RS422之间的关系</h2><h3 id="2-1-1-什么是RS485"><a href="#2-1-1-什么是RS485" class="headerlink" title="2.1.1.什么是RS485"></a>2.1.1.什么是RS485</h3><p>通讯协议主要是实现两个设备之间的数据交换功能，通讯协议分硬件层协议和软件层协议。硬件层协议决定数据如何传输问题，比如要在设备1向设备2发送0x63，0x63的二进制数为0110 0011，这8个二进制数从设备1传输到设备2，涉及到1怎么传，0怎么传的问题，这就是硬件层要解决的问题。<br>RS485就是硬件层协议，同类的还有RS232，SPI，IIC等。</p>
-<h3 id="2-1-2-RS485电气特性"><a href="#2-1-2-RS485电气特性" class="headerlink" title="2.1.2.RS485电气特性"></a>2.1.2.RS485电气特性</h3><p>RS485的电气特性：</p>
-<ul>
-<li>逻辑“1”以两线之间电压差+（2-6）V表示；</li>
-<li>逻辑“0”以两线之间电压差-（2-6）V表示；<br>接口信号电平比RS232（3-15V）降低了，就不容易损坏接口电路的芯片，且该电平与TTL电平兼容，可方便与TTL电路连接。</li>
-</ul>
-<p>RS485标准只对接口的电气特性做出决定，而不涉及接插件、电缆、协议；因此用户需要再RS485应用的网络基础上建立自己的应用层通信协议。<br>而Modbus就是应用层协议的一种，还有其他协议，如电表的645协议，也可用自己制定简单的通讯协议。</p>
-<h3 id="2-2-Modbus与RS485"><a href="#2-2-Modbus与RS485" class="headerlink" title="2.2.Modbus与RS485"></a>2.2.Modbus与RS485</h3><p>Modbus与RS485在OSI模型中的位置：<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200615155318.png" alt=""></p>
-<p>上面说了，Modbus其实只是一种通信协议（软件），就像汉语和英语一样，就是一种交流语言，一种机器之间的交流语言。那么交流就要有沟通的桥梁或者说传输的介质（硬件），不同的介质（硬件平台）具有不同的电气特性和连接方式，比如RS232，RS485；<br>如果把Modbus比作英语，RS232比作印度人，RS485比作美国人，印度人之间讲英语时，理解为基于RS232的modbus通信，美国人之间讲英语时，理解为基于RS485的modbus通信。<br>总的来说，Modbus需要通过多种类型的物理介质进行通信，例如：</p>
-<ul>
-<li><p>串行RS232</p>
-</li>
-<li><p>串行RS485</p>
-</li>
-<li><p>串行RS422</p>
-</li>
-<li><p>以太网<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Communication-Physical-Media.gif" alt=""></p>
-<p>最初的Modbus接口在RS-232串行通信上运行，但是大多数后来的Modbus实现使用RS-485，因为它允许：距离更长，速度更快，单个多点网络可接多个设备。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/0910022P4-5.jpg" alt=""></p>
-<h2 id="3-Modbus通信协议"><a href="#3-Modbus通信协议" class="headerlink" title="3.Modbus通信协议"></a>3.Modbus通信协议</h2><p>串行端口和以太网存在多种版本的Modbus协议，最常见的是:</p>
-</li>
-<li><p>Modbus RTU</p>
-</li>
-<li><p>Modbus ASCII</p>
-</li>
-<li><p>Modbus TCP</p>
-<p>Modbus RTU,Modbus ASCII所用的物理硬件接口都是串行（Serial）通讯口（RS485，RS232，RS422），而Modbus TCP则是为了顺应当今世界发展潮流，什么都可以<br>用Ethernet网或者Internet来连接，传送数据。所以有了Modbus TCP模式，该模式的硬件接口就是<strong>以太网</strong>（Ethernet）口了，也就是我们电脑上一般用的网络口。<br>Modbu还有一个扩展版本Modbus Plus（Modbus+或者MB+），该协议是Modicon专有的，和Modbus不同。它需要一个专门的协处理器来处理类似HDLC的高速令牌旋转。它使用1Mbit/s的双绞线，并且每个节点都有转换隔离装置，是一种采用转换/边缘触发而不是电压/水平触发的装置。连接Modbus Plus到计算机需要特别的接口，通常是支持ISA（SA85），PCI或者PMCIA总线的板卡。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Different-Types.jpg" alt=""></p>
-<h2 id="4-Modbus通信方式：主-从模式"><a href="#4-Modbus通信方式：主-从模式" class="headerlink" title="4.Modbus通信方式：主-从模式"></a>4.Modbus通信方式：主-从模式</h2><p>Modbus串行链路协议是一个主-从协议。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20170510133926081.png" alt=""></p>
-<ul>
-<li>至少且只有1个主机，其他都是从机</li>
-<li>不管任何时候，从机都不能主动向主机发送数据</li>
-<li>主机具有访问从机的权限，从机不可主动访问从机，任何一次数据交换，都要由主机发起</li>
-</ul>
-<p>在同一时刻，只有一个主节点连接于总线，一个或多个子节点 (最大编号为 247 ) 连接于同一个串行总线。子节点之间从不会互相通信。<br>主节点有两种方式与子节点发出请求：</p>
-<p>（1） 单播模式：点对点发送，主节点发送请求，子节点回应。</p>
-<p>（2） 广播模式：广播发送，主节点发送，子节点不回应。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Message-Architecture.jpg" alt=""><br>Modbus设备使用Master-Slave（Ethernet称为Client-Server）技术进行通信，其中只有一个设备（Master 或Server）可以请求数据（称为查询）。</p>
-<p>其他设备（Slaves或Clients）通过将请求的数据提供给主服务器或执行查询中请求的操作来进行响应。</p>
-<p>从站是任何外围设备，例如I / O传感器，阀门，网络驱动器或其他测量类型的设备，它们处理信息并使用Modbus将其响应消息发送到主设备。</p>
-<p>主机可以寻址单个从机或向所有从机发起广播消息。从站将分别对所有寻址到它们的消息查询返回响应，但不响应广播消息。</p>
-<p>从站不会自行回复消息，而仅响应从主站发送的消息查询。</p>
-<p>对于使用以太网的协议（例如Modbus TCP），任何设备都可以发出Modbus命令，因此所有设备都可以充当主设备，尽管通常只有一个设备充当主设备。</p>
-<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/Modbus-Master-Query-and-Reply.gif" alt=""></p>
-</li>
-</ul>
+                <p>RS-485总线由于其支持设备广泛，设计结构简单，布线成本低廉，抗干扰能力强，在工业现场数据通信领域得到了极其广泛使用，但是在现场施工需要注意若干事项，防止出现相关问题，避免后期的维护成本增加。</p>
+<p>拓扑结构问题：RS-485总线规范规定，RS-485总线需要按照总线式拓扑结构布线，在总线连接上要采用菊花链手牵手方式布线，就等于是要求从主机开始，下面的从设备用RS-485总线像人与人握手相连一样连接在一起，等于是采用一条RS-485总线将所有485设备链接在一起。但是在工业现场中，相应的RS-485设备分布并不一定呈现出线性分布情况，也有可能是网格状或者散乱的分布在现场，如果采用手牵手菊花链方式连接，布线会非常复杂且耗费线材增加成本，所以很多时候人们会采用星型拓扑结构或者树形拓扑结构布线，但是不经过相应设备（星型拓扑结构需要485集线器，树形拓扑结构需要485中继器，相关拓扑结构可以参阅RS-485总线几种拓扑结构）则会出现通信不稳定的情况。所以RS-485总线布线一定需要按照手牵手菊花链方式拓扑结构连接，如果需要连接星型拓扑结构或者树形拓扑结构，则需要借助相应设备。</p>
+<p>RS-485总线接地问题：在RS-485总线布线规范中，要求RS-485总线单点可靠接地，也就是说整个RS-485总线有且仅有一个点接地，但是必须是可靠接地。可靠接地其实有两个意思：1.接地的地电平较为稳定，一般建议接在主机上面或者计算机的地线上。2.整条总线的地线必须保证有可靠的连接，而在现场施工情况下，这点很容易被忽略，一般而言，由于RS-485总线采用的是手牵手连接方式，一般都是将线材剪断与485设备连接（相关页面可以参考RS-485总线几种拓扑结构相关图示），而大家一般都是采用屏蔽层线路作为地线，但是在做接地的时候，大多数人都不会将屏蔽层做连接，那实际而言，屏蔽层是分成了很多段且相互之间是没有良好连接的，这样的地线接地其实可能会适得其反的。所以一旦接地就必须将地线做良好的连接且单点可靠接地，否则宁可不接地。</p>
+<p>线材问题：在RS-485总线布线规范中，要求485+，485-两根导线要互为双绞，且需要带有屏蔽层保护信号线不被外部环境干扰。在现场施工中，由于网线使用非常广泛，很多人采用网线作为485通信线路的线材，由于网线有八根线且单根的线径较细，采用网线作为RS-485总线的线材存在一定的浪费且通信质量不能得到保障。建议采用专用的屏蔽双绞线做为RS-485线路的线材，推荐采用0.5毫米以上线径的线材。另外，需要采购纯铜的线材，因为现在市场上的线材鱼龙混杂，很多奸商利用铁铝合金外层镀铜冒充铜线出售，这些合金线材容易折断且电阻大，对于通信质量有很大的影响，先提供一个鉴别的小窍门：将线材截断之后，对着光线看，如果截断面为铜色，则应该为纯铜线，如果为银白色，那就肯定是劣质线材，建议不要采购。</p>
+<p>通信距离问题:RS-485总线规范标准表明，RS-485总线在通信速率110Kbps的情况下，其通信距离可以达到1200米。但是这个是在理想状态下测定的，RS-485通信距离还受总线负载情况，外部干扰情况以及线材的优劣是相关因素。通信距离与通信线材线径粗细优劣，负载数量以及通信速率成反比，当通信速率越高，负载数量越多以及通信线材越细，RS-485总线的通信距离就越短。如果需要延长RS-485总线通信距离，可以通过增加485中继器或者通过相应的设备转换为网络线路（利用串口服务器的串口转网络功能）或者光纤线路（利用光纤Modem的串口转光纤功能）进行远距离传输。</p>
+<p>RS-485总线负载问题：在485总线标准中，RS-485总线的负载能力是32个单位，现有的普通485芯片负载能力一般是32个，但是最新的芯片负载能力可以达到128单位，最高可以达到400单位。所以一个485网络中的485设备数量并不一定是限制在32单位之内，其网络的最大数量是由标识485设备的地址占用的字节长度有关，而485网络的单条485总线的芯片相关，但是可以通过485集线器扩展出多条485总线来增加485网络的负载数量。建议在一条485总线上的负载数量不要超过30台485设备，因为RS-485总线上的设备一旦出现问题（如短路），就有可能会导致整个485线路上的所有设备都不能正常工作，将单条总线上的设备数量减少，可以有效的降低故障率，比如假定设备无差错的概率为99.9%，当总线上有128个设备的时候，其无差错的概率为99.9%的128次方，其整条总线无差错概率为87.98%，而通过四路的485集线器将其分割为四路单独的485总线，那每条总线的无差错概率则为99.9%的32次方，其单条总线的出错概率为96.85%，通过将大的485总线进行分割，可以有效的增强485总线的稳定性。</p>
+<p>电阻问题：RS-485总线一般都是使用屏蔽双绞线作为通信线材，由于使用的线材质量不一，有可能造成阻抗不匹配，导致数据通信不稳定。在此建议使用120欧姆电阻匹配阻抗，保证通信稳定性。120欧姆电阻的接线方式是在RS-485总线上首尾各接一个120欧姆电阻，电阻并联在485+，485-上。提请注意的是：由于并接120欧姆电阻会导致整个RS-485总线负载能力降低，只有在阻抗不匹配的情况下才考虑并接120欧姆电阻，即一般在排除其他通信不稳定的因素下，才考虑并接电阻。</p>
 
             </div>
             <hr/>
@@ -473,7 +436,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me/2020/06/09/Modbus%E4%BB%8B%E7%BB%8D/">http://niww.me/2020/06/09/Modbus%E4%BB%8B%E7%BB%8D/</a>
+                    <a href="http://niww.me/2020/07/06/RS485/RS485%E6%80%BB%E7%BA%BF%E5%B8%83%E7%BA%BF%E8%A7%84%E8%8C%83(%E5%9B%9B)/">http://niww.me/2020/07/06/RS485/RS485%E6%80%BB%E7%BA%BF%E5%B8%83%E7%BA%BF%E8%A7%84%E8%8C%83(%E5%9B%9B)/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -511,8 +474,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Modbus/">
-                                    <span class="chip bg-color">Modbus</span>
+                                <a href="/tags/RS485/">
+                                    <span class="chip bg-color">RS485</span>
                                 </a>
                             
                         </div>
@@ -684,31 +647,31 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/06/10/Modbus%E6%B6%88%E6%81%AF%E5%B8%A7/">
+                <a href="/2020/07/06/RS485/RS485%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0(%E4%B8%80)/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Modbus消息帧">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="RS485总线技术概述(一)">
                         
-                        <span class="card-title">Modbus消息帧</span>
+                        <span class="card-title">RS485总线技术概述(一)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Modbus消息帧串口通信消息帧在串口传输模式中（ASCII或RTU），传输设备以将Modbus消息转为有起点和终点的帧，这就允许接收的设备在消息起始处开始工作，读地址分配信息，判断哪一个设备被选中（广播方式则传给所有设备），判知何时信息已
+                            现场总线概念是由国际电工委员会（International Electrotechnical Commission简称IEC)与1984年提出，具体定义如下：现场总线是一种应用于生产现场，在现场设备和控制装置之间以及现场设备之间实行双向、串
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-10
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-07-06
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Modbus/" class="post-category">
-                                    Modbus
+                            <a href="/categories/RS485/" class="post-category">
+                                    RS485
                                 </a>
                             
                             
@@ -718,8 +681,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Modbus/">
-                        <span class="chip bg-color">Modbus</span>
+                    <a href="/tags/RS485/">
+                        <span class="chip bg-color">RS485</span>
                     </a>
                     
                 </div>
@@ -733,33 +696,36 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/04/23/JS%E4%B8%ADbyte%E8%BD%ACString%E4%B9%B1%E7%A0%81/">
+                <a href="/2020/06/19/Thingsboard/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbusRPC%E8%AF%B7%E6%B1%82/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="JS中byte转String乱码">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="ThingsBoard网关之ModbusRPC请求">
                         
-                        <span class="card-title">JS中byte转String乱码</span>
+                        <span class="card-title">ThingsBoard网关之ModbusRPC请求</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            项目中遇到一个问题，在JS中将byte数组转化为String的时候，有中文的情况下会出现乱码问题：
-function decodeToString(payload) {
-  return String.fromCharCode.apply(
+                            之前模拟了Modbus设备的数据采集，这次来模拟下Modbus下的RPC请求。
+1.模拟一个空调设备，采用ModbusTCP使用ModbusSlave模拟设备，设备地址1，分配4个寄存器：
+
+寄存器1:模式
+寄存器2:开关状态
+寄存器3,4
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-23
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-19
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" class="post-category">
-                                    问题记录
+                            <a href="/categories/ThingsBoard/" class="post-category">
+                                    ThingsBoard
                                 </a>
                             
                             
@@ -769,8 +735,8 @@ function decodeToString(payload) {
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/JavaScript/">
-                        <span class="chip bg-color">JavaScript</span>
+                    <a href="/tags/ThingsBoard/">
+                        <span class="chip bg-color">ThingsBoard</span>
                     </a>
                     
                 </div>

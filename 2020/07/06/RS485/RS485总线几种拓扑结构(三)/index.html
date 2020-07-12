@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ThingsBoard-Gateway（Java版）在树莓派上的使用-ModBus协议, Niww&#39;s Blog">
+    <meta name="keywords" content="RS485总线几种拓扑结构(三), Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>ThingsBoard-Gateway（Java版）在树莓派上的使用-ModBus协议 | Niww&#39;s Blog</title>
+    <title>RS485总线几种拓扑结构(三) | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -245,7 +245,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ThingsBoard-Gateway（Java版）在树莓派上的使用-ModBus协议</h1>
+                    <h1 class="description center-align post-title">RS485总线几种拓扑结构(三)</h1>
                 </div>
             </div>
         </div>
@@ -362,8 +362,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/ThingsBoard/">
-                                <span class="chip bg-color">ThingsBoard</span>
+                            <a href="/tags/RS485/">
+                                <span class="chip bg-color">RS485</span>
                             </a>
                         
                     </div>
@@ -374,8 +374,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/ThingsBoard/" class="post-category">
-                                ThingsBoard
+                            <a href="/categories/RS485/" class="post-category">
+                                RS485
                             </a>
                         
                     </div>
@@ -387,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-11-21
+                    2020-07-06
                 </div>
                 
 
@@ -404,117 +404,10 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>ThingsBoard GateWay 是在ThingsBoard下的一款高度集成遗留系统和第三方系统上联接设备的开源解决方案。<br>具有以下几个特点：</p>
-<ul>
-<li>MQTT扩展 - 于控制、配置和收集使用现有协议连接到外部MQTT代理的IoT设备数据。</li>
-<li>OPC-UA扩展 - 收集连接到OPC-UA服务端的IoT设备数据。</li>
-<li>Sigfox扩展 - 收集连接到Sigfox后端的IoT设备数据。</li>
-<li>数据持久 - 网络和硬件异常时保证数据正常传输。</li>
-<li>自动重新连接到UlyncThings集群。</li>
-<li>将传入的数据和消息映射到统一格式。<br>本篇将介绍在树莓派上安装ThingsBoard GateWay使用Modbus协议遥测数据。<a id="more"></a>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1></li>
-</ul>
-<ol>
-<li>启动ThingsBoard服务</li>
-<li><a href="https://thingsboard.io/docs/iot-gateway/install/rpi/" target="_blank" rel="noopener">在树莓派上安装ThingsBoard GateWay</a></li>
-<li><a href="https://thingsboard.io/docs/iot-gateway/getting-started/" target="_blank" rel="noopener">启动ThingsBoard GateWay服务</a></li>
-<li><a href="http://etrd.org/2017/01/29/%E6%A0%91%E8%8E%93%E6%B4%BE3%E7%A1%AC%E4%BB%B6%E4%B8%B2%E5%8F%A3%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E7%BC%96%E7%A8%8B/" target="_blank" rel="noopener">树莓派串口配置</a></li>
-<li><a href="http://www.waveshare.net/wiki/RS485_CAN_HAT" target="_blank" rel="noopener">树莓派RS485扩展板</a>一块,将扩展板插入树莓派，并与自己的传感设备连接好</li>
-<li><a href="https://harttle.land/2017/01/14/raspberrypi-uart.html" target="_blank" rel="noopener">将树莓派ttyAMA0串口权限开放</a><h1 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h1><h2 id="配置网关扩展"><a href="#配置网关扩展" class="headerlink" title="配置网关扩展"></a>配置网关扩展</h2><pre class=" language-$xslt"><code class="language-$xslt">[{
- "id": "modbus-water",
- "type": "MODBUS",
- "configuration": {
-     "servers": [{
-         "transport": {
-             "type": "rtu",
-             "portName": "ttyAMA0",
-             "encoding": "rtu",
-             "timeout": 5000,
-             "baudRate": 9600,
-             "dataBits": 8,
-             "stopBits": 1,
-             "parity": "none"
-         },
-         "devices": [{
-             "unitId": 1,
-             "deviceName": "水压-设备1",
-             "attributesPollPeriod": 1000,
-             "timeseriesPollPeriod": 1000,
-             "attributes": [],
-             "timeseries": [{
-                 "tag": "pressure",
-                 "type": "long",
-                 "pollPeriod": 1000,
-                 "functionCode": 3,
-                 "address": 4,
-                 "registerCount": 1,
-                 "bit": 0,
-                 "byteOrder": "BIG"
-             }]
-         }]
-     }]
- }
-}]
-</code></pre>
-</li>
-</ol>
-<pre><code>## 配置网关服务文件tb-gateway.yml
-```$xslt
-server:
-  # Server bind address
-  address: &quot;0.0.0.0&quot;
-  # Server bind port
-  port: &quot;9090&quot;
-
-# Check new version updates parameters
-updates:
-  # Enable/disable updates checking.
-  enabled: &quot;${UPDATES_ENABLED:true}&quot;
-
-gateways:
-  tenants:
-    -
-      label: &quot;Tenant&quot;
-      reporting:
-        interval: 60000
-      persistence:
-        type: file
-        path: storage
-        bufferSize: 1000
-      connection:
-        host: #ThingsBoard服务地址#
-        port: 1883
-        retryInterval: 3000
-        maxInFlight: 1000
-        security:
-          accessToken: #网关设备的令牌#
-      remoteConfiguration: true
-      extensions:
-        -
-          id: &quot;http&quot;
-          type: &quot;HTTP&quot;
-          extensionConfiguration: http-config.json</code></pre><h2 id="重启GateWay服务"><a href="#重启GateWay服务" class="headerlink" title="重启GateWay服务"></a>重启GateWay服务</h2><p>#问题<br>整个安装配置过程中出现了一个问题花了好久，在配置并重启GateWay服务后，发现网关设备始终没有同步，查看日志后发现</p>
-<pre class=" language-$xslt"><code class="language-$xslt">2019-11-19 18:36:13,160 [pool-1-thread-1] ERROR o.t.g.extensions.modbus.ModbusClient - MBS[ttyAMA0] connection failed!
-java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid ports are: [ttyAMA0]
-    at com.ghgande.j2mod.modbus.net.SerialConnection.open(SerialConnection.java:127)
-    at com.ghgande.j2mod.modbus.facade.ModbusSerialMaster.connect(ModbusSerialMaster.java:96)
-    at org.thingsboard.gateway.extensions.modbus.ModbusClient.connect(ModbusClient.java:121)
-    at java.util.ArrayList.forEach(ArrayList.java:1257)
-    at org.thingsboard.gateway.extensions.modbus.DefaultModbusService.init(DefaultModbusService.java:64)
-    at org.thingsboard.gateway.service.TenantServiceRegistry.updateExtensionConfiguration(TenantServiceRegistry.java:83)
-    at org.thingsboard.gateway.service.DefaultTenantManagerService.lambda$init$0(DefaultTenantManagerService.java:64)
-    at org.thingsboard.gateway.service.gateway.MqttGatewayService.updateConfiguration(MqttGatewayService.java:515)
-    at org.thingsboard.gateway.service.gateway.MqttGatewayService.onGatewayAttributesGet(MqttGatewayService.java:496)
-    at org.thingsboard.gateway.service.gateway.MqttGatewayService.lambda$onMessage$17(MqttGatewayService.java:426)
-    at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
-    at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-    at java.lang.Thread.run(Thread.java:748)
-2019-11-19 18:36:13,165 [pool-1-thread-1] ERROR o.t.g.e.modbus.DefaultModbusService - [Tenant] Modbus service initialization failed
-</code></pre>
-<p>日志显示ttyAMA0口不能打开或不存在。dose not exist肯定是不可能的，那就是串口打不开。<br>最后在<a href="https://harttle.land/2017/01/14/raspberrypi-uart.html" target="_blank" rel="noopener">这里</a>找到了解决办法。将ttyAMA0口的权限设置为任何人可以读，写。<br>在<code>/etc/udev/rules.d</code>中添加100-ttyAMA0.rules,内容为：</p>
-<pre class=" language-$xslt"><code class="language-$xslt">KERNEL=="ttyAMA0", MODE="666"</code></pre>
+                <p>RS-485总线布线规范规定其必须是总线式拓扑结构，也就是要是手牵手菊花链布线方式，但是在现场实际施工过程中，现场RS-485设备的分布不会总是按照线性分布，而可能是零散的分布在不同的位置上或者是呈网格状分布，也有可能呈树形分布，在这种情况下，采用总线式拓扑结构布线不仅浪费线材，拓扑结构也更加复杂，容易造成RS-485总线系统的通信质量不稳定。一般需要借助一些相应的设备布设成星形拓扑结构或者树形拓扑结构，方便现场布线施工以及后期现场维护工作。现将RS-485总线的几种拓扑结构以图示的方式表示出来，与大家共享。</p>
+<p>1.总线式拓扑结构，总线式拓扑结构是RS-485总线的布线规范，总线式拓扑结构其实就是一种特殊的树形拓扑结构，只不过总线式拓扑结构的分支线路距离非常短，在RS-485总线布线中，建议分支距离不要超过0.5米，一般都是建议直接手牵手菊花链的连接，不留分支，这样可以保证没有信号反射的问题。而所谓的手牵手菊花链连接方式就是：A,B,C三台RS-485设备，A设备的485+接入B设备的485+，B设备的485+再连接C设备的485+，有更多设备的话，以此类推，485-的接线方式和485+的接线方式一样。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/bus.png" alt=""></p>
+<p>2.星形拓扑结构，RS-485总线支持点对多点通信方式，即一个主控485设备控制多个从控485设备，而主控设备多放置于中心位置，如果按照总线式拓扑结构布线的话，485线路需要围绕主控485设备布线，布线方式复杂且浪费线材，利用485集线器布设成星形拓扑结构则布线结构简单，施工以及维护都会非常方便。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/star.png" alt=""></p>
+<p>3.树形拓扑结构，在现场布线情况下，RS-485设备可能分布在某个主干线的两边，如果采用手牵手的布线方式，则会来回往复的走线，形成浪费且布线结构复杂，布设成树形拓扑结构是比较合理的。树形拓扑结构域总线式拓扑结构的区别在于树形拓扑结构的分支距离比较长，RS-485总线一旦分支距离较长的话，非常容易形成信号反射，从而导致通信不稳定，利用485中继器做隔离，可以有效的保证RS-485总线通信的稳定性。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/tree.png" alt=""></p>
 
             </div>
             <hr/>
@@ -530,7 +423,7 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me" rel="external nofollow noreferrer">Niww</a>
+                    <a href="http://niww.me" rel="external nofollow noreferrer">niww</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -540,7 +433,7 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me/2019/11/21/ThingsBoard%E7%BD%91%E5%85%B3%E9%85%8D%E7%BD%AE(Java%E7%89%88)-Modbus/">http://niww.me/2019/11/21/ThingsBoard%E7%BD%91%E5%85%B3%E9%85%8D%E7%BD%AE(Java%E7%89%88)-Modbus/</a>
+                    <a href="http://niww.me/2020/07/06/RS485/RS485%E6%80%BB%E7%BA%BF%E5%87%A0%E7%A7%8D%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84(%E4%B8%89)/">http://niww.me/2020/07/06/RS485/RS485%E6%80%BB%E7%BA%BF%E5%87%A0%E7%A7%8D%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84(%E4%B8%89)/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -553,7 +446,7 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="http://niww.me" target="_blank">Niww</a>
+                    <a href="http://niww.me" target="_blank">niww</a>
                     !
                 </span>
             </div>
@@ -578,8 +471,8 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/ThingsBoard/">
-                                    <span class="chip bg-color">ThingsBoard</span>
+                                <a href="/tags/RS485/">
+                                    <span class="chip bg-color">RS485</span>
                                 </a>
                             
                         </div>
@@ -751,36 +644,31 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/12/23/ThingsBoard-PE%E7%89%88%E7%A0%B4%E8%A7%A3/">
+                <a href="/2020/07/06/RS485/RS485%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE(%E4%BA%8C)/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="ThingsBoard PE版破解">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="RS485通信协议(二)">
                         
-                        <span class="card-title">ThingsBoard PE版破解</span>
+                        <span class="card-title">RS485通信协议(二)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ThingsBoard是一款开源的IOT平台，有CE,PE两个版本，PE版需要付费，功能也更加丰富。为了体验下PE版的功能，尝试着对PE版进行破解。
-
-
-按照官方文档进行安装，跳过步骤中的填写license部分
-
-启动服务，当然此时是无法访
+                            RS-485总线技术只是规定了接口的电气标准，并没有规定RS-485接口的电缆，插件以及通信协议，只是OSI规范中物理层的一个标准，由于RS-485总线采用差分平衡传输方式，一般使用的电缆建议采用屏蔽双绞线，使得485+与485-两两双绞，
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-23
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-07-06
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/ThingsBoard/" class="post-category">
-                                    ThingsBoard
+                            <a href="/categories/RS485/" class="post-category">
+                                    RS485
                                 </a>
                             
                             
@@ -790,8 +678,8 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/ThingsBoard/">
-                        <span class="chip bg-color">ThingsBoard</span>
+                    <a href="/tags/RS485/">
+                        <span class="chip bg-color">RS485</span>
                     </a>
                     
                 </div>
@@ -805,31 +693,31 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/18/%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88---CORS/">
+                <a href="/2020/07/06/RS485/RS485%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0(%E4%B8%80)/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="跨域解决方案---CORS">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="RS485总线技术概述(一)">
                         
-                        <span class="card-title">跨域解决方案---CORS</span>
+                        <span class="card-title">RS485总线技术概述(一)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一、什么是跨域访问说到跨域访问，必须先解释一个名词：同源策略。所谓同源策略就是在浏览器端出于安全考量，向服务端发起请求必须满足：协议相同、Host(ip)相同、端口相同的条件，否则访问将被禁止，该访问也就被称为跨域访问。虽然跨域访问被禁止之
+                            现场总线概念是由国际电工委员会（International Electrotechnical Commission简称IEC)与1984年提出，具体定义如下：现场总线是一种应用于生产现场，在现场设备和控制装置之间以及现场设备之间实行双向、串
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-09-18
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-06
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/SpringBoot/" class="post-category">
-                                    SpringBoot
+                            <a href="/categories/RS485/" class="post-category">
+                                    RS485
                                 </a>
                             
                             
@@ -839,8 +727,8 @@ java.io.IOException: Port [ttyAMA0] cannot be opened or does not exist - Valid p
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/SpringBoot/">
-                        <span class="chip bg-color">SpringBoot</span>
+                    <a href="/tags/RS485/">
+                        <span class="chip bg-color">RS485</span>
                     </a>
                     
                 </div>

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="ThingsBoard网关之Modbus设备模拟采集, Niww&#39;s Blog">
+    <meta name="keywords" content="RS485总线技术概述(一), Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>ThingsBoard网关之Modbus设备模拟采集 | Niww&#39;s Blog</title>
+    <title>RS485总线技术概述(一) | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -240,12 +240,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ThingsBoard网关之Modbus设备模拟采集</h1>
+                    <h1 class="description center-align post-title">RS485总线技术概述(一)</h1>
                 </div>
             </div>
         </div>
@@ -362,8 +362,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/ThingsBoard/">
-                                <span class="chip bg-color">ThingsBoard</span>
+                            <a href="/tags/RS485/">
+                                <span class="chip bg-color">RS485</span>
                             </a>
                         
                     </div>
@@ -374,8 +374,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/ThingsBoard/" class="post-category">
-                                ThingsBoard
+                            <a href="/categories/RS485/" class="post-category">
+                                RS485
                             </a>
                         
                     </div>
@@ -387,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-06-11
+                    2020-07-06
                 </div>
                 
 
@@ -404,165 +404,75 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>本篇介绍下如何使用ModbusSlave/ModbusPoll模拟ModbusRTU与ModbusTCP协议并与TB的Python网关对接。</p>
-<h1 id="1-准备工具"><a href="#1-准备工具" class="headerlink" title="1.准备工具"></a>1.准备工具</h1><p>1.ModbusPoll(链接: <a href="https://pan.baidu.com/s/1cX_jow-G8cmQNaYpAZ42fg" target="_blank" rel="noopener">https://pan.baidu.com/s/1cX_jow-G8cmQNaYpAZ42fg</a> 提取码: p2gk)</p>
-<p>2.ModbusSlave（链接: <a href="https://pan.baidu.com/s/1Fq5O5a-EuWhUBlaNUa98OQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1Fq5O5a-EuWhUBlaNUa98OQ</a> 提取码: 95x7）</p>
-<p>3.虚拟com端口工具VSPD（链接: <a href="https://pan.baidu.com/s/14nN79wXnh8tVYhhn6N3iNQ" target="_blank" rel="noopener">https://pan.baidu.com/s/14nN79wXnh8tVYhhn6N3iNQ</a> 提取码: f6p5）</p>
-<h1 id="2-ModbusRTU协议模拟"><a href="#2-ModbusRTU协议模拟" class="headerlink" title="2.ModbusRTU协议模拟"></a>2.ModbusRTU协议模拟</h1><h2 id="2-1本地ModbusRTU模拟"><a href="#2-1本地ModbusRTU模拟" class="headerlink" title="2.1本地ModbusRTU模拟"></a>2.1本地ModbusRTU模拟</h2><p>1.虚拟两个com端口,COM7,COM8<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/vspd1.png" alt=""><br>2.打开ModbusSlave,点击setup-&gt;slave(从机)definition配置从端，如图：<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/201807231339436.png" alt=""><br>3.打开ModbusPoll,点击read/write(主机)definition配置主端，如图：<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20180723133942973.png" alt=""><br>以上配置的是10个寄存器从机设备ID为1但只读取前4个寄存器的数据，可根据自己的需要设置。后面为了简便，只配置了一个寄存器。<br>4.接下来分别点击”connection”进行连接，注意修改连接界面的端口，因为我只用到了RTU模式，所以其他选项如波特率9600,比特位8，校验位1，无等价位等可以保持不变，然后点击确定进行连接，未连接成功窗口第二行会给出提示信息。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/modbusrtuconnection.png" alt=""><br>5.通讯开始，主机端显示：TX=发送命令次数，Err=错误次数，ID=从机ID，F=功能号，SR=轮询间隔时间。使用ModbusSlave工具栏的”Display-&gt;Communication Traffic按钮，可以显示出当前发送命令和接受的数据。<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/modbusrtuconnection2.png" alt=""></p>
-<h2 id="2-2-连接thingsBoard-gateway"><a href="#2-2-连接thingsBoard-gateway" class="headerlink" title="2.2.连接thingsBoard-gateway"></a>2.2.连接thingsBoard-gateway</h2><p>1.我的网关是装在树莓派中的，所以需要用到其他转换器，整体的连接是：</p>
-<p>电脑COM3端口–&gt;USB转485转换器–&gt;485转TTL转换器–&gt;树莓派串口<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/lijie.jpg" alt=""></p>
-<p>2.将ModbusSlave的端口指向COM3</p>
-<p>3.配置tb_gateway.yaml与modbus_serial.json;在tb_gateway.yaml中将连接配置指向modbus_serial.json</p>
-<p>tb_gateway.yaml中内容如下：</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">thingsboard</span><span class="token punctuation">:</span>
-  <span class="token key atrule">host</span><span class="token punctuation">:</span> <span class="token string">"ip"</span>
-  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">1883</span>
-  <span class="token key atrule">remoteConfiguration</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
-  <span class="token key atrule">security</span><span class="token punctuation">:</span>
-    <span class="token key atrule">accessToken</span><span class="token punctuation">:</span> <span class="token string">"token"</span>
-<span class="token key atrule">storage</span><span class="token punctuation">:</span>
-  <span class="token key atrule">type</span><span class="token punctuation">:</span> memory
-  <span class="token key atrule">read_records_count</span><span class="token punctuation">:</span> <span class="token number">100</span>
-  <span class="token key atrule">max_records_count</span><span class="token punctuation">:</span> <span class="token number">100000</span>
-<span class="token comment" spellcheck="true">#  type: file</span>
-<span class="token comment" spellcheck="true">#  data_folder_path: ./data/</span>
-<span class="token comment" spellcheck="true">#  max_file_count: 10</span>
-<span class="token comment" spellcheck="true">#  max_read_records_count: 10</span>
-<span class="token comment" spellcheck="true">#  max_records_per_file: 10000</span>
-<span class="token key atrule">connectors</span><span class="token punctuation">:</span>
-  <span class="token punctuation">-</span>
-    <span class="token key atrule">name</span><span class="token punctuation">:</span> Modbus Connector
-    <span class="token key atrule">type</span><span class="token punctuation">:</span> modbus
-    <span class="token key atrule">configuration</span><span class="token punctuation">:</span> modbus_serial.json</code></pre>
-<p>modbus_serial.json中内容如下：</p>
-<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"server"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Modbus Default Server"</span><span class="token punctuation">,</span>
-    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"serial"</span><span class="token punctuation">,</span>
-    <span class="token property">"method"</span><span class="token operator">:</span> <span class="token string">"rtu"</span><span class="token punctuation">,</span>
-    <span class="token property">"port"</span><span class="token operator">:</span> <span class="token string">"/dev/ttyAMA0"</span><span class="token punctuation">,</span>
-    <span class="token property">"baudrate"</span><span class="token operator">:</span> <span class="token number">9600</span><span class="token punctuation">,</span>
-    <span class="token property">"timeout"</span><span class="token operator">:</span> <span class="token number">35</span><span class="token punctuation">,</span>
-    <span class="token property">"devices"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-      <span class="token punctuation">{</span>
-        <span class="token property">"unitId"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-        <span class="token property">"deviceName"</span><span class="token operator">:</span> <span class="token string">"VuritalDevice"</span><span class="token punctuation">,</span>
-        <span class="token property">"attributesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
-        <span class="token property">"timeseriesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
-        <span class="token property">"sendDataOnlyOnChange"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
-        <span class="token property">"timeseries"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-          <span class="token punctuation">{</span>
-            <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
-            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"count"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"16int"</span><span class="token punctuation">,</span>
-            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
-            <span class="token property">"registerCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">0</span>
-          <span class="token punctuation">}</span>
-        <span class="token punctuation">]</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">]</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<p>最后在TB平台上可以看到遥测值在更新</p>
-<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/viratuldevice.png" alt=""></p>
-<h1 id="3-ModbusTCP协议模拟"><a href="#3-ModbusTCP协议模拟" class="headerlink" title="3.ModbusTCP协议模拟"></a>3.ModbusTCP协议模拟</h1><h2 id="3-1本地ModbusTCP模拟"><a href="#3-1本地ModbusTCP模拟" class="headerlink" title="3.1本地ModbusTCP模拟"></a>3.1本地ModbusTCP模拟</h2><p>修改上面Poll/Slave的连接信息，将Connection选择Modbus TCP/IP，点击连接后可看到传输的数据</p>
-<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200611141355.png" alt=""></p>
-<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200611142128.png" alt=""></p>
-<h2 id="3-2连接thingsBoard-gateway"><a href="#3-2连接thingsBoard-gateway" class="headerlink" title="3.2连接thingsBoard-gateway"></a>3.2连接thingsBoard-gateway</h2><p>配置tb_gateway.yaml与modbus_serial.json;在tb_gateway.yaml中将连接配置指向modbus.json。</p>
-<p>tb_gateway.yaml中内容如下：</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">thingsboard</span><span class="token punctuation">:</span>
-  <span class="token key atrule">host</span><span class="token punctuation">:</span> <span class="token string">"ip"</span>
-  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">1883</span>
-  <span class="token key atrule">remoteConfiguration</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
-  <span class="token key atrule">security</span><span class="token punctuation">:</span>
-    <span class="token key atrule">accessToken</span><span class="token punctuation">:</span> <span class="token string">"token"</span>
-<span class="token key atrule">storage</span><span class="token punctuation">:</span>
-  <span class="token key atrule">type</span><span class="token punctuation">:</span> memory
-  <span class="token key atrule">read_records_count</span><span class="token punctuation">:</span> <span class="token number">100</span>
-  <span class="token key atrule">max_records_count</span><span class="token punctuation">:</span> <span class="token number">100000</span>
-<span class="token comment" spellcheck="true">#  type: file</span>
-<span class="token comment" spellcheck="true">#  data_folder_path: ./data/</span>
-<span class="token comment" spellcheck="true">#  max_file_count: 10</span>
-<span class="token comment" spellcheck="true">#  max_read_records_count: 10</span>
-<span class="token comment" spellcheck="true">#  max_records_per_file: 10000</span>
-<span class="token key atrule">connectors</span><span class="token punctuation">:</span>
-  <span class="token punctuation">-</span>
-    <span class="token key atrule">name</span><span class="token punctuation">:</span> Modbus Connector
-    <span class="token key atrule">type</span><span class="token punctuation">:</span> modbus
-    <span class="token key atrule">configuration</span><span class="token punctuation">:</span> modbus.json</code></pre>
-<p>modbus.json内容如下：</p>
-<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"server"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"tcp"</span><span class="token punctuation">,</span>
-    <span class="token property">"host"</span><span class="token operator">:</span> <span class="token string">"10.49.0.66"</span><span class="token punctuation">,</span>
-    <span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">502</span><span class="token punctuation">,</span>
-    <span class="token property">"timeout"</span><span class="token operator">:</span> <span class="token number">35</span><span class="token punctuation">,</span>
-    <span class="token property">"method"</span><span class="token operator">:</span> <span class="token string">"socket"</span><span class="token punctuation">,</span>
-    <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
-    <span class="token property">"devices"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-      <span class="token punctuation">{</span>
-        <span class="token property">"unitId"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-        <span class="token property">"deviceName"</span><span class="token operator">:</span> <span class="token string">"TCPDevice"</span><span class="token punctuation">,</span>
-        <span class="token property">"attributesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
-        <span class="token property">"timeseriesPollPeriod"</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
-        <span class="token property">"sendDataOnlyOnChange"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
-        <span class="token property">"attributes"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-          <span class="token punctuation">{</span>
-            <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
-            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"count"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"16int"</span><span class="token punctuation">,</span>
-            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
-            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">0</span>
-          <span class="token punctuation">}</span>
-        <span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"timeseries"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-          <span class="token punctuation">{</span>
-            <span class="token property">"byteOrder"</span><span class="token operator">:</span> <span class="token string">"BIG"</span><span class="token punctuation">,</span>
-            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"count"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"16int"</span><span class="token punctuation">,</span>
-            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
-            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">0</span>
-          <span class="token punctuation">}</span>
-        <span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token property">"rpc"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-          <span class="token punctuation">{</span>
-            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"setValue"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"bits"</span><span class="token punctuation">,</span>
-            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
-            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">31</span>
-          <span class="token punctuation">}</span><span class="token punctuation">,</span>
-          <span class="token punctuation">{</span>
-            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"getValue"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"bits"</span><span class="token punctuation">,</span>
-            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">31</span>
-          <span class="token punctuation">}</span><span class="token punctuation">,</span>
-          <span class="token punctuation">{</span>
-            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"setCPUFanSpeed"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"32int"</span><span class="token punctuation">,</span>
-            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">16</span><span class="token punctuation">,</span>
-            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
-            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">33</span>
-          <span class="token punctuation">}</span><span class="token punctuation">,</span>
-          <span class="token punctuation">{</span>
-            <span class="token property">"tag"</span><span class="token operator">:</span><span class="token string">"getCPULoad"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"32int"</span><span class="token punctuation">,</span>
-            <span class="token property">"functionCode"</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
-            <span class="token property">"objectsCount"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
-            <span class="token property">"address"</span><span class="token operator">:</span> <span class="token number">35</span>
-          <span class="token punctuation">}</span>
-        <span class="token punctuation">]</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">]</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<p>最后在TB平台上能看到设备的遥测值：</p>
-<p><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200611142757.png" alt=""></p>
+                <p>现场总线概念是由国际电工委员会（International Electrotechnical Commission简称IEC)与1984年提出，具体定义如下：现场总线是一种应用于生产现场，在现场设备和控制装置之间以及现场设备之间实行双向、串行、多节点的数字通信技术。而RS-485又称为EIA-485是由美国电子工业协议（Electronic Industries Association简称EIA)于1983年在RS-422的基础上提出，RS-232/485串口只规定了接口的电气标准，没有规定接口的插件，电缆以及使用的协议，只是OSI规范中物理层的一个标准。严格意义来讲，RS-485总线是现场总线技术的鼻祖，但是其严格意义上来讲并不是现场总线。</p>
+<p>理解RS-485总线需要从RS-232串口开始，现在的RS-232串口基本上都是基于RS-232C标准定义的，其接口定义有DB9以及DB25两种接口定义，现在基本上都是采用DB9接口。RS-232串口定义如下：1.载波检测，2.接收数据，3.发送数据，4.数据终端准备就绪，5.信号地，6.调制解调器就绪，7.请求发送，8.允许发送，9.振铃提示。现在由于计算机处理能力的增强，握手之类的处理基本上交由软件来处理，只需要采用2，3，5（RXD,TXD,GND)三根线就可以正常通信。RS-232串口采用单端非差分电路平衡传输方式传输数据，收发数据线路共用接地线，也就是说其收发数据(RXD,TXD)的表示是针对地线(GND)而言的。当数据线的电平低于-3V的时候，其为逻辑“1”，高于+3V的时候，其为逻辑“0”。所以RS-232串口并不能抑制共模干扰以及共地噪音，从而决定RS-232串口的通信距离较短，并且RS-232串口只能针对点对点通信，不能支持多点组网的通信模式。</p>
+<p>由于工业现场通信节点众多，相互之间距离较远且外部电磁环境复杂，针对工业网络通信人们需要一种采用最少的连线互联各个通信节点，并且具备一定抑制外部干扰的通信方式来完成工业现场的通信任务。针对RS-232存在的缺点，EIA提出了RS-422/485标准，其支持点对多点通信，通信速率最大可以支持110Kbps，通信距离最远可达1200米（通过增加485中继器通信距离可以延长至6000米）。</p>
+<p>EIA232,EIA422,EIA485技术参数：</p>
+<table>
+<thead>
+<tr>
+<th align="left">规范</th>
+<th align="left">EIA-232</th>
+<th align="left">EIA-422</th>
+<th align="left">EIA-485</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">最大传输距离</td>
+<td align="left">15m</td>
+<td align="left">1200m（110kbps)</td>
+<td align="left">1200m（110kbps)</td>
+</tr>
+<tr>
+<td align="left">最大传输速度</td>
+<td align="left">20Kbps</td>
+<td align="left">10Mbps(12m)</td>
+<td align="left">10Mbps(12m)</td>
+</tr>
+<tr>
+<td align="left">驱动器最小输出</td>
+<td align="left">±5V</td>
+<td align="left">±2V</td>
+<td align="left">±1.5V</td>
+</tr>
+<tr>
+<td align="left">驱动器最大输出</td>
+<td align="left">±15V</td>
+<td align="left">±10V</td>
+<td align="left">±6V</td>
+</tr>
+<tr>
+<td align="left">最大驱动器数量</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">32单位负载</td>
+</tr>
+<tr>
+<td align="left">最大接收器数量</td>
+<td align="left">1</td>
+<td align="left">10</td>
+<td align="left">32单位负载</td>
+</tr>
+<tr>
+<td align="left">接收器敏感度</td>
+<td align="left">±3V</td>
+<td align="left">±0.2V</td>
+<td align="left">±0.2V</td>
+</tr>
+<tr>
+<td align="left">传输方式</td>
+<td align="left">单端</td>
+<td align="left">差分</td>
+<td align="left">差分</td>
+</tr>
+<tr>
+<td align="left">RS-485总线由于其采用差分平衡电路，能够极大的抑制噪音以及不受节点之间的接地电平差异的影响，具有较强的抗干扰能力以及较远的传输距离。差分平衡电路相应原理如下：在RS-485总线的两条信号线路上（485+，485-）上一根导线的电压值是另外一根导线的电压取反值，接收器的输入电压为两根导线的差值，其差值的正负表示相应的逻辑“1”和“0”（485+电压低于485-，则为逻辑“1”，反之则为逻辑“0”），其接收器最小敏感度可以达到200mV。由于RS-485总线上的两条信号线传递方向相反，大小相同的电流，当噪音电压对其形成干扰的时候，往往都是同时施加于两条信号线路上，并且施加的效果一致，而由于接收器的输入电压为两根导线的差值，其在某一条导线上的噪声电压会被另外一条导线上的噪声电压相互抵消（比如485+上的电压为+1V，485-上的电压为-1V，差值为2V，当噪声电压影响他们使其电压都上升1V，那么485+的电压为+2V,485-的电压则为0V,其差值仍然为2V，这样噪声电压就被抵消了）。同样的道理，由于RS-485总线两根导线的取值是485+，485-的差值，不同节点的接地线的电平差值并不会对差分电路造成任何影响。</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>RS-485总线接线：485+，485-两条信号线应该在同一条双绞线中，并且互为双绞（比如采用网络作为485线路时，只能是蓝，蓝白或者绿，绿白这样连接,而不能绿，蓝），相互之间不能调换。在RS-485总线首尾各接一个120Ω电阻，成为一个60Ω并联终端电阻，当终端电阻等于电缆的特征阻抗时，可以削弱乃至消除信号的反射。</p>
 
             </div>
             <hr/>
@@ -588,7 +498,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me/2020/06/11/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbus%E6%A8%A1%E6%8B%9F%E8%AE%BE%E5%A4%87/">http://niww.me/2020/06/11/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbus%E6%A8%A1%E6%8B%9F%E8%AE%BE%E5%A4%87/</a>
+                    <a href="http://niww.me/2020/07/06/RS485/RS485%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0(%E4%B8%80)/">http://niww.me/2020/07/06/RS485/RS485%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0(%E4%B8%80)/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -626,8 +536,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/ThingsBoard/">
-                                    <span class="chip bg-color">ThingsBoard</span>
+                                <a href="/tags/RS485/">
+                                    <span class="chip bg-color">RS485</span>
                                 </a>
                             
                         </div>
@@ -799,33 +709,31 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/06/15/TB%E7%BD%91%E5%85%B3%E6%B5%8B%E8%AF%95%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">
+                <a href="/2020/07/06/RS485/RS485%E6%80%BB%E7%BA%BF%E5%87%A0%E7%A7%8D%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84(%E4%B8%89)/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="TB网关测试问题记录">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="RS485总线几种拓扑结构(三)">
                         
-                        <span class="card-title">TB网关测试问题记录</span>
+                        <span class="card-title">RS485总线几种拓扑结构(三)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            一、Modbus网关配置1.attributes/timeseries下面的参数需要加上”byteOrder”: “BIG”
-2.同时采集多个设备，要修改设备地址，值对应devices配置下的unitId
-3.Modbus多主机多从机是否可
+                            RS-485总线布线规范规定其必须是总线式拓扑结构，也就是要是手牵手菊花链布线方式，但是在现场实际施工过程中，现场RS-485设备的分布不会总是按照线性分布，而可能是零散的分布在不同的位置上或者是呈网格状分布，也有可能呈树形分布，在这种情况
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-15
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-07-06
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/ThingsBoard/" class="post-category">
-                                    ThingsBoard
+                            <a href="/categories/RS485/" class="post-category">
+                                    RS485
                                 </a>
                             
                             
@@ -835,8 +743,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/ThingsBoard/">
-                        <span class="chip bg-color">ThingsBoard</span>
+                    <a href="/tags/RS485/">
+                        <span class="chip bg-color">RS485</span>
                     </a>
                     
                 </div>
@@ -850,31 +758,32 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/06/10/Modbus%E6%B6%88%E6%81%AF%E5%B8%A7/">
+                <a href="/2020/07/06/RS485/RS485%E6%80%BB%E7%BA%BF%E5%B8%83%E7%BA%BF%E8%A7%84%E8%8C%83(%E5%9B%9B)/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Modbus消息帧">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="485总线布线规范(四)">
                         
-                        <span class="card-title">Modbus消息帧</span>
+                        <span class="card-title">485总线布线规范(四)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Modbus消息帧串口通信消息帧在串口传输模式中（ASCII或RTU），传输设备以将Modbus消息转为有起点和终点的帧，这就允许接收的设备在消息起始处开始工作，读地址分配信息，判断哪一个设备被选中（广播方式则传给所有设备），判知何时信息已
+                            RS-485总线由于其支持设备广泛，设计结构简单，布线成本低廉，抗干扰能力强，在工业现场数据通信领域得到了极其广泛使用，但是在现场施工需要注意若干事项，防止出现相关问题，避免后期的维护成本增加。
+拓扑结构问题：RS-485总线规范规定，RS
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-06
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Modbus/" class="post-category">
-                                    Modbus
+                            <a href="/categories/RS485/" class="post-category">
+                                    RS485
                                 </a>
                             
                             
@@ -884,8 +793,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Modbus/">
-                        <span class="chip bg-color">Modbus</span>
+                    <a href="/tags/RS485/">
+                        <span class="chip bg-color">RS485</span>
                     </a>
                     
                 </div>

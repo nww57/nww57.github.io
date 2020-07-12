@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="TB网关测试问题记录, Niww&#39;s Blog">
+    <meta name="keywords" content="ThingsBoard PE版破解, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>TB网关测试问题记录 | Niww&#39;s Blog</title>
+    <title>ThingsBoard PE版破解 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -240,12 +240,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">TB网关测试问题记录</h1>
+                    <h1 class="description center-align post-title">ThingsBoard PE版破解</h1>
                 </div>
             </div>
         </div>
@@ -387,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-06-15
+                    2019-12-23
                 </div>
                 
 
@@ -404,25 +404,112 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="一、Modbus网关配置"><a href="#一、Modbus网关配置" class="headerlink" title="一、Modbus网关配置"></a>一、Modbus网关配置</h1><p>1.attributes/timeseries下面的参数需要加上”byteOrder”: “BIG”</p>
-<p>2.同时采集多个设备，要修改设备地址，值对应devices配置下的unitId</p>
-<p>3.Modbus多主机多从机是否可行？<br><img src="https://nblog.oss-cn-shanghai.aliyuncs.com/20200615164134.png" alt=""></p>
-<ul>
-<li><a href="https://www.konnad.com/product/serial-to-serial-converter/" target="_blank" rel="noopener">康耐德串口转换器</a></li>
-<li><a href="http://bbs.gongkong.com/d/201407/570336_1.shtml" target="_blank" rel="noopener">modbus代理</a>,<a href="https://item.taobao.com/item.htm?spm=a230r.1.14.16.52932ade35mdEM&id=40352800001&ns=1&abbucket=9#detail" target="_blank" rel="noopener">代理设备</a><br><a href="https://v.youku.com/v_show/id_XMTQxNjI3NjkxMg==.html?spm=a2h0c.8166622.PhoneSokuUgc_1.dtitle" target="_blank" rel="noopener">视频</a></li>
-</ul>
-<p>4.使用knob控制控件时，发送rpc请求时，请求参数是string,导致网关解析时无法解析,转换成所需要的数值类型即可</p>
-<pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">turn</span><span class="token punctuation">(</span>ratio<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">var</span> value <span class="token operator">=</span> <span class="token punctuation">(</span>vm<span class="token punctuation">.</span>minValue <span class="token operator">+</span> <span class="token punctuation">(</span>vm<span class="token punctuation">.</span>maxValue <span class="token operator">-</span> vm<span class="token punctuation">.</span>minValue<span class="token punctuation">)</span><span class="token operator">*</span>ratio<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toFixed</span><span class="token punctuation">(</span>vm<span class="token punctuation">.</span>ctx<span class="token punctuation">.</span>decimals<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>canvasBar<span class="token punctuation">.</span>value <span class="token operator">!=</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            canvasBar<span class="token punctuation">.</span>value <span class="token operator">=</span> value<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token function">updateColor</span><span class="token punctuation">(</span>canvasBar<span class="token punctuation">.</span><span class="token function">getValueColor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <p><a href="https://thingsboard.io/" target="_blank" rel="noopener">ThingsBoard是一款开源的IOT平台</a>，有CE,PE两个版本，PE版需要付费，功能也更加丰富。为了体验下PE版的功能，尝试着对<br>PE版进行破解。</p>
+<a id="more"></a>
+<ol>
+<li><p>按照<a href="https://thingsboard.io/docs/user-guide/install/pe/windows/" target="_blank" rel="noopener">官方文档</a>进行安装，跳过步骤中的填写license部分</p>
+</li>
+<li><p>启动服务，当然此时是无法访问的。查看日志thingsboard.log发现最后有如下提示</p>
+<pre><code> 2019-12-24 09:14:50,056 [main] ERROR o.t.s.d.s.BasicSubscriptionService - License secret is not provided!
+ 2019-12-24 09:14:50,057 [main] ERROR o.t.s.d.s.BasicSubscriptionService - Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!
+ 2019-12-24 09:14:50,156 [Shutdown Thread] INFO  o.t.s.d.s.BasicSubscriptionService - Terminating application due to critical License Error GENERAL_ERROR(300), exit code [-1]...</code></pre><p>这里提示<code>BasicSubscriptionService</code>这个类中进行了license的检验，但是上面没有显示改类包路径，无法精确定位到改类的位置。</p>
+</li>
+<li><p>为了精确定位<code>BasicSubscriptionService</code>这个类的位置，对<code>conf/logback.xml</code>进行修改，将日志长度改大一点</p>
+<pre><code>&lt;encoder&gt;
+   &lt;pattern&gt;%d{ISO8601} [%thread] %-5level %logger{255} - %msg%n&lt;/pattern&gt;
+&lt;/encoder&gt;</code></pre></li>
+<li><p>再次重启服务，查看日志</p>
+<pre><code>2019-12-24 09:32:58,495 [main] ERROR org.thingsboard.server.dao.subscription.BasicSubscriptionService - License secret is not provided!
+2019-12-24 09:32:58,497 [main] ERROR org.thingsboard.server.dao.subscription.BasicSubscriptionService - Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!
+2019-12-24 09:32:58,504 [Shutdown Thread] INFO  org.thingsboard.server.dao.subscription.BasicSubscriptionService - Terminating application due to critical License Error GENERAL_ERROR(300), exit code [-1]...</code></pre><p>发现<code>org.thingsboard.server.dao.subscription.BasicSubscriptionService</code>这个类是再dao包下，解压<code>lib/thingsboard.jar</code>，找到依赖的<code>dao-2.4.2PE.jar</code>，解压找到<code>BasicSubscriptionService</code><br>最后发现检查license的地方在这里:</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@PostConstruct</span>
+   <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+       <span class="token keyword">if</span> <span class="token punctuation">(</span>StringUtils<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>licenseSecret<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+           log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"License secret is not provided!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+           log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"Please provide license.secret property value in thingsboard.yml or set TB_LICENSE_SECRET environment variable!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+           <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">doExit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> LicenseErrorCode<span class="token punctuation">.</span>GENERAL_ERROR<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+           <span class="token keyword">try</span> <span class="token punctuation">{</span>
+               <span class="token keyword">this</span><span class="token punctuation">.</span>tbLicenseClient <span class="token operator">=</span> TbLicenseClient<span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">listener</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">licenseSecret</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>licenseSecret<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">releaseDate</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SimpleDateFormat</span><span class="token punctuation">(</span><span class="token string">"yyyy-MM-dd"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span><span class="token string">"2019-09-13"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+               <span class="token keyword">this</span><span class="token punctuation">.</span>tbLicenseClient<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+           <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> var3<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+               log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"Failed to init license client"</span><span class="token punctuation">,</span> var3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+               LicenseErrorCode licenseErrorCode <span class="token operator">=</span> var3 <span class="token keyword">instanceof</span> <span class="token class-name">LicenseException</span> <span class="token operator">?</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>LicenseException<span class="token punctuation">)</span>var3<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getErrorCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> LicenseErrorCode<span class="token punctuation">.</span>GENERAL_ERROR<span class="token punctuation">;</span>
+               <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">doExit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> licenseErrorCode<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+           <span class="token punctuation">}</span>
+       <span class="token punctuation">}</span>
 
-        value <span class="token operator">=</span> <span class="token function">parseFloat</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">onValue</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span></code></pre>
+   <span class="token punctuation">}</span></code></pre>
+</li>
+<li><p>尝试重写该类中方法，将验证license那部分去掉。然后将新的<code>BasicSubscriptionService.class</code>替换掉之前的代码。<br>打开CE版的源码，在<code>dao</code>模块下新建<code>subscription</code>包，对照<code>dao-2.4.2PE.jar</code>中的内容，将<code>SubscriptionService</code>,<code>InstallSubscriptionService</code>,<code>BasicSubscriptionService</code>这3个类中的内容完全复制过来,<br>再重写<code>BasicSubscriptionService</code>中的方法，最后内容如下：</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> org<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span>Logger<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>slf4j<span class="token punctuation">.</span>LoggerFactory<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Value<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Profile<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>stereotype<span class="token punctuation">.</span>Service<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>thingsboard<span class="token punctuation">.</span>server<span class="token punctuation">.</span>common<span class="token punctuation">.</span>data<span class="token punctuation">.</span>id<span class="token punctuation">.</span>TenantId<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>thingsboard<span class="token punctuation">.</span>server<span class="token punctuation">.</span>common<span class="token punctuation">.</span>data<span class="token punctuation">.</span>subscription<span class="token punctuation">.</span>SubscriptionException<span class="token punctuation">;</span>
 
+<span class="token keyword">import</span> javax<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>PostConstruct<span class="token punctuation">;</span>
+<span class="token keyword">import</span> javax<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>PreDestroy<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Service</span>
+<span class="token annotation punctuation">@Profile</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">"!install"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BasicSubscriptionService</span> <span class="token keyword">implements</span> <span class="token class-name">SubscriptionService</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> Logger log <span class="token operator">=</span> LoggerFactory<span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span>BasicSubscriptionService<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String MAX_DEVICES_KEY <span class="token operator">=</span> <span class="token string">"maxdevices"</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String MAX_ASSETS_KEY <span class="token operator">=</span> <span class="token string">"maxassets"</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String WHITELABELING_KEY <span class="token operator">=</span> <span class="token string">"whitelabeling"</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"${license.secret}"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> String licenseSecret<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">BasicSubscriptionService</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@PostConstruct</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+</code></pre>
+</li>
+</ol>
+<pre><code>   }
+
+   @PreDestroy
+   public void stop() {
+
+   }
+
+
+   @Override
+   public void createDeviceAllowed(TenantId tenantId) throws SubscriptionException {
+
+   }
+
+   @Override
+   public void createAssetAllowed(TenantId tenantId) throws SubscriptionException {
+
+   }
+
+   @Override
+   public void whiteLabelingAllowed(TenantId tenantId) throws SubscriptionException {
+
+   }
+
+   @Override
+   public boolean whiteLabelingEnabled(TenantId tenantId) throws SubscriptionException {
+      return true;
+   }</code></pre><p>   }</p>
+<pre><code>(这步过程中`SubscriptionService`类中有个异常类`SubscriptionException`是在`common`模块下的，CE版中也没有这个类，需要按照路径在CE版中生成，然后重新编译`common`模块)
+
+6. 编译`dao`模块，拿到`BasicSubscriptionService.class`
+
+7. 重新生成`dao-2.4.2PE.jar`,使用jar命令替换，在`dao-2.4.2PE.jar`同目录下新建目录`org\thingsboard\server\dao\subscription`,将`BasicSubscriptionService.class`放到该目录下，
+执行`jar uf dao-2.4.2PE.jar org\thingsboard\server\dao\subscription\BasicSubscriptionService.class`此时`dao-2.4.2PE.jar`已经更新完。
+
+8. 重新生成`thingsboard.jar`，解压之间的`thingsboard.jar`,得到3个目录`BOOT-INF`,`META-INF`,`org`,将上一步生成的`dao-2.4.2PE.jar`放入`BOOT-INF\lib`中，
+执行`jar cf0M thingsboard.jar *`生成新的jar包
+
+9. 用新的thingsboard.jar替换掉lib中的jar包重新install或者直接执行都可以（java -jar thingsboard.jar,需要修改jar包中的yml配置文件）。</code></pre>
             </div>
             <hr/>
 
@@ -437,7 +524,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me" rel="external nofollow noreferrer">niww</a>
+                    <a href="http://niww.me" rel="external nofollow noreferrer">Niww</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -447,7 +534,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me/2020/06/15/TB%E7%BD%91%E5%85%B3%E6%B5%8B%E8%AF%95%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">http://niww.me/2020/06/15/TB%E7%BD%91%E5%85%B3%E6%B5%8B%E8%AF%95%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</a>
+                    <a href="http://niww.me/2019/12/23/Thingsboard/ThingsBoard-PE%E7%89%88%E7%A0%B4%E8%A7%A3/">http://niww.me/2019/12/23/Thingsboard/ThingsBoard-PE%E7%89%88%E7%A0%B4%E8%A7%A3/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -460,7 +547,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="http://niww.me" target="_blank">niww</a>
+                    <a href="http://niww.me" target="_blank">Niww</a>
                     !
                 </span>
             </div>
@@ -658,36 +745,37 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/06/19/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbusRPC%E8%AF%B7%E6%B1%82/">
+                <a href="/2019/12/28/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/Git/%E9%AB%98%E9%A2%91%E4%BD%BF%E7%94%A8%E7%9A%84Git%E5%91%BD%E4%BB%A4%E9%9B%86%E5%90%88/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="ThingsBoard网关之ModbusRPC请求">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="高频使用的Git命令集合">
                         
-                        <span class="card-title">ThingsBoard网关之ModbusRPC请求</span>
+                        <span class="card-title">高频使用的Git命令集合</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            之前模拟了Modbus设备的数据采集，这次来模拟下Modbus下的RPC请求。
-1.模拟一个空调设备，采用ModbusTCP使用ModbusSlave模拟设备，设备地址1，分配4个寄存器：
+                            前言汇总下我在项目中高频使用的git命令及姿势
 
-寄存器1:模式
-寄存器2:开关状态
-寄存器3,4
+
+不是入门文档，官方文档肯定比我全面，这里是结合实际业务场景输出
+使用的 Git版本：git version 2.24.0
+git log查看日志，常规操作，必备
+# 输出概要日志,这条命令
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-19
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-28
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/ThingsBoard/" class="post-category">
-                                    ThingsBoard
+                            <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" class="post-category">
+                                    开发工具
                                 </a>
                             
                             
@@ -697,8 +785,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/ThingsBoard/">
-                        <span class="chip bg-color">ThingsBoard</span>
+                    <a href="/tags/Git/">
+                        <span class="chip bg-color">Git</span>
                     </a>
                     
                 </div>
@@ -712,25 +800,26 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/06/11/ThingsBoard%E7%BD%91%E5%85%B3%E4%B9%8BModbus%E6%A8%A1%E6%8B%9F%E8%AE%BE%E5%A4%87/">
+                <a href="/2019/11/21/Thingsboard/ThingsBoard%E7%BD%91%E5%85%B3%E9%85%8D%E7%BD%AE(Java%E7%89%88)-Modbus/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="ThingsBoard网关之Modbus设备模拟采集">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="ThingsBoard-Gateway（Java版）在树莓派上的使用-ModBus协议">
                         
-                        <span class="card-title">ThingsBoard网关之Modbus设备模拟采集</span>
+                        <span class="card-title">ThingsBoard-Gateway（Java版）在树莓派上的使用-ModBus协议</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            本篇介绍下如何使用ModbusSlave/ModbusPoll模拟ModbusRTU与ModbusTCP协议并与TB的Python网关对接。
-1.准备工具1.ModbusPoll(链接: https://pan.baidu.com/s/1c
+                            前言ThingsBoard GateWay 是在ThingsBoard下的一款高度集成遗留系统和第三方系统上联接设备的开源解决方案。具有以下几个特点：
+
+MQTT扩展 - 于控制、配置和收集使用现有协议连接到外部MQTT代理的IoT设备数据
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-11-21
                             </span>
                         <span class="publish-author">
                             
