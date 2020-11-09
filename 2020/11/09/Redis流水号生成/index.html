@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="RS485总线技术概述(一), Niww&#39;s Blog">
+    <meta name="keywords" content="Redis流水号生成, Niww&#39;s Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>RS485总线技术概述(一) | Niww&#39;s Blog</title>
+    <title>Redis流水号生成 | Niww&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -240,12 +240,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">RS485总线技术概述(一)</h1>
+                    <h1 class="description center-align post-title">Redis流水号生成</h1>
                 </div>
             </div>
         </div>
@@ -362,8 +362,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/RS485/">
-                                <span class="chip bg-color">RS485</span>
+                            <a href="/tags/Redis/">
+                                <span class="chip bg-color">Redis</span>
                             </a>
                         
                     </div>
@@ -374,8 +374,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/RS485/" class="post-category">
-                                RS485
+                            <a href="/categories/Redis/" class="post-category">
+                                Redis
                             </a>
                         
                     </div>
@@ -387,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-07-06
+                    2020-11-09
                 </div>
                 
 
@@ -404,75 +404,96 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="RS485总线技术概述"><a href="#RS485总线技术概述" class="headerlink" title="RS485总线技术概述"></a>RS485总线技术概述</h2><p>现场总线概念是由国际电工委员会（International Electrotechnical Commission简称IEC)与1984年提出，具体定义如下：现场总线是一种应用于生产现场，在现场设备和控制装置之间以及现场设备之间实行双向、串行、多节点的数字通信技术。而RS-485又称为EIA-485是由美国电子工业协议（Electronic Industries Association简称EIA)于1983年在RS-422的基础上提出，RS-232/485串口只规定了接口的电气标准，没有规定接口的插件，电缆以及使用的协议，只是OSI规范中物理层的一个标准。严格意义来讲，RS-485总线是现场总线技术的鼻祖，但是其严格意义上来讲并不是现场总线。</p>
-<p>理解RS-485总线需要从RS-232串口开始，现在的RS-232串口基本上都是基于RS-232C标准定义的，其接口定义有DB9以及DB25两种接口定义，现在基本上都是采用DB9接口。RS-232串口定义如下：1.载波检测，2.接收数据，3.发送数据，4.数据终端准备就绪，5.信号地，6.调制解调器就绪，7.请求发送，8.允许发送，9.振铃提示。现在由于计算机处理能力的增强，握手之类的处理基本上交由软件来处理，只需要采用2，3，5（RXD,TXD,GND)三根线就可以正常通信。RS-232串口采用单端非差分电路平衡传输方式传输数据，收发数据线路共用接地线，也就是说其收发数据(RXD,TXD)的表示是针对地线(GND)而言的。当数据线的电平低于-3V的时候，其为逻辑“1”，高于+3V的时候，其为逻辑“0”。所以RS-232串口并不能抑制共模干扰以及共地噪音，从而决定RS-232串口的通信距离较短，并且RS-232串口只能针对点对点通信，不能支持多点组网的通信模式。</p>
-<p>由于工业现场通信节点众多，相互之间距离较远且外部电磁环境复杂，针对工业网络通信人们需要一种采用最少的连线互联各个通信节点，并且具备一定抑制外部干扰的通信方式来完成工业现场的通信任务。针对RS-232存在的缺点，EIA提出了RS-422/485标准，其支持点对多点通信，通信速率最大可以支持110Kbps，通信距离最远可达1200米（通过增加485中继器通信距离可以延长至6000米）。</p>
-<p>EIA232,EIA422,EIA485技术参数：</p>
-<table>
-<thead>
-<tr>
-<th align="left">规范</th>
-<th align="left">EIA-232</th>
-<th align="left">EIA-422</th>
-<th align="left">EIA-485</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">最大传输距离</td>
-<td align="left">15m</td>
-<td align="left">1200m（110kbps)</td>
-<td align="left">1200m（110kbps)</td>
-</tr>
-<tr>
-<td align="left">最大传输速度</td>
-<td align="left">20Kbps</td>
-<td align="left">10Mbps(12m)</td>
-<td align="left">10Mbps(12m)</td>
-</tr>
-<tr>
-<td align="left">驱动器最小输出</td>
-<td align="left">±5V</td>
-<td align="left">±2V</td>
-<td align="left">±1.5V</td>
-</tr>
-<tr>
-<td align="left">驱动器最大输出</td>
-<td align="left">±15V</td>
-<td align="left">±10V</td>
-<td align="left">±6V</td>
-</tr>
-<tr>
-<td align="left">最大驱动器数量</td>
-<td align="left">1</td>
-<td align="left">1</td>
-<td align="left">32单位负载</td>
-</tr>
-<tr>
-<td align="left">最大接收器数量</td>
-<td align="left">1</td>
-<td align="left">10</td>
-<td align="left">32单位负载</td>
-</tr>
-<tr>
-<td align="left">接收器敏感度</td>
-<td align="left">±3V</td>
-<td align="left">±0.2V</td>
-<td align="left">±0.2V</td>
-</tr>
-<tr>
-<td align="left">传输方式</td>
-<td align="left">单端</td>
-<td align="left">差分</td>
-<td align="left">差分</td>
-</tr>
-<tr>
-<td align="left">RS-485总线由于其采用差分平衡电路，能够极大的抑制噪音以及不受节点之间的接地电平差异的影响，具有较强的抗干扰能力以及较远的传输距离。差分平衡电路相应原理如下：在RS-485总线的两条信号线路上（485+，485-）上一根导线的电压值是另外一根导线的电压取反值，接收器的输入电压为两根导线的差值，其差值的正负表示相应的逻辑“1”和“0”（485+电压低于485-，则为逻辑“1”，反之则为逻辑“0”），其接收器最小敏感度可以达到200mV。由于RS-485总线上的两条信号线传递方向相反，大小相同的电流，当噪音电压对其形成干扰的时候，往往都是同时施加于两条信号线路上，并且施加的效果一致，而由于接收器的输入电压为两根导线的差值，其在某一条导线上的噪声电压会被另外一条导线上的噪声电压相互抵消（比如485+上的电压为+1V，485-上的电压为-1V，差值为2V，当噪声电压影响他们使其电压都上升1V，那么485+的电压为+2V,485-的电压则为0V,其差值仍然为2V，这样噪声电压就被抵消了）。同样的道理，由于RS-485总线两根导线的取值是485+，485-的差值，不同节点的接地线的电平差值并不会对差分电路造成任何影响。</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-</tbody></table>
-<p>RS-485总线接线：485+，485-两条信号线应该在同一条双绞线中，并且互为双绞（比如采用网络作为485线路时，只能是蓝，蓝白或者绿，绿白这样连接,而不能绿，蓝），相互之间不能调换。在RS-485总线首尾各接一个120Ω电阻，成为一个60Ω并联终端电阻，当终端电阻等于电缆的特征阻抗时，可以削弱乃至消除信号的反射。</p>
+                <h2 id="一、场景-生成具有一定规则的编码。"><a href="#一、场景-生成具有一定规则的编码。" class="headerlink" title="一、场景:生成具有一定规则的编码。"></a>一、场景:生成具有一定规则的编码。</h2><p>在工作中，想必都接触过这样一个场景：生成具有一定规则的编码。</p>
+<p>比如，合同编号。要求格式为&lt;HT前缀&gt;&lt;4位年&gt;&lt;2位月&gt;&lt;2位类型&gt;&lt;N位流水号&gt;。</p>
+<p>前面都好说，只有这个流水号，很容易就出现重复、跨越等问题。<br>如何解决呢？其实办法也有好多种，能想到的最多就是加锁。无论是synchronized关键字、还是Lock锁、Zookeeper锁、Redis锁等，都是通过阻塞其它请求，即同步阻塞模式，一次只处理一个流水号生成请求，以达到唯一性目的。<br>那么有没有同步非阻塞模式呢？答案是有的，且使用起来也比较简单，即采用Redis的自增特性。</p>
+<h2 id="二、技术方案：利用Redis的原子操作incr命令"><a href="#二、技术方案：利用Redis的原子操作incr命令" class="headerlink" title="二、技术方案：利用Redis的原子操作incr命令"></a>二、技术方案：利用Redis的原子操作incr命令</h2><p>Redis Incr 命令将 key 中储存的数字值增一。<br>如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCR 操作。<br>如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。<br>本操作的值限制在 64 位(bit)有符号数字表示之内。 </p>
+<pre class=" language-text"><code class="language-text">127.0.0.1:6379> set num 10
+OK
+127.0.0.1:6379> incr num
+(integer) 11
+127.0.0.1:6379> get num    # 数字值在 Redis 中以字符串的形式保存
+"11"</code></pre>
+<h2 id="二、存储形式"><a href="#二、存储形式" class="headerlink" title="二、存储形式"></a>二、存储形式</h2><p>可使用string类型存储，也可以使用hash存储，都可以。还是那句话，根据业务场景不同，做不同的适应处理。脱离业务谈实践，就是耍流氓。</p>
+<p>string类型存储好理解，那hash存储适用于哪些场景呢？比如，存在这样一个业务场景：系统是多租户的，每个租户都需要生成合同编号，后台需要实时查看所有租户的流水号情况。那么此时，就需要把Redis中所有的流水号信息取出来。</p>
+<p>如果要使用string类型存储，那么在key的定义上，势必就要加上租户的标识来区分。然后通过scan也好，循环也好，找到所有租户的流水号信息，比较繁琐。</p>
+<p>如果使用hash存储，则只需在value对应的key上，加上租户标识来区分，key值则是统一的<HTCODE>。无论租户使用怎样的流水号生成、循环规则，只需调整其Redis中value对应的key值规则即可。此时，查找Redis中所有的流水号信息则变得异常方便，把此key值hash表的值全部拿到，即找到了所有租户的流水号信息。</p>
+<p>所以说，代码实现还是要看具体业务场景，只有业务场景明确了，才能根据具体的业务场景，来做不同的代码实现。</p>
+<h2 id="三、关于key"><a href="#三、关于key" class="headerlink" title="三、关于key"></a>三、关于key</h2><p>比如合同编号，可以定义为&lt;4位年&gt;&lt;2位月&gt;<HTCODE>。这里key的定义与自身业务场景有很大关系。举个例子，假设业务规定，流水号以年为单位循环，那么，key的定义最好就只有年和固定后缀，即&lt;4位年&gt;<HTCODE>；如果以月未单位循环，那么，key则需要带上月份以区分不同月份的数据，即&lt;4位年&gt;&lt;2位月&gt;<HTCODE>。</p>
+<h2 id="四、实现"><a href="#四、实现" class="headerlink" title="四、实现"></a>四、实现</h2><p>实现非常简单，以string存储类型为例，只需调用 redisTemplate.opsForValue().increment(key, delta) 方法即可。<br>注：本例只专注于实现流水号生成，不做具体合同编号按照规则拼装的逻辑。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>Test<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>runner<span class="token punctuation">.</span>RunWith<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Autowired<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token punctuation">.</span>test<span class="token punctuation">.</span>context<span class="token punctuation">.</span>SpringBootTest<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>data<span class="token punctuation">.</span>redis<span class="token punctuation">.</span>core<span class="token punctuation">.</span>RedisTemplate<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>test<span class="token punctuation">.</span>context<span class="token punctuation">.</span>junit4<span class="token punctuation">.</span>SpringRunner<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>*<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>CountDownLatch<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>atomic<span class="token punctuation">.</span>AtomicInteger<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@RunWith</span><span class="token punctuation">(</span>SpringRunner<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@SpringBootTest</span><span class="token punctuation">(</span>webEnvironment <span class="token operator">=</span> SpringBootTest<span class="token punctuation">.</span>WebEnvironment<span class="token punctuation">.</span>RANDOM_PORT<span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CodeGeneratorTest</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> CountDownLatch cd <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CountDownLatch</span><span class="token punctuation">(</span><span class="token number">2001</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> RedisTemplate<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Object<span class="token operator">></span> redisTemplate<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> AtomicInteger atomicInteger <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicInteger</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">single</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>redisTemplate<span class="token punctuation">.</span><span class="token function">opsForValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">increment</span><span class="token punctuation">(</span><span class="token string">"index"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">concurrent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 两千个线程，等待全部创建完成后，再同时执行</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">2000</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+                <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                    <span class="token comment" spellcheck="true">// 当前线程阻塞等待</span>
+                    cd<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>redisTemplate<span class="token punctuation">.</span><span class="token function">opsForValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">increment</span><span class="token punctuation">(</span><span class="token string">"index"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+            cd<span class="token punctuation">.</span><span class="token function">countDown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">new</span> <span class="token class-name">Timer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">schedule</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TimerTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                cd<span class="token punctuation">.</span><span class="token function">countDown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span> 3000L<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            cd<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">long</span> currentTimeMillis <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"当前用时："</span> <span class="token operator">+</span> <span class="token punctuation">(</span>System<span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> currentTimeMillis<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">int</span> index <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token keyword">this</span><span class="token punctuation">.</span>redisTemplate<span class="token punctuation">.</span><span class="token function">opsForValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"index"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>index <span class="token operator">%</span> <span class="token number">2000</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            index <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token keyword">this</span><span class="token punctuation">.</span>redisTemplate<span class="token punctuation">.</span><span class="token function">opsForValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"index"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+
+<span class="token punctuation">}</span></code></pre>
 
             </div>
             <hr/>
@@ -498,7 +519,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://niww.me/2020/07/06/RS485/RS485%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0(%E4%B8%80)/">http://niww.me/2020/07/06/RS485/RS485%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0(%E4%B8%80)/</a>
+                    <a href="http://niww.me/2020/11/09/Redis%E6%B5%81%E6%B0%B4%E5%8F%B7%E7%94%9F%E6%88%90/">http://niww.me/2020/11/09/Redis%E6%B5%81%E6%B0%B4%E5%8F%B7%E7%94%9F%E6%88%90/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -536,8 +557,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/RS485/">
-                                    <span class="chip bg-color">RS485</span>
+                                <a href="/tags/Redis/">
+                                    <span class="chip bg-color">Redis</span>
                                 </a>
                             
                         </div>
@@ -705,46 +726,49 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/07/06/RS485/RS485%E6%80%BB%E7%BA%BF%E5%87%A0%E7%A7%8D%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84(%E4%B8%89)/">
+                <a href="/2020/11/09/Redis%E6%B5%81%E6%B0%B4%E5%8F%B7%E7%94%9F%E6%88%90/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="RS485总线几种拓扑结构(三)">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Redis流水号生成">
                         
-                        <span class="card-title">RS485总线几种拓扑结构(三)</span>
+                        <span class="card-title">Redis流水号生成</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RS485总线几种拓扑结构RS-485总线布线规范规定其必须是总线式拓扑结构，也就是要是手牵手菊花链布线方式，但是在现场实际施工过程中，现场RS-485设备的分布不会总是按照线性分布，而可能是零散的分布在不同的位置上或者是呈网格状分布，也有
+                            一、场景:生成具有一定规则的编码。在工作中，想必都接触过这样一个场景：生成具有一定规则的编码。
+比如，合同编号。要求格式为&lt;HT前缀&gt;&lt;4位年&gt;&lt;2位月&gt;&lt;2位类型&gt;&lt;N位流水号&gt;
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-07-06
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-09
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/RS485/" class="post-category">
-                                    RS485
+                            <a href="/categories/Redis/" class="post-category">
+                                    Redis
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RS485/">
-                        <span class="chip bg-color">RS485</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
@@ -758,20 +782,19 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/07/06/RS485/RS485%E6%80%BB%E7%BA%BF%E5%B8%83%E7%BA%BF%E8%A7%84%E8%8C%83(%E5%9B%9B)/">
+                <a href="/2020/07/06/RS485/RS485%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE(%E4%BA%8C)/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="485总线布线规范(四)">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="RS485通信协议(二)">
                         
-                        <span class="card-title">485总线布线规范(四)</span>
+                        <span class="card-title">RS485通信协议(二)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            485总线布线规范RS-485总线由于其支持设备广泛，设计结构简单，布线成本低廉，抗干扰能力强，在工业现场数据通信领域得到了极其广泛使用，但是在现场施工需要注意若干事项，防止出现相关问题，避免后期的维护成本增加。
-拓扑结构问题：RS-485
+                            RS485通信协议RS-485总线技术只是规定了接口的电气标准，并没有规定RS-485接口的电缆，插件以及通信协议，只是OSI规范中物理层的一个标准，由于RS-485总线采用差分平衡传输方式，一般使用的电缆建议采用屏蔽双绞线，使得485+与
                         
                     </div>
                     <div class="publish-info">

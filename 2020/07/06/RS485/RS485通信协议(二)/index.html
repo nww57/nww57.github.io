@@ -404,7 +404,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>RS-485总线技术只是规定了接口的电气标准，并没有规定RS-485接口的电缆，插件以及通信协议，只是OSI规范中物理层的一个标准，由于RS-485总线采用差分平衡传输方式，一般使用的电缆建议采用屏蔽双绞线，使得485+与485-两两双绞，外面采用屏蔽层屏蔽外部电磁干扰，但是在现场实施施工中，有人采用平行线也是可以适用于RS-485总线的电缆，只是抗干扰能力较差，传输距离不远且通信质量不稳定，一般都是建议采用屏蔽双绞线。而接口定义形式，由于RS-485总线一般都是用到485+，485-以及GND三根线，没有硬性规定接口定义形式，一般市面上多见的接口形式有RJ45接口，工业接线端子接口，DB9串口接线端子以及RJ11电话线接口等。一般而言，采用工业接线端子更为合适，因为如果需要接入终端电阻的话，采用工业接线端子是很好接入的，而且接入屏蔽双绞线也是工业接线端子更加方便。</p>
+                <h2 id="RS485通信协议"><a href="#RS485通信协议" class="headerlink" title="RS485通信协议"></a>RS485通信协议</h2><p>RS-485总线技术只是规定了接口的电气标准，并没有规定RS-485接口的电缆，插件以及通信协议，只是OSI规范中物理层的一个标准，由于RS-485总线采用差分平衡传输方式，一般使用的电缆建议采用屏蔽双绞线，使得485+与485-两两双绞，外面采用屏蔽层屏蔽外部电磁干扰，但是在现场实施施工中，有人采用平行线也是可以适用于RS-485总线的电缆，只是抗干扰能力较差，传输距离不远且通信质量不稳定，一般都是建议采用屏蔽双绞线。而接口定义形式，由于RS-485总线一般都是用到485+，485-以及GND三根线，没有硬性规定接口定义形式，一般市面上多见的接口形式有RJ45接口，工业接线端子接口，DB9串口接线端子以及RJ11电话线接口等。一般而言，采用工业接线端子更为合适，因为如果需要接入终端电阻的话，采用工业接线端子是很好接入的，而且接入屏蔽双绞线也是工业接线端子更加方便。</p>
 <p>由于RS-485总线并没有规定通信协议，有很多厂家自己推出基于RS-485总线的通信协议，其中最为著名的是由modicon公司推出的Modbus协议，该协议具有两个版本，一个是Modbus RTU和Modbus ASCII两种帧报文格式，该内容我们会在其他文章内详细描述，我们现在讨论基于RS-485总线通信的协议的一些基本原则以及相关情况。</p>
 <p>由于RS-485总线支持点对多点通信模式，而其没有数据冲突检测解决机制，所以数据冲突的问题都是依靠主机来解决，通过主机对整个系统进行全方位的控制，避免数据冲突的产生，一般而言，由于必须通过主机进行控制以避免数据冲突，基于RS-485总线通信只能支持一主多从的通信方式，在现实生活中，老师在课堂讲课的模式其实就是一种一主多从的通信方式，下面我们按照老师课堂授课的比喻来说明RS-485总线通信协议的一些基本原则。</p>
 <p>由于RS-485总线支持一主多从的通信模式，主机需要能够识别下位多个从机设备，所以从机设备必须具备一个在485网络中的唯一的地址码，就像班级中给学生分配学号一样，学生的姓名可能会有重复，但是学号必须是该班级内唯一的。而老师只需要叫唤学生的学号要求学生回答问题或者做相应的动作等。 同样的道理，485通信主机通过呼叫485通信从机的地址码来控制485通信从机的相关动作。</p>
@@ -644,48 +644,47 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/07/06/RS485/RS485%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE(%E4%BA%8C)/">
+                <a href="/2020/11/09/Redis%E6%B5%81%E6%B0%B4%E5%8F%B7%E7%94%9F%E6%88%90/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="RS485通信协议(二)">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Redis流水号生成">
                         
-                        <span class="card-title">RS485通信协议(二)</span>
+                        <span class="card-title">Redis流水号生成</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RS-485总线技术只是规定了接口的电气标准，并没有规定RS-485接口的电缆，插件以及通信协议，只是OSI规范中物理层的一个标准，由于RS-485总线采用差分平衡传输方式，一般使用的电缆建议采用屏蔽双绞线，使得485+与485-两两双绞，
+                            一、场景:生成具有一定规则的编码。在工作中，想必都接触过这样一个场景：生成具有一定规则的编码。
+比如，合同编号。要求格式为&lt;HT前缀&gt;&lt;4位年&gt;&lt;2位月&gt;&lt;2位类型&gt;&lt;N位流水号&gt;
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-06
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-11-09
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/RS485/" class="post-category">
-                                    RS485
+                            <a href="/categories/Redis/" class="post-category">
+                                    Redis
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RS485/">
-                        <span class="chip bg-color">RS485</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
@@ -711,7 +710,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RS-485总线布线规范规定其必须是总线式拓扑结构，也就是要是手牵手菊花链布线方式，但是在现场实际施工过程中，现场RS-485设备的分布不会总是按照线性分布，而可能是零散的分布在不同的位置上或者是呈网格状分布，也有可能呈树形分布，在这种情况
+                            RS485总线几种拓扑结构RS-485总线布线规范规定其必须是总线式拓扑结构，也就是要是手牵手菊花链布线方式，但是在现场实际施工过程中，现场RS-485设备的分布不会总是按照线性分布，而可能是零散的分布在不同的位置上或者是呈网格状分布，也有
                         
                     </div>
                     <div class="publish-info">
