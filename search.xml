@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>CentOS下的运维操作</title>
+      <link href="/2020/11/09/CentOS%E4%B8%8B%E7%9A%84%E8%BF%90%E7%BB%B4%E6%93%8D%E4%BD%9C/"/>
+      <url>/2020/11/09/CentOS%E4%B8%8B%E7%9A%84%E8%BF%90%E7%BB%B4%E6%93%8D%E4%BD%9C/</url>
+      
+        <content type="html"><![CDATA[<h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><ul><li><a href="https://blog.csdn.net/yaozhiwei1019/article/details/84954569" target="_blank" rel="noopener">Centos7下mysql大小写敏感问题</a></li></ul><h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><ul><li><a href="https://blog.csdn.net/baidu_30000217/article/details/51558408" target="_blank" rel="noopener">Centos7下配置Redis开机自启动</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 运维 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CentOS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Redis流水号生成</title>
       <link href="/2020/11/09/Redis%E6%B5%81%E6%B0%B4%E5%8F%B7%E7%94%9F%E6%88%90/"/>
       <url>/2020/11/09/Redis%E6%B5%81%E6%B0%B4%E5%8F%B7%E7%94%9F%E6%88%90/</url>
